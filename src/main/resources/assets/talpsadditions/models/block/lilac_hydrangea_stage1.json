@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "talpsadditions:block/lilac_hydrangea_stage1"
+  }
+}

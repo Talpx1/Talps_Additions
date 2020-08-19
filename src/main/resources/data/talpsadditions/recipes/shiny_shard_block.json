@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    "xxx",
+    "xxx"
+  ],
+  "key": {
+    "x": {
+      "item": "talpsadditions:shiny_shard"
+    }
+  },
+  "result": {
+    "item": "talpsadditions:shiny_shard_block",
+    "count": 1
+  }
+}

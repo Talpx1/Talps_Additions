@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "talpsadditions:purple_rose_item"
+    }
+  ],
+  "result": {
+    "item": "minecraft:purple_dye"
+  }
+}

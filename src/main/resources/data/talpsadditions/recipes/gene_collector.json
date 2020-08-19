@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    "VIV",
+    " V "
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "V": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "talpsadditions:gene_collector",
+    "count": 1
+  }
+}

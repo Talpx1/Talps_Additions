@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "talpsadditions:multicolor_rose_item"
+    }
+  ],
+  "result": {
+    "item": "talpsadditions:petal",
+    "count": 8
+  }
+}

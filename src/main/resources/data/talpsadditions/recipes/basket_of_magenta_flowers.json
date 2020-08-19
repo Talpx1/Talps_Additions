@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    " S ",
+    " B "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:lilac"
+    },
+    "B": {
+      "item": "talpsadditions:basket_item"
+    }
+  },
+  "result": {
+    "item": "talpsadditions:basket_of_magenta_flowers_item",
+    "count": 1
+  }
+}

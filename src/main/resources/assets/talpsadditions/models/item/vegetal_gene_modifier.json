@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "talpsadditions:item/vegetal_gene_modifier"
+  }
+}

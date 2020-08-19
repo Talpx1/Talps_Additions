@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "talpsadditions:yellow_rose_item"
+    }
+  ],
+  "result": {
+    "item": "minecraft:yellow_dye"
+  }
+}

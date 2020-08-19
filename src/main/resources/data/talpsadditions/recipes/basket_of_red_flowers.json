@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " H ",
+    " R ",
+    " B "
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:rose_bush"
+    },
+    "H": {
+      "item": "talpsadditions:red_hydrangea_sprout"
+    },
+    "B": {
+      "item": "talpsadditions:basket_item"
+    }
+  },
+  "result": {
+    "item": "talpsadditions:basket_of_red_flowers_item",
+    "count": 1
+  }
+}

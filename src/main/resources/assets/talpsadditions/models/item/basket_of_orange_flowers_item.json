@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "talpsadditions:item/basket_of_orange_flowers_item"
+  }
+}

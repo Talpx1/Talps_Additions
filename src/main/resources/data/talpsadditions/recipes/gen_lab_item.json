@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "xxx",
+    "xCx",
+    "xRx"
+  ],
+  "key": {
+    "x": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "talpsadditions:gene_collector"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+
+  },
+  "result": {
+    "item": "talpsadditions:gen_lab_item",
+    "count": 1
+  }
+}

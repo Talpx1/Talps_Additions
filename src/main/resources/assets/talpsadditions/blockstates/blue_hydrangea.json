@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "talpsadditions:block/blue_hydrangea_stage0"
+    },
+    "age=1": {
+      "model": "talpsadditions:block/blue_hydrangea_stage1"
+    },
+    "age=2": {
+      "model": "talpsadditions:block/blue_hydrangea_stage2"
+    },
+    "age=3": {
+      "model": "talpsadditions:block/blue_hydrangea_stage3"
+    }
+  }
+}

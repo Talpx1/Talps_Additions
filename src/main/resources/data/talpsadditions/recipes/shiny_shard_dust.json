@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "talpsadditions:mortar_and_pestle"
+    },
+    {
+      "item": "talpsadditions:shiny_shard"
+    }
+  ],
+  "result": {
+    "item": "talpsadditions:shiny_shard_dust"
+  }
+}

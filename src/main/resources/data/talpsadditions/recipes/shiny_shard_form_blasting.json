@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "talpsadditions:shiny_shard_ore"
+  },
+  "result": "talpsadditions:shiny_shard",
+  "experience": 1,
+  "cookingtime": 175
+}

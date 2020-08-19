@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "talpsadditions:block/multicolor_rose_top"
+  }
+}

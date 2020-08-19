@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "talpsadditions:earth_worm"
+  },
+  "result": "talpsadditions:cooked_earth_worm",
+  "experience": 1,
+  "cookingtime": 75
+}

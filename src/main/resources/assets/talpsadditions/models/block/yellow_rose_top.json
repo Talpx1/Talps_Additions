@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "talpsadditions:block/yellow_rose_top"
+  }
+}

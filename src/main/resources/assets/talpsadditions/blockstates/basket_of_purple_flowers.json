@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "talpsadditions:block/basket_of_purple_flowers",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "talpsadditions:block/basket_of_purple_flowers"
+    },
+    "facing=south": {
+      "model": "talpsadditions:block/basket_of_purple_flowers",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "talpsadditions:block/basket_of_purple_flowers",
+      "y": 270
+    }
+  }
+}

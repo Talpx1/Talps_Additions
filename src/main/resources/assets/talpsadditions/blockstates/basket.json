@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "talpsadditions:block/basket",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "talpsadditions:block/basket"
+    },
+    "facing=south": {
+      "model": "talpsadditions:block/basket",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "talpsadditions:block/basket",
+      "y": 270
+    }
+  }
+}

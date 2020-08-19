@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "talpsadditions:block/green_rose_bottom"
+    },
+    "half=upper": {
+      "model": "talpsadditions:block/green_rose_top"
+    }
+  }
+}

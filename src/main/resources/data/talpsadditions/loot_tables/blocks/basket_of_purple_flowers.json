@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "talpsadditions:basket_of_purple_flowers_item"
+        }
+      ]
+    }
+  ]
+}

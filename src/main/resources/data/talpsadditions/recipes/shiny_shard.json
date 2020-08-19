@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "talpsadditions:shiny_shard_block"
+    }
+  ],
+  "result": {
+    "item": "talpsadditions:shiny_shard",
+    "count": 9
+  }
+}
