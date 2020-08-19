@@ -52,17 +52,5 @@ public class GenLabScreen extends ContainerScreen<GenLabContainer> {
         int relY = (this.height - this.ySize)/2-60;
 
         this.blit(matrixStack,relX, relY, 0, 0, this.xSize, this.ySize+87);
-
-        int i = this.guiLeft;
-        int j = this.guiTop;
-
-        if (this.container.isBurning()) {
-            int k = this.container.getBurnLeftScaled();
-            this.blit(matrixStack, relX, relY, 176, 12 - k, 14, k + 1);
-        }
-
-        int l = this.container.getCookProgressionScaled();
-        this.blit(matrixStack, relX, relY, 176, 14, l + 1, 16);
-
     }
 }

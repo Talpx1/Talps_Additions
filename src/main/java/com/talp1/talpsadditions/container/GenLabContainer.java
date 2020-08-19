@@ -35,23 +35,12 @@ public class GenLabContainer extends Container {
     private TileEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
-    private final IIntArray furnaceData;
-    private final IInventory furnaceInventory;
 
     public GenLabContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        this(windowId, world, pos, playerInventory, player, new Inventory(3), new IntArray(4));
-    }
-
-    public GenLabContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IInventory furnaceInventoryIn, IIntArray furnaceDataIn) {
         super(RegistryHandler.gen_lab_container.get(), windowId);
         tileEntity = world.getTileEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-
-        assertInventorySize(furnaceInventoryIn, 3);
-        assertIntArraySize(furnaceDataIn, 4);
-        this.furnaceInventory = furnaceInventoryIn;
-        this.furnaceData = furnaceDataIn;
 
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
@@ -61,12 +50,10 @@ public class GenLabContainer extends Container {
                 addSlot(new SlotItemHandler(h, 3, 131, 52-60));
                 addSlot(new SlotItemHandler(h, 4, 27, 94-60));
                 addSlot(new SlotItemHandler(h, 5, 81, 141-60));
-                //FurnaceContainer
             });
         }
         layoutPlayerInventorySlots(10, 90);
         trackPower();
-        this.trackIntArray(furnaceDataIn);
     }
     //--cretits to McJty--
     // Setup syncing of power from server to client so that the GUI can show the amount of power in the block
@@ -207,27 +194,5 @@ public class GenLabContainer extends Container {
 
         // Hotbar
         addSlotRange(playerInventory, 0, leftCol-2, topRow*2+49-60, 9, 18);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public int getCookProgressionScaled() {
-        int i = this.furnaceData.get(2);
-        int j = this.furnaceData.get(3);
-        return j != 0 && i != 0 ? i * 24 / j : 0;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public int getBurnLeftScaled() {
-        int i = this.furnaceData.get(1);
-        if (i == 0) {
-            i = 200;
-        }
-
-        return this.furnaceData.get(0) * 13 / i;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public boolean isBurning() {
-        return this.furnaceData.get(0) > 0;
     }
 }
