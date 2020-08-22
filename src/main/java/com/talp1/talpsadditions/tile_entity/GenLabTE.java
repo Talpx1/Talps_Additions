@@ -59,10 +59,10 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         public void set(int index, int value) {
             switch(index) {
                 case 0:
-                    GenLabTE.this.timer = getTimer();
+                    GenLabTE.this.timer = value;
                     break;
                 case 1:
-                    GenLabTE.this.totalTime = getTotalTime();
+                    GenLabTE.this.totalTime = value;
                     break;
             }
 
@@ -111,6 +111,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
     //set timer from secs to ticks
     private void setTimerInSecond(int sec){
         this.timer=sec*20;
+        this.genLabData.set(0, sec*20);
     }
 
     //decrease the timer by 1 every tick
@@ -227,6 +228,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
     private void startCrafting(int timerDuration){
         saveRecipe();
         this.totalTime=timerDuration*20;
+        this.genLabData.set(1, timerDuration*20);
         this.isCrafting=true;
         if (isTimerDisabled()){
             setTimerInSecond(timerDuration);
