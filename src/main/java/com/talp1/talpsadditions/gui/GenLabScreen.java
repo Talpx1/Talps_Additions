@@ -6,6 +6,7 @@ import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.container.GenLabContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.screen.inventory.FurnaceScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -48,18 +49,17 @@ public class GenLabScreen extends ContainerScreen<GenLabContainer> {
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize)/2-60;
 
-        Main.LOGGER.info("progress: "+container.getProgress());
-        Main.LOGGER.info("total: "+container.getTotal());
-        //Main.LOGGER.info("completePerc: "+Math.round((100*((float)container.getTotalTime()-(float)container.getProgress()))/(float)container.getTotalTime()));
+        //display bg gui
+        this.blit(matrixStack,relX, relY, 0, 0, this.xSize, this.ySize+87);
 
+        //display progress
         if (container.getProgress()>-1&&container.getTotal()>-1){
             if (container.getProgress()!=container.getTotal()){
                 int completePerc=Math.round((100*((float)container.getTotal()-(float)container.getProgress()))/(float)container.getTotal());
-                //render here
+                int toDisplay=Math.round(((float)107*(float)completePerc)/(float)100);
+                //blit(matrixstack, centerx, centery, startFromTopX,startFromTopY,sizeX, sizeY)
+                this.blit(matrixStack,relX+48,relY+27,178,0,78,toDisplay);
             }
         }
-        //move the first line on "render here" when working
-        this.blit(matrixStack,relX,relY,this.getGuiLeft()+this.xSize,0,160,100+87);
-        this.blit(matrixStack,relX, relY, 0, 0, this.xSize, this.ySize+87);
     }
 }

@@ -7,6 +7,7 @@ import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.FurnaceContainer;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -127,7 +128,7 @@ public class GenLabContainer extends Container {
             ItemStack stack = slot.getStack();
             itemstack = stack.copy();
             if (index == 0||index == 1||index == 2||index == 3||index == 4||index == 5) {
-                if (!this.mergeItemStack(stack, 3, 39, true)) {
+                if (!this.mergeItemStack(stack, 6, 42, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onSlotChange(stack, itemstack);
@@ -157,11 +158,11 @@ public class GenLabContainer extends Container {
                         return ItemStack.EMPTY;
                     }
                 }
-                else if (index < 28) {
-                    if (!this.mergeItemStack(stack, 28, 37, false)) {
+                else if (index < 34) {
+                    if (!this.mergeItemStack(stack, 34, 42, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index < 37 && !this.mergeItemStack(stack, 1, 28, false)) {
+                } else if (index < 42 && !this.mergeItemStack(stack, 1, 34, false)) {
                     return ItemStack.EMPTY;
                 }
             }
