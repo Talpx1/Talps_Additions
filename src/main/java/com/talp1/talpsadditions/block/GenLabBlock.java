@@ -77,7 +77,7 @@ public class GenLabBlock extends Block {
 
                     @Override
                     public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-                        return new GenLabContainer(i, world, pos, playerInventory, playerEntity);
+                        return new GenLabContainer(i, world, pos, playerInventory, playerEntity, ((GenLabTE) tileEntity).genLabData);
                     }
                 };
                 NetworkHooks.openGui((ServerPlayerEntity) player, containerProvider, tileEntity.getPos());

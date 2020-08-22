@@ -5,18 +5,11 @@ import com.talp1.talpsadditions.utils.EnergyStorageHandler;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.FurnaceContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -44,7 +37,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
     private int totalTime;//total time for the output
     private Item currResult;//output for the current recipe
     //data for the syncing
-    protected final IIntArray genLabData = new IIntArray() {
+    public final IIntArray genLabData = new IIntArray() {
         public int get(int index) {
             switch(index) {
                 case 0:
@@ -111,7 +104,6 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
     //set timer from secs to ticks
     private void setTimerInSecond(int sec){
         this.timer=sec*20;
-        this.genLabData.set(0, sec*20);
     }
 
     //decrease the timer by 1 every tick
@@ -228,7 +220,6 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
     private void startCrafting(int timerDuration){
         saveRecipe();
         this.totalTime=timerDuration*20;
-        this.genLabData.set(1, timerDuration*20);
         this.isCrafting=true;
         if (isTimerDisabled()){
             setTimerInSecond(timerDuration);
@@ -472,10 +463,6 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
             return energy.cast();
         }
         return super.getCapability(cap, side);
-    }
-
-    protected Container createMenu(int id, PlayerInventory player) {
-        return new GenLabContainer(id, this.world, this.pos, player, player.player, this.genLabData);
     }
 
 }

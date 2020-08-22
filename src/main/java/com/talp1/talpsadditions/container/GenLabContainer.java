@@ -6,8 +6,6 @@ import com.talp1.talpsadditions.utils.EnergyStorageHandler;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
@@ -20,8 +18,6 @@ import net.minecraft.util.IntArray;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -213,12 +209,10 @@ public class GenLabContainer extends Container {
         addSlotRange(playerInventory, 0, leftCol-2, topRow*2+49-60, 9, 18);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getProgress() {
         return this.genLabData.get(0);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public int getTotal() {
         return this.genLabData.get(1);
     }
