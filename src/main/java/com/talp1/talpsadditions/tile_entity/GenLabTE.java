@@ -9,6 +9,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -28,36 +30,38 @@ import java.util.Arrays;
 
 public class GenLabTE extends TileEntity implements ITickableTileEntity {
 
-    private final int USAGE_PER_TICK=50;
-    private int timer;
-    private int currAmount;
+    private final int USAGE_PER_TICK=50;//RF per Tick
+    private int timer;//timer for recipes
+    private int currAmount;//amount of items to output (for the itemstack constructor)
     private boolean isCrafting;
-    private ArrayList<Item> lastRecipe;
-    private int totalTime;
-    private CompoundNBT tileData;
+    private ArrayList<Item> lastRecipe;//last recipe used, to check if items in slot are being removed
+    private int totalTime;//total time for the output
+    private Item currResult;//output for the current recipe
 
+    //return the current item to output
     public Item getCurrResult() {
         return currResult;
     }
 
+    //set the item to output and the amount (for the itemstack)
     public void setCurrResult(Item currResult , int amount) {
         this.currResult = currResult;
         this.currAmount=amount;
     }
 
-    private Item currResult=null;
-
+    //handlers
     private ItemStackHandler itemHandler= createItemHandler();
     private EnergyStorageHandler energyStorage= createEnergyHandler();
     private LazyOptional<IItemHandler> handler =  LazyOptional.of(()->itemHandler);
     private LazyOptional<IEnergyStorage> energy =  LazyOptional.of(()->energyStorage);
 
+    //items valid in each slot, used to check where to put an itemstack on shift-click
     private static ArrayList<Item> baseItems = new ArrayList<>(Arrays.asList(Items.FEATHER, Items.WHITE_WOOL, RegistryHandler.bush_leaf.get(), Items.VINE));
     private static ArrayList<Item> toInjItems = new ArrayList<>(Arrays.asList(RegistryHandler.petal.get(),Items.BONE_MEAL, Items.BLUE_DYE, Items.RED_DYE, Items.PINK_DYE, Items.WHITE_DYE, Items.PURPLE_DYE, Items.DIAMOND_BLOCK, Items.COAL_BLOCK,Items.IRON_BLOCK, Items.EMERALD_BLOCK, Items.LAPIS_BLOCK, Items.REDSTONE_BLOCK, Items.GOLD_BLOCK, Items.QUARTZ_BLOCK, Items.NETHERITE_BRICKS));
     private static ArrayList<Item> injIntoItems = new ArrayList<>(Arrays.asList(Items.EGG, Items.WHEAT_SEEDS, RegistryHandler.bush_sprout.get()));
     private static ArrayList<Item> geneItems = new ArrayList<>(Arrays.asList(RegistryHandler.bush_gene.get(), RegistryHandler.chicken_gene.get(), RegistryHandler.vine_gene.get(), RegistryHandler.sheep_gene.get()));
     private static ArrayList<Item> geneMod = new ArrayList<>(Arrays.asList(RegistryHandler.animal_gen_modifier.get(), RegistryHandler.vegetal_gen_modifier.get()));
-    private static ArrayList<Item> outputItems = new ArrayList<>(Arrays.asList(RegistryHandler.blue_hydrangea_sprout.get(),RegistryHandler.red_hydrangea_sprout.get(),RegistryHandler.pink_hydrangea_sprout.get(),RegistryHandler.lilac_hydrangea_sprout.get(), RegistryHandler.bush_sprout.get(), RegistryHandler.floreal_vines_item.get(), RegistryHandler.ExtraRegHandler.coalChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.diamondChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.emeraldChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.goldChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.ironChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.quartzChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.netheriteChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.lapisChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.redstoneChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.coalSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.diamondSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.emeraldSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.goldSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.ironSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.quartzSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.netheriteSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.lapisSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.redstoneSheepSpawnEgg.getItem() ));
+    //private static ArrayList<Item> outputItems = new ArrayList<>(Arrays.asList(RegistryHandler.blue_hydrangea_sprout.get(),RegistryHandler.red_hydrangea_sprout.get(),RegistryHandler.pink_hydrangea_sprout.get(),RegistryHandler.lilac_hydrangea_sprout.get(), RegistryHandler.bush_sprout.get(), RegistryHandler.floreal_vines_item.get(), RegistryHandler.ExtraRegHandler.coalChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.diamondChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.emeraldChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.goldChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.ironChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.quartzChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.netheriteChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.lapisChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.redstoneChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.coalSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.diamondSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.emeraldSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.goldSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.ironSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.quartzSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.netheriteSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.lapisSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.redstoneSheepSpawnEgg.getItem() ));
 
     public GenLabTE() {
         super(RegistryHandler.gen_lab_te.get());
@@ -67,18 +71,20 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         this.currAmount=0;
         this.totalTime=-1;
         this.lastRecipe=new ArrayList<>();
-        this.tileData=new CompoundNBT();
     }
 
+    //set timer from secs to ticks
     private void setTimerInSecond(int sec){
         this.timer=sec*20;
     }
 
+    //decrease the timer by 1 every tick
     private void decreaseTimer(){
         this.timer--;
         markDirty();
     }
 
+    //check if the recipe is ready to output
     private boolean checkIfDone(){
         return timer==0;
     }
@@ -96,6 +102,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         return itemHandler.getStackInSlot(slot).getItem();
     }
 
+    //drop the itemstacks in the tile
     private void dropContent(){
         for (int i=0;i<=5;i++){
             if (!itemHandler.getStackInSlot(i).isEmpty()){
@@ -172,6 +179,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         };
     }
 
+    //save the current recipe to check if the ingredients are being removed
     private void saveRecipe(){
         lastRecipe.clear();
         for (int i=0;i<5;i++){
@@ -180,15 +188,17 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         }
     }
 
+    //start the crafting process setting timers
     private void startCrafting(int timerDuration){
         saveRecipe();
-        this.totalTime=timerDuration;
+        this.totalTime=timerDuration*20;
         this.isCrafting=true;
         if (isTimerDisabled()){
             setTimerInSecond(timerDuration);
         }
     }
 
+    //check the slots of the tiles to see if items are being removed
     private boolean checkSlots(){
         for (int i=0;i<5;i++){
             if (!itemHandler.getStackInSlot(i).isEmpty()){
@@ -204,6 +214,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         return true;
     }
 
+    //aborts the current crafting without output
     private void stopCrafting(){
         this.isCrafting=false;
         this.totalTime=-1;
@@ -211,6 +222,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         markDirty();
     }
 
+    //creates the output and consume items in slots
     private void produceResult(){
         itemHandler.extractItem(0,1,false);
         itemHandler.extractItem(1,1,false);
@@ -233,10 +245,6 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         if (world.isRemote){
             return;
         }
-
-        //saving data
-        //this.write(this.tileData);
-
         //changing blockstate
         BlockState blockState = world.getBlockState(pos);
         if (energyStorage.getEnergyStored()>0 && this.timer > 0) {
@@ -394,8 +402,6 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         super.write(compound);
         compound.put("inv", itemHandler.serializeNBT());
         compound.put("energy", energyStorage.serializeNBT());
-        compound.putInt("progress", this.timer);
-        compound.putInt("total_time", this.totalTime);
         return  compound;
     }
 
@@ -404,25 +410,21 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         super.read(state, nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         energyStorage.deserializeNBT(nbt.getCompound("energy"));
-        nbt.getInt("progress");
-        nbt.getInt("total_time");
     }
 
-    private CompoundNBT serializeIntNBT(int val, String tagName){
+    /*private CompoundNBT serializeIntNBT(int val, String tagName){
         CompoundNBT tag = new CompoundNBT();
         tag.putInt(tagName, val);
         return tag;
-    }
-
-    @Override
-    public CompoundNBT getTileData() {
-        return tileData;
-    }
+    }*/
 
     public int getTimer(){
         return this.timer;
     }
 
+    public int getTotalTime(){
+        return this.totalTime;
+    }
 
     @Nonnull
     @Override

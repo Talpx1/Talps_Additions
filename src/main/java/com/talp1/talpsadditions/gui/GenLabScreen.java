@@ -53,14 +53,11 @@ public class GenLabScreen extends ContainerScreen<GenLabContainer> {
 
         Main.LOGGER.info("progress: "+container.getProgress());
         Main.LOGGER.info("totalTime: "+container.getTotalTime());
-        Main.LOGGER.info("completePerc: "+Math.round((100*(container.getTotalTime()-container.getProgress()))/container.getTotalTime()));
+        Main.LOGGER.info("completePerc: "+Math.round((100*((float)container.getTotalTime()-(float)container.getProgress()))/(float)container.getTotalTime()));
 
         if (container.getProgress()>-1&&container.getTotalTime()>-1){
             if (container.getProgress()!=container.getTotalTime()){
-                int completePerc=Math.round((100*(container.getTotalTime()-container.getProgress()))/container.getTotalTime());
-                Main.LOGGER.info("progress: "+container.getProgress());
-                Main.LOGGER.info("totalTime: "+container.getTotalTime());
-                Main.LOGGER.info("completePerc: "+completePerc);
+                int completePerc=Math.round((100*((float)container.getTotalTime()-(float)container.getProgress()))/(float)container.getTotalTime());
                 //render here
             }
         }

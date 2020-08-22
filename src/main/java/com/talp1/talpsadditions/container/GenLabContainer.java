@@ -1,12 +1,11 @@
 package com.talp1.talpsadditions.container;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.tile_entity.GenLabTE;
 import com.talp1.talpsadditions.utils.EnergyStorageHandler;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
@@ -32,13 +31,19 @@ public class GenLabContainer extends Container {
     private TileEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
+    private GenLabTE genLabTile;
 
     public GenLabContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
         super(RegistryHandler.gen_lab_container.get(), windowId);
+
+        //setting variables
         tileEntity = world.getTileEntity(pos);
+        genLabTile = (GenLabTE) tileEntity;
+
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
 
+        //creating slots
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                 addSlot(new SlotItemHandler(h, 0, 48, 12-60));
@@ -49,9 +54,10 @@ public class GenLabContainer extends Container {
                 addSlot(new SlotItemHandler(h, 5, 81, 141-60));
             });
         }
-        layoutPlayerInventorySlots(10, 90);
+        layoutPlayerInventorySlots(10, 90);//player inv
         trackPower();
     }
+
     //--cretits to McJty--
     // Setup syncing of power from server to client so that the GUI can show the amount of power in the block
     private void trackPower() {
@@ -193,12 +199,11 @@ public class GenLabContainer extends Container {
         addSlotRange(playerInventory, 0, leftCol-2, topRow*2+49-60, 9, 18);
     }
 
-    public float getProgress(){
-        Main.LOGGER.info(tileEntity.getTileData().toString());
-        return tileEntity.getTileData().getFloat("progress");
+    public int getProgress(){
+        return genLabTile!=null ?  genLabTile.getTimer() :  -2;
     }
 
-    public float getTotalTime(){
-        return tileEntity.getTileData().getFloat("total_time");
+    public int getTotalTime(){
+        return genLabTile!=null ? genLabTile.getTotalTime() : -2;
     }
 }
