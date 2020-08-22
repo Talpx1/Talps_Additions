@@ -1,10 +1,13 @@
 package com.talp1.talpsadditions.tile_entity;
 
-import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.container.GenLabContainer;
 import com.talp1.talpsadditions.utils.EnergyStorageHandler;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.FurnaceContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -12,9 +15,12 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.AbstractFurnaceTileEntity;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,6 +43,35 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
     private ArrayList<Item> lastRecipe;//last recipe used, to check if items in slot are being removed
     private int totalTime;//total time for the output
     private Item currResult;//output for the current recipe
+    //data for the syncing
+    protected final IIntArray genLabData = new IIntArray() {
+        public int get(int index) {
+            switch(index) {
+                case 0:
+                    return  GenLabTE.this.timer;
+                case 1:
+                    return GenLabTE.this.totalTime;
+                default:
+                    return 0;
+            }
+        }
+
+        public void set(int index, int value) {
+            switch(index) {
+                case 0:
+                    GenLabTE.this.timer = getTimer();
+                    break;
+                case 1:
+                    GenLabTE.this.totalTime = getTotalTime();
+                    break;
+            }
+
+        }
+
+        public int size() {
+            return 2;
+        }
+    };
 
     //return the current item to output
     public Item getCurrResult() {
@@ -245,6 +280,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         if (world.isRemote){
             return;
         }
+
         //changing blockstate
         BlockState blockState = world.getBlockState(pos);
         if (energyStorage.getEnergyStored()>0 && this.timer > 0) {
@@ -402,6 +438,8 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         super.write(compound);
         compound.put("inv", itemHandler.serializeNBT());
         compound.put("energy", energyStorage.serializeNBT());
+        compound.putInt("progress", getTimer());
+        compound.putInt("total_time", getTotalTime());
         return  compound;
     }
 
@@ -410,13 +448,9 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         super.read(state, nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         energyStorage.deserializeNBT(nbt.getCompound("energy"));
+        nbt.getInt("progress");
+        nbt.getInt("total_time");
     }
-
-    /*private CompoundNBT serializeIntNBT(int val, String tagName){
-        CompoundNBT tag = new CompoundNBT();
-        tag.putInt(tagName, val);
-        return tag;
-    }*/
 
     public int getTimer(){
         return this.timer;
@@ -437,4 +471,9 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         }
         return super.getCapability(cap, side);
     }
+
+    protected Container createMenu(int id, PlayerInventory player) {
+        return new GenLabContainer(id, this.world, this.pos, player, player.player, this.genLabData);
+    }
+
 }

@@ -6,16 +6,22 @@ import com.talp1.talpsadditions.utils.EnergyStorageHandler;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.IntArray;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -31,17 +37,24 @@ public class GenLabContainer extends Container {
     private TileEntity tileEntity;
     private PlayerEntity playerEntity;
     private IItemHandler playerInventory;
-    private GenLabTE genLabTile;
+    private final IIntArray genLabData;
 
     public GenLabContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+        this(windowId,world,pos,playerInventory,player, new IntArray(2));
+    }
+
+    public GenLabContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray genLabDataIn) {
         super(RegistryHandler.gen_lab_container.get(), windowId);
 
         //setting variables
         tileEntity = world.getTileEntity(pos);
-        genLabTile = (GenLabTE) tileEntity;
-
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
+
+        assertIntArraySize(genLabDataIn, 2);
+        this.genLabData = genLabDataIn;
+
+
 
         //creating slots
         if (tileEntity != null) {
@@ -56,6 +69,7 @@ public class GenLabContainer extends Container {
         }
         layoutPlayerInventorySlots(10, 90);//player inv
         trackPower();
+        this.trackIntArray(genLabDataIn);
     }
 
     //--cretits to McJty--
@@ -117,7 +131,7 @@ public class GenLabContainer extends Container {
             ItemStack stack = slot.getStack();
             itemstack = stack.copy();
             if (index == 0||index == 1||index == 2||index == 3||index == 4||index == 5) {
-                if (!this.mergeItemStack(stack, 1, 37, true)) {
+                if (!this.mergeItemStack(stack, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onSlotChange(stack, itemstack);
@@ -199,11 +213,13 @@ public class GenLabContainer extends Container {
         addSlotRange(playerInventory, 0, leftCol-2, topRow*2+49-60, 9, 18);
     }
 
-    public int getProgress(){
-        return genLabTile!=null ?  genLabTile.getTimer() :  -2;
+    @OnlyIn(Dist.CLIENT)
+    public int getProgress() {
+        return this.genLabData.get(0);
     }
 
-    public int getTotalTime(){
-        return genLabTile!=null ? genLabTile.getTotalTime() : -2;
+    @OnlyIn(Dist.CLIENT)
+    public int getTotal() {
+        return this.genLabData.get(1);
     }
 }

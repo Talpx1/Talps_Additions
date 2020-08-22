@@ -5,9 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.container.GenLabContainer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.BlastFurnaceScreen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.screen.inventory.FurnaceScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -27,7 +25,6 @@ public class GenLabScreen extends ContainerScreen<GenLabContainer> {
         if (this.getMinecraft().player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.getHasStack()) {
             this.renderTooltip(matrixStack, this.hoveredSlot.getStack(), mouseX, mouseY);
         }
-
     }
 
     @Override
@@ -52,12 +49,12 @@ public class GenLabScreen extends ContainerScreen<GenLabContainer> {
         int relY = (this.height - this.ySize)/2-60;
 
         Main.LOGGER.info("progress: "+container.getProgress());
-        Main.LOGGER.info("totalTime: "+container.getTotalTime());
-        Main.LOGGER.info("completePerc: "+Math.round((100*((float)container.getTotalTime()-(float)container.getProgress()))/(float)container.getTotalTime()));
+        Main.LOGGER.info("total: "+container.getTotal());
+        //Main.LOGGER.info("completePerc: "+Math.round((100*((float)container.getTotalTime()-(float)container.getProgress()))/(float)container.getTotalTime()));
 
-        if (container.getProgress()>-1&&container.getTotalTime()>-1){
-            if (container.getProgress()!=container.getTotalTime()){
-                int completePerc=Math.round((100*((float)container.getTotalTime()-(float)container.getProgress()))/(float)container.getTotalTime());
+        if (container.getProgress()>-1&&container.getTotal()>-1){
+            if (container.getProgress()!=container.getTotal()){
+                int completePerc=Math.round((100*((float)container.getTotal()-(float)container.getProgress()))/(float)container.getTotal());
                 //render here
             }
         }
