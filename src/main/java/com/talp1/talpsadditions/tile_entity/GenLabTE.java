@@ -27,11 +27,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GenLabTE extends TileEntity implements ITickableTileEntity {
-    private int timer=-1;
-    private int currAmount=0;
+
     private final int USAGE_PER_TICK=50;
-    private boolean isCrafting=false;
-    private ArrayList<Item> lastRecipe=new ArrayList<>();
+    private int timer;
+    private int currAmount;
+    private boolean isCrafting;
+    private ArrayList<Item> lastRecipe;
+    private int totalTime;
+    private CompoundNBT tileData;
 
     public Item getCurrResult() {
         return currResult;
@@ -62,6 +65,9 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         this.timer=-1;
         this.currResult=null;
         this.currAmount=0;
+        this.totalTime=-1;
+        this.lastRecipe=new ArrayList<>();
+        this.tileData=new CompoundNBT();
     }
 
     private void setTimerInSecond(int sec){
@@ -83,6 +89,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
 
     private void disbleTimer(){
         this.timer=-1;
+        this.totalTime=-1;
     }
 
     private Item getItemInSlot(int slot){
@@ -152,7 +159,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
                     case 2: return baseItems.contains(stack.getItem());
                     case 3: return toInjItems.contains(stack.getItem());
                     case 4: return injIntoItems.contains(stack.getItem());
-                    case 5: return outputItems.contains(stack.getItem());
+                    case 5: return false;
                     default: return super.isItemValid(slot, stack);
                 }
             }
@@ -175,6 +182,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
 
     private void startCrafting(int timerDuration){
         saveRecipe();
+        this.totalTime=timerDuration;
         this.isCrafting=true;
         if (isTimerDisabled()){
             setTimerInSecond(timerDuration);
@@ -198,6 +206,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
 
     private void stopCrafting(){
         this.isCrafting=false;
+        this.totalTime=-1;
         disbleTimer();
         markDirty();
     }
@@ -225,6 +234,10 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
             return;
         }
 
+        //saving data
+        //this.write(this.tileData);
+
+        //changing blockstate
         BlockState blockState = world.getBlockState(pos);
         if (energyStorage.getEnergyStored()>0 && this.timer > 0) {
             world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, true), Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
@@ -232,7 +245,9 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
             world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, false), Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
         }
 
+        //remember to remove this
         energyStorage.addEnergy(60);
+        //crafting actions
         if (isCrafting){
             energyStorage.consumeEnergy(USAGE_PER_TICK);
             decreaseTimer();
@@ -376,17 +391,38 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
 
     @Override
     public CompoundNBT write(CompoundNBT compound) {
+        super.write(compound);
         compound.put("inv", itemHandler.serializeNBT());
         compound.put("energy", energyStorage.serializeNBT());
-        return super.write(compound);
+        compound.putInt("progress", this.timer);
+        compound.putInt("total_time", this.totalTime);
+        return  compound;
     }
 
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
+        super.read(state, nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         energyStorage.deserializeNBT(nbt.getCompound("energy"));
-        super.read(state, nbt);
+        nbt.getInt("progress");
+        nbt.getInt("total_time");
     }
+
+    private CompoundNBT serializeIntNBT(int val, String tagName){
+        CompoundNBT tag = new CompoundNBT();
+        tag.putInt(tagName, val);
+        return tag;
+    }
+
+    @Override
+    public CompoundNBT getTileData() {
+        return tileData;
+    }
+
+    public int getTimer(){
+        return this.timer;
+    }
+
 
     @Nonnull
     @Override

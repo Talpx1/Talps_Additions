@@ -51,6 +51,21 @@ public class GenLabScreen extends ContainerScreen<GenLabContainer> {
         int relX = (this.width - this.xSize) / 2;
         int relY = (this.height - this.ySize)/2-60;
 
+        Main.LOGGER.info("progress: "+container.getProgress());
+        Main.LOGGER.info("totalTime: "+container.getTotalTime());
+        Main.LOGGER.info("completePerc: "+Math.round((100*(container.getTotalTime()-container.getProgress()))/container.getTotalTime()));
+
+        if (container.getProgress()>-1&&container.getTotalTime()>-1){
+            if (container.getProgress()!=container.getTotalTime()){
+                int completePerc=Math.round((100*(container.getTotalTime()-container.getProgress()))/container.getTotalTime());
+                Main.LOGGER.info("progress: "+container.getProgress());
+                Main.LOGGER.info("totalTime: "+container.getTotalTime());
+                Main.LOGGER.info("completePerc: "+completePerc);
+                //render here
+            }
+        }
+        //move the first line on "render here" when working
+        this.blit(matrixStack,relX,relY,this.getGuiLeft()+this.xSize,0,160,100+87);
         this.blit(matrixStack,relX, relY, 0, 0, this.xSize, this.ySize+87);
     }
 }

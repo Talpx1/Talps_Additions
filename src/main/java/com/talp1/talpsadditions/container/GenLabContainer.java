@@ -1,5 +1,6 @@
 package com.talp1.talpsadditions.container;
 
+import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.utils.EnergyStorageHandler;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,14 +13,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntArray;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -194,5 +191,14 @@ public class GenLabContainer extends Container {
 
         // Hotbar
         addSlotRange(playerInventory, 0, leftCol-2, topRow*2+49-60, 9, 18);
+    }
+
+    public float getProgress(){
+        Main.LOGGER.info(tileEntity.getTileData().toString());
+        return tileEntity.getTileData().getFloat("progress");
+    }
+
+    public float getTotalTime(){
+        return tileEntity.getTileData().getFloat("total_time");
     }
 }
