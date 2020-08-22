@@ -3,17 +3,19 @@ package com.talp1.talpsadditions.world.features;
 import com.mojang.serialization.Codec;
 import java.util.Random;
 
+import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.utils.RegistryHandler;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.VineBlock;
+import net.minecraft.block.*;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.StructureManager;
+import net.minecraftforge.common.Tags;
 
 public class FlorealVineFeature extends Feature<NoFeatureConfig> {
     public FlorealVineFeature(Codec<NoFeatureConfig> p_i232002_1_) {
@@ -26,16 +28,57 @@ public class FlorealVineFeature extends Feature<NoFeatureConfig> {
         BlockState currentBlockState = worldIn.getBlockState(blockPos);
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
-            boolean isValidSpot=RegistryHandler.floreal_vines.get().isValidPosition(RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(direction), Boolean.TRUE),worldIn,blockPos);
-            if (blockPos.getY()>63 && currentBlockState==Blocks.AIR.getDefaultState()&&isValidSpot){
-                worldIn.setBlockState(blockPos, RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(direction), Boolean.TRUE),2);
-                for (int i=0; i<=rand.nextInt(3);i++) {
-                    if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
-                        worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(direction), Boolean.TRUE), 2);
-                    }
-                }
+            if (blockPos.getY()>63 && currentBlockState==Blocks.AIR.getDefaultState()){
+                checkSorroundingBlocks(blockPos, worldIn, rand, direction);
             }
         }
         return true;
     }
+
+    private boolean checkValidSpot(Direction dir, BlockPos pos, ISeedReader worldIn,BlockPos originalPos){
+        if(worldIn.getBlockState(pos).getBlock() instanceof LeavesBlock){
+        return RegistryHandler.floreal_vines.get().isValidPosition(RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE),worldIn,originalPos);
+        }
+        return false;
+    }
+
+    private void checkSorroundingBlocks(BlockPos blockPos, ISeedReader worldIn, Random rand, Direction dir){
+
+       if (checkValidSpot(dir, blockPos.east(),worldIn,blockPos)){
+           worldIn.setBlockState(blockPos, RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+           for (int i=0; i<=rand.nextInt(3);i++) {
+               if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
+                   worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+               }
+           }
+       }
+
+        if (checkValidSpot(dir, blockPos.west(),worldIn,blockPos)){
+            worldIn.setBlockState(blockPos, RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+            for (int i=0; i<=rand.nextInt(3);i++) {
+                if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
+                    worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+                }
+            }
+        }
+
+        if (checkValidSpot(dir, blockPos.north(),worldIn,blockPos)){
+            worldIn.setBlockState(blockPos, RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+            for (int i=0; i<=rand.nextInt(3);i++) {
+                if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
+                    worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+                }
+            }
+        }
+
+        if (checkValidSpot(dir, blockPos.south(),worldIn,blockPos)){
+            worldIn.setBlockState(blockPos, RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+            for (int i=0; i<=rand.nextInt(3);i++) {
+                if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
+                    worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+                }
+            }
+        }
+    }
+
 }

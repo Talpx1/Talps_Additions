@@ -22,7 +22,7 @@ public class VinesGen {
     public static void generateVines(FMLLoadCompleteEvent event){
         for (Biome biome : ForgeRegistries.BIOMES){
             if (biome.getCategory()== Biome.Category.SWAMP||biome== Biomes.FLOWER_FOREST||biome.getCategory()== Biome.Category.JUNGLE){
-                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, RegistryHandler.floreal_vine_feature.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP.configure(new FrequencyConfig(350))));
+                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, RegistryHandler.floreal_vine_feature.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP.configure(new FrequencyConfig(600))));
             }
         }
     }
