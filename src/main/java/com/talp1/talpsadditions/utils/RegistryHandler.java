@@ -20,6 +20,7 @@ import com.talp1.talpsadditions.tile_entity.GenLabTE;
 import com.talp1.talpsadditions.world.features.FlorealVineFeature;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -115,6 +116,7 @@ public class RegistryHandler {
     public static final RegistryObject<BasketBlock> basket_of_yellow_flowers = BLOCKS.register("basket_of_yellow_flowers", () -> new BasketBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).zeroHardnessAndResistance().sound(SoundType.CROP)));
     public static final RegistryObject<GenLabBlock> gen_lab_block = BLOCKS.register("gen_lab_block", () -> new GenLabBlock(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.METAL)));
     public static final RegistryObject<ShinyPebbleBlock> shiny_pebble = BLOCKS.register("shiny_pebble", () -> new ShinyPebbleBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
+    public static final RegistryObject<CauldronWithAcid> cauldron_with_acid = BLOCKS.register("cauldron_with_acid", () -> new CauldronWithAcid(AbstractBlock.Properties.create(Material.IRON, MaterialColor.STONE).setRequiresTool().hardnessAndResistance(2.0F).notSolid()));
 
     //tile entities
     public static final RegistryObject<TileEntityType<GenLabTE>> gen_lab_te = TILE_ENTITIES.register("gen_lab_te", () -> TileEntityType.Builder.create(GenLabTE::new, RegistryHandler.gen_lab_block.get()).build(null));
@@ -168,6 +170,7 @@ public class RegistryHandler {
     public static final RegistryObject<Item> vine_gene = ITEMS.register("vine_gene", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> bush_gene = ITEMS.register("bush_gene", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> shiny_pebble_item = ITEMS.register("shiny_pebble_item", () -> new BlockItem(RegistryHandler.shiny_pebble.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> cauldron_with_acid_item = ITEMS.register("cauldron_with_acid_item", () -> new BlockItem(RegistryHandler.cauldron_with_acid.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
