@@ -15,10 +15,11 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
@@ -26,6 +27,7 @@ import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.state.properties.Half;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
@@ -35,9 +37,17 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.treedecorator.TreeDecorator;
 import net.minecraftforge.client.event.DrawHighlightEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.item.ItemEvent;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -46,7 +56,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.BlockingQueue;
 
 import static javax.swing.UIManager.put;
 
@@ -184,4 +197,54 @@ public class EventHandler{
             buffer.finish(OverlayLineRenderer.OVERLAY_LINES);
         }
     }
+
+
+//----------------------------------CRAFT ACID------------------------------
+    private static int findSlotInInv(Item item, PlayerInventory plyerInv){
+        for (int i=0; i<plyerInv.getSizeInventory(); i++){
+            if (plyerInv.getStackInSlot(i).getItem()==item){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private static int findPotionSlotInInv(ItemStack item, PlayerInventory plyerInv){
+        for (int i=0; i<plyerInv.getSizeInventory(); i++){
+            if (plyerInv.getStackInSlot(i).getItem()==item.getItem()){
+                if (plyerInv.getStackInSlot(i).getTag().getString("Potion").equals(item.getTag().getString("Potion"))){
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    @SubscribeEvent
+    public static void craftAcidBottle(TickEvent.PlayerTickEvent event) {
+        if(event.player.isSneaking()&&event.side.isServer()){
+            World worldIn = event.player.getEntityWorld();
+            BlockPos playerPos =event.player.getPosition();
+            if(worldIn.getBlockState(playerPos.down())==Blocks.CAULDRON.getDefaultState()){
+                ItemStack potion = new ItemStack(Items.POTION);
+                potion.setTag(new CompoundNBT());
+                potion.getTag().putString("Potion","minecraft:poison");
+
+                PlayerInventory playerInv = event.player.inventory;
+
+                if (playerInv.hasItemStack(potion)&&playerInv.hasItemStack(new ItemStack(Items.REDSTONE))&&playerInv.hasItemStack(new ItemStack(Items.FERMENTED_SPIDER_EYE))){
+                    int slotRedstone=findSlotInInv(Items.REDSTONE,playerInv);
+                    int slotSpiderEye=findSlotInInv(Items.FERMENTED_SPIDER_EYE,playerInv);
+                    int slotPoisonPot=findPotionSlotInInv(potion,playerInv);
+                    if (slotRedstone!=-1&&slotSpiderEye!=-1&&slotPoisonPot!=-1){
+                        playerInv.decrStackSize(slotRedstone,1);
+                        playerInv.decrStackSize(slotSpiderEye,1);
+                        playerInv.decrStackSize(slotPoisonPot,1);
+                        event.player.addItemStackToInventory(new ItemStack(RegistryHandler.bottle_of_acid.get(),1));
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -14,6 +14,7 @@ import com.talp1.talpsadditions.entity.ResourceSheep.renderer.*;
 import com.talp1.talpsadditions.entity.ResourceSheep.types.*;
 import com.talp1.talpsadditions.gui.CustomItemGroup;
 import com.talp1.talpsadditions.gui.GenLabScreen;
+import com.talp1.talpsadditions.item.BottleOfAcidItem;
 import com.talp1.talpsadditions.item.GeneCollectorItem;
 import com.talp1.talpsadditions.item.MortarAndPestleItem;
 import com.talp1.talpsadditions.tile_entity.GenLabTE;
@@ -171,6 +172,9 @@ public class RegistryHandler {
     public static final RegistryObject<Item> bush_gene = ITEMS.register("bush_gene", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> shiny_pebble_item = ITEMS.register("shiny_pebble_item", () -> new BlockItem(RegistryHandler.shiny_pebble.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> cauldron_with_acid_item = ITEMS.register("cauldron_with_acid_item", () -> new BlockItem(RegistryHandler.cauldron_with_acid.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> vegetal_dna_helix = ITEMS.register("vegetal_dna_helix", ()-> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> animal_dna_helix = ITEMS.register("animal_dna_helix", ()-> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<BottleOfAcidItem> bottle_of_acid = ITEMS.register("bottle_of_acid", ()-> new BottleOfAcidItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
@@ -388,7 +392,9 @@ public class RegistryHandler {
             try {
                 Method addMix = PotionBrewing.class.getDeclaredMethod("addMix", Potion.class, Item.class, Potion.class);
                 addMix.setAccessible(true);
+                //luck
                 addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.shiny_shard_dust.get(), RegistryHandler.luck_potion.get());
+                //smell
                 addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.moles_nose.get(), RegistryHandler.smell_potion.get());
             }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
                 e.printStackTrace();
