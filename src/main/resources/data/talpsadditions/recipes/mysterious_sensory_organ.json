@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "talpsadditions:bat_eardrum"
+    },
+    {
+      "item": "talpsadditions:moles_nose"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "result": {
+    "item": "talpsadditions:mysterious_sensory_organ"
+  }
+}

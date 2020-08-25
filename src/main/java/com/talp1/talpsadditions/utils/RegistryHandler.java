@@ -3,7 +3,7 @@ package com.talp1.talpsadditions.utils;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.block.*;
 import com.talp1.talpsadditions.container.GenLabContainer;
-import com.talp1.talpsadditions.effect.SmellEffect;
+import com.talp1.talpsadditions.effect.SensesEffect;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleRenderer;
 import com.talp1.talpsadditions.entity.ResourceChicken.ResourceChickenEntity;
@@ -175,6 +175,8 @@ public class RegistryHandler {
     public static final RegistryObject<Item> vegetal_dna_helix = ITEMS.register("vegetal_dna_helix", ()-> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> animal_dna_helix = ITEMS.register("animal_dna_helix", ()-> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<BottleOfAcidItem> bottle_of_acid = ITEMS.register("bottle_of_acid", ()-> new BottleOfAcidItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> bat_eardrum = ITEMS.register("bat_eardrum",()->new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> mysterious_sensory_organ = ITEMS.register("mysterious_sensory_organ",()->new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
@@ -185,10 +187,10 @@ public class RegistryHandler {
 
     //registrazione potions
     public static final RegistryObject<Potion> luck_potion = POTIONS.register("luck_potion", () -> new Potion(new EffectInstance(Effects.LUCK, 6000,2)));
-    public static final RegistryObject<Potion> smell_potion = POTIONS.register("smell_potion", () -> new Potion(new EffectInstance(RegistryHandler.smell_effect.get(), 6000), new EffectInstance(Effects.BLINDNESS, 6000, 3)));
+    public static final RegistryObject<Potion> senses_potion = POTIONS.register("senses_potion", () -> new Potion(new EffectInstance(Effects.HASTE, 6000, 0),new EffectInstance(Effects.BLINDNESS, 6000, 3),new EffectInstance(RegistryHandler.senses_effect.get(), 6000)));
 
     //registrazione effects
-    public static final RegistryObject<SmellEffect> smell_effect = EFFECTS.register("smell_effect",()->new SmellEffect(EffectType.NEUTRAL, 0x572e19));
+    public static final RegistryObject<SensesEffect> senses_effect = EFFECTS.register("senses_effect",()->new SensesEffect(EffectType.NEUTRAL, 0x572e19));
 
 
     //registrazione entity
@@ -394,8 +396,8 @@ public class RegistryHandler {
                 addMix.setAccessible(true);
                 //luck
                 addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.shiny_shard_dust.get(), RegistryHandler.luck_potion.get());
-                //smell
-                addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.moles_nose.get(), RegistryHandler.smell_potion.get());
+                //senses
+                addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.mysterious_sensory_organ.get(), RegistryHandler.senses_potion.get());
             }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
                 e.printStackTrace();
             }
