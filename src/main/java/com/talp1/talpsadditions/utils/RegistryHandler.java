@@ -33,6 +33,7 @@ import net.minecraft.item.*;
 import net.minecraft.potion.*;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.Feature;
@@ -71,6 +72,8 @@ public class RegistryHandler {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Main.MODID);
     //DefReg per Features
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Main.MODID);
+    //DefReg per Sounds
+    public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Main.MODID);
     //Mod Item Group Instance
     public static final CustomItemGroup CUSTOM_ITEM_GROUP = new CustomItemGroup("talpsadditions", "item_search.png");
 
@@ -84,6 +87,7 @@ public class RegistryHandler {
         FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
         TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
         CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     // registrazione blocchi
@@ -184,6 +188,9 @@ public class RegistryHandler {
     public static final RegistryObject<BlockNamedItem> blue_berries = ITEMS.register("blue_berries", () -> new BlockNamedItem(RegistryHandler.blue_berry_bush.get(), (new Item.Properties()).group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair().food(new Food.Builder().hunger(2).saturation(0.1F).build())));
     public static final RegistryObject<Item> earth_worm = ITEMS.register("earth_worm", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(0.7f).hunger(1).effect(new EffectInstance(Effects.NAUSEA,200,1),1).build())));
     public static final RegistryObject<Item> cooked_earth_worm = ITEMS.register("cooked_earth_worm", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(1.5f).hunger(2).build())));
+
+    //sounds
+    public static final RegistryObject<SoundEvent> shiny_ores_sound = SOUNDS.register("shiny_ores", ()->new SoundEvent(new ResourceLocation(Main.MODID, "shiny_ores")));
 
     //registrazione potions
     public static final RegistryObject<Potion> luck_potion = POTIONS.register("luck_potion", () -> new Potion(new EffectInstance(Effects.LUCK, 6000,2)));

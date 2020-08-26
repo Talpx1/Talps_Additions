@@ -1,0 +1,7 @@
+{
+  "shiny_ores": {
+    "category": "block",
+    "subtitle": "talpsadditions.subtitle.shiny_ores_sound",
+    "sounds": [ "talpsadditions:shiny_ores" ]
+  }
+}

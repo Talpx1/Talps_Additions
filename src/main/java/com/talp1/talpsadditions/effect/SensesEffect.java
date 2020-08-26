@@ -40,12 +40,14 @@ public class SensesEffect extends Effect {
     private int index;
     private ArrayList<BlockPos> oresInChunk;
     private boolean first;
+    private int delay;
 
     public SensesEffect(EffectType typeIn, int liquidColorIn) {
         super(typeIn, liquidColorIn);
         this.index=0;
         this.oresInChunk=new ArrayList<>();
         this.first=true;
+        delay=0;
     }
 
 
@@ -54,10 +56,15 @@ public class SensesEffect extends Effect {
         if(first){
             oresInChunk=getOrePos(entityLivingBaseIn);
             first=false;
+            delay=6*20;
         }
         if (!oresInChunk.isEmpty()&&entityLivingBaseIn instanceof PlayerEntity) {
-            Block currBlock = entityLivingBaseIn.getEntityWorld().getBlockState(new BlockPos(oresInChunk.get(index).getX(), oresInChunk.get(index).getY(), oresInChunk.get(index).getZ())).getBlock();
-            playSound(entityLivingBaseIn.getEntityWorld(), new BlockPos(oresInChunk.get(index).getX(), oresInChunk.get(index).getY(), oresInChunk.get(index).getZ()));
+            Block currBlock = entityLivingBaseIn.getEntityWorld().getBlockState(oresInChunk.get(index)).getBlock();
+            delay--;
+            if(delay==0) {
+                playSound(entityLivingBaseIn.getEntityWorld(), oresInChunk.get(index));
+                delay=6*20;
+            }
             if (currBlock != RegistryHandler.shiny_shard_ore.get().getBlock()&&index<=oresInChunk.size()) {
                 index++;
             }
@@ -104,7 +111,7 @@ public class SensesEffect extends Effect {
     }
 
     public void playSound(World worldIn, BlockPos pos){
-        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), new SoundEvent(new ResourceLocation(Main.MODID, "sounds/ambient/shiny_ores")), SoundCategory.AMBIENT,1f,1f,false);
+        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), RegistryHandler.shiny_ores_sound.get(), SoundCategory.BLOCKS,0.75f,0.75f,false);
     }
 
 }

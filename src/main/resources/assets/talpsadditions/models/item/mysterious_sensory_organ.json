@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "talpsadditions:block/mysterious_sensory_organ"
+    "layer0": "talpsadditions:item/mysterious_sensory_organ"
   }
 }
