@@ -43,7 +43,7 @@ public class ShinyPebbleBlock extends Block {
         dropXpOnBlockBreak(worldIn,pos, MathHelper.nextInt(new Random(), 1, 2));
         ItemStack randItem = null;
         do{
-           randItem = new ItemStack(Item.getItemById(MathHelper.nextInt(new Random(), 0, 2267)));
+           randItem = new ItemStack(Item.getItemById(MathHelper.nextInt(new Random(), 0, 10000)));
         }while(randItem.isEmpty());
         worldIn.addEntity(new ItemEntity(worldIn,pos.getX(), pos.getY()+1,pos.getZ(), randItem));
         super.onBlockHarvested(worldIn, pos, state, player);

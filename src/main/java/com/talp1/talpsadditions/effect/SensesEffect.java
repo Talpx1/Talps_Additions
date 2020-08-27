@@ -37,62 +37,52 @@ import java.util.concurrent.BlockingQueue;
 
 public class SensesEffect extends Effect {
 
-    private int index;
     private ArrayList<BlockPos> oresInChunk;
-    private boolean first;
     private int delay;
 
     public SensesEffect(EffectType typeIn, int liquidColorIn) {
         super(typeIn, liquidColorIn);
-        this.index=0;
         this.oresInChunk=new ArrayList<>();
-        this.first=true;
-        delay=0;
+        this.delay=-1;
     }
 
+    private void setDelaySec(int sec){
+        this.delay=sec*20;
+    }
 
     @Override
     public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-        if(first){
+        if(delay==-1){setDelaySec(2);}
+        delay--;
+        if (entityLivingBaseIn instanceof  PlayerEntity){
             oresInChunk=getOrePos(entityLivingBaseIn);
-            first=false;
-            delay=6*20;
-        }
-        if (!oresInChunk.isEmpty()&&entityLivingBaseIn instanceof PlayerEntity) {
-            Block currBlock = entityLivingBaseIn.getEntityWorld().getBlockState(oresInChunk.get(index)).getBlock();
-            delay--;
-            if(delay==0) {
-                playSound(entityLivingBaseIn.getEntityWorld(), oresInChunk.get(index));
-                delay=6*20;
+            if (!oresInChunk.isEmpty()&&delay==0) {
+                for(int i=0; i<oresInChunk.size();i++){
+                    playSound(entityLivingBaseIn.getEntityWorld(), oresInChunk.get(i));
+                }
+                setDelaySec(2);
             }
-            if (currBlock != RegistryHandler.shiny_shard_ore.get().getBlock()&&index<=oresInChunk.size()) {
-                index++;
-            }
-        } else{
-            ItemStack potion = new ItemStack(Items.POTION);
-            potion.setDisplayName(ITextComponent.func_241827_a_("No Ores (Re)Found!"));
-            entityLivingBaseIn.entityDropItem(PotionUtils.addPotionToItemStack(potion,RegistryHandler.senses_potion.get()));
-            entityLivingBaseIn.removeActivePotionEffect(RegistryHandler.senses_effect.get());
-            entityLivingBaseIn.removeActivePotionEffect(Effects.BLINDNESS.getEffect());
         }
     }
 
     public static ArrayList<BlockPos> getOrePos(LivingEntity playerIn) {
         ArrayList<BlockPos> foundOres = new ArrayList<>();
         Vector3d playerPosIn =playerIn.getPositionVec();
-        int xStart =(int)playerPosIn.getX()-25;
-        int xEnd = (int)playerPosIn.getX()+25;
-        int zStart = (int)playerPosIn.getZ()-25;
-        int zEnd =(int)playerPosIn.getZ()+25;
-        int maxOreGen = 33;
-        int minOreGen = 0;
+        int xStart =(int)playerPosIn.getX()-3;
+        int xEnd = (int)playerPosIn.getX()+3;
+        int zStart = (int)playerPosIn.getZ()-3;
+        int zEnd =(int)playerPosIn.getZ()+3;
+        int maxOreGen = (int)playerPosIn.getY()+3;
+        int minOreGen = (int)playerPosIn.getY()-3;
         for (int x = xStart; x <= xEnd; x++) {
             for (int z = zStart; z <= zEnd; z++) {
                 for (int y = minOreGen; y <= maxOreGen; y++) {
-                    BlockPos currBlockPos = new BlockPos(x, y, z);
-                    Block currBlock = playerIn.getEntityWorld().getBlockState(currBlockPos).getBlock();
-                    if (currBlock == RegistryHandler.shiny_shard_ore.get().getBlock()) {
-                        foundOres.add(currBlockPos);
+                    if(y>0) {
+                        BlockPos currBlockPos = new BlockPos(x, y, z);
+                        Block currBlock = playerIn.getEntityWorld().getBlockState(currBlockPos).getBlock();
+                        if (currBlock == RegistryHandler.shiny_shard_ore.get().getBlock()) {
+                            foundOres.add(currBlockPos);
+                        }
                     }
                 }
             }
@@ -111,7 +101,7 @@ public class SensesEffect extends Effect {
     }
 
     public void playSound(World worldIn, BlockPos pos){
-        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), RegistryHandler.shiny_ores_sound.get(), SoundCategory.BLOCKS,0.75f,0.75f,false);
+        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), RegistryHandler.shiny_ores_sound.get(), SoundCategory.BLOCKS,0.6f,0.6f,false);
     }
 
 }

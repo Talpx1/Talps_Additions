@@ -2,6 +2,7 @@ package com.talp1.talpsadditions.item;
 
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.utils.RegistryHandler;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -59,5 +60,4 @@ public class BottleOfAcidItem extends Item {
         }
         return true;
     }
-
 }
