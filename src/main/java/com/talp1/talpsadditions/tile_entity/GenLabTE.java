@@ -282,8 +282,6 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
             world.setBlockState(pos, blockState.with(BlockStateProperties.POWERED, false), Constants.BlockFlags.NOTIFY_NEIGHBORS + Constants.BlockFlags.BLOCK_UPDATE);
         }
 
-        //remember to remove this
-        energyStorage.addEnergy(60);
         //crafting actions
         if (isCrafting){
             energyStorage.consumeEnergy(USAGE_PER_TICK);

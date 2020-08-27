@@ -13,6 +13,7 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class BottleOfAcidItem extends Item {
@@ -46,7 +47,7 @@ public class BottleOfAcidItem extends Item {
        return 32;
     }
 
-    @Override
+    /*@Override
     public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity playerIn) {
         World worldIn = playerIn.getEntityWorld();
         if (!worldIn.isRemote) {
@@ -59,5 +60,21 @@ public class BottleOfAcidItem extends Item {
             }
         }
         return true;
+    }*/
+
+    @Override
+    public boolean doesSneakBypassUse(ItemStack stack, IWorldReader worldIn, BlockPos pos, PlayerEntity playerIn) {
+        if (!worldIn.isRemote()) {
+            if(worldIn.getBlockState(pos)== Blocks.CAULDRON.getDefaultState()){
+                if (!playerIn.abilities.isCreativeMode){
+                    playerIn.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+                    stack.shrink(1);
+                }
+                worldIn.getChunk(pos).getWorldForge().getWorld().setBlockState(pos,RegistryHandler.cauldron_with_acid.get().getDefaultState(),2);
+                return true;
+            }
+        }
+        return false;
     }
+
 }
