@@ -7,11 +7,15 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -53,11 +57,12 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
 
     public ResourceSheepEntity(EntityType<? extends ResourceSheepEntity> type, World worldIn){
         super(type, worldIn);
-        setSheared(false);
+        this.sheared=false;
     }
 
     @Nullable
     public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+        setSheared(false);
         return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
@@ -77,7 +82,7 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
 
     @Override
     public boolean isShearable() {
-        return this.isAlive() && !this.isSheared() && !this.isChild();
+        return this.isAlive() && !this.isSheared()&& !this.isChild();
     }
 
     @Override
@@ -141,7 +146,7 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
 
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
-        compound.putBoolean("Sheared", this.isSheared());
+        compound.putBoolean("Sheared",this.isSheared());
         compound.putString("ResourceType", this.getResourceType());
     }
 

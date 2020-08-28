@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "talpsadditions:cauldron_with_acid_item"
+          "name": "minecraft:cauldron"
         }
       ]
     }
