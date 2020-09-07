@@ -24,6 +24,9 @@ public class VinesGen {
             if (biome.getCategory()== Biome.Category.SWAMP||biome== Biomes.FLOWER_FOREST||biome.getCategory()== Biome.Category.JUNGLE){
                 biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, RegistryHandler.floreal_vine_feature.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP.configure(new FrequencyConfig(600))));
             }
+            if (biome.getCategory()== Biome.Category.ICY){
+                biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, RegistryHandler.frosted_vine_feature.get().withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP.configure(new FrequencyConfig(250))));
+            }
         }
     }
 }

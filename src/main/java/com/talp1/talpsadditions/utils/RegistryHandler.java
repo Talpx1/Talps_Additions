@@ -19,6 +19,7 @@ import com.talp1.talpsadditions.item.GeneCollectorItem;
 import com.talp1.talpsadditions.item.MortarAndPestleItem;
 import com.talp1.talpsadditions.tile_entity.GenLabTE;
 import com.talp1.talpsadditions.world.features.FlorealVineFeature;
+import com.talp1.talpsadditions.world.features.FrostedVineFeature;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -122,6 +123,7 @@ public class RegistryHandler {
     public static final RegistryObject<GenLabBlock> gen_lab_block = BLOCKS.register("gen_lab_block", () -> new GenLabBlock(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(3.5F).sound(SoundType.METAL)));
     public static final RegistryObject<ShinyPebbleBlock> shiny_pebble = BLOCKS.register("shiny_pebble", () -> new ShinyPebbleBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
     public static final RegistryObject<CauldronWithAcid> cauldron_with_acid = BLOCKS.register("cauldron_with_acid", () -> new CauldronWithAcid(AbstractBlock.Properties.create(Material.IRON, MaterialColor.STONE).setRequiresTool().hardnessAndResistance(2.0F).notSolid()));
+    public static final RegistryObject<VineBlock> frosted_vines = BLOCKS.register("frosted_vines", () -> new VineBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.VINE)));
 
     //tile entities
     public static final RegistryObject<TileEntityType<GenLabTE>> gen_lab_te = TILE_ENTITIES.register("gen_lab_te", () -> TileEntityType.Builder.create(GenLabTE::new, RegistryHandler.gen_lab_block.get()).build(null));
@@ -181,6 +183,7 @@ public class RegistryHandler {
     public static final RegistryObject<BottleOfAcidItem> bottle_of_acid = ITEMS.register("bottle_of_acid", ()-> new BottleOfAcidItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> bat_eardrum = ITEMS.register("bat_eardrum",()->new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> mysterious_sensory_organ = ITEMS.register("mysterious_sensory_organ",()->new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> frosted_vines_item = ITEMS.register("frosted_vines", () -> new BlockItem(frosted_vines.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
@@ -265,6 +268,7 @@ public class RegistryHandler {
 
     //registrazione features
     public static final RegistryObject<Feature<NoFeatureConfig>> floreal_vine_feature = FEATURES.register("floreal_vine_feature", ()->new FlorealVineFeature(NoFeatureConfig.field_236558_a_));
+    public static final RegistryObject<Feature<NoFeatureConfig>> frosted_vine_feature = FEATURES.register("frosted_vine_feature", ()->new FrostedVineFeature(NoFeatureConfig.field_236558_a_));
 
     //registrazione Renderer
     @Mod.EventBusSubscriber(modid = Main.MODID, bus=Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -299,6 +303,8 @@ public class RegistryHandler {
             RenderTypeLookup.setRenderLayer(RegistryHandler.floreal_vines.get(), RenderType.getCutout());
             //cutout renderer for floreal_decoration
             RenderTypeLookup.setRenderLayer(RegistryHandler.floreal_decoration.get(), RenderType.getCutout());
+            //cutout renderer for frosted_vines
+            RenderTypeLookup.setRenderLayer(RegistryHandler.frosted_vines.get(), RenderType.getCutout());
             //cutout renderer for normal_bush
             RenderTypeLookup.setRenderLayer(RegistryHandler.normal_bush.get(), RenderType.getCutout());
             //cutout renderer for hydrangea bushes
