@@ -4,6 +4,7 @@ import com.talp1.talpsadditions.Main;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,6 +17,7 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -139,6 +141,16 @@ public class EventHandler{
         if (event.getEntity().getType()== EntityType.BAT){
             if (new Random().nextInt(6)==0){
                 event.getEntityLiving().entityDropItem(new ItemStack(RegistryHandler.bat_eardrum.get()));
+            }
+        }
+    }
+
+//----------------------------------FROSTED VINES TURNS WATER INTO BLUE ICE------------------------------
+    @SubscribeEvent
+    public static void vinesGeneratesBlueIce(BlockEvent.EntityPlaceEvent event){
+        if (event.getEntity() instanceof PlayerEntity) {
+            if (event.getPlacedBlock().getBlock() == RegistryHandler.frosted_vines.get().getBlock() && event.getWorld().getBlockState(event.getPos().down()) == Blocks.WATER.getDefaultState()) {
+                event.getWorld().setBlockState(event.getPos().down(), Blocks.BLUE_ICE.getDefaultState(), 2);
             }
         }
     }

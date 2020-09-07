@@ -4,6 +4,7 @@ import com.talp1.talpsadditions.container.GenLabContainer;
 import com.talp1.talpsadditions.utils.EnergyStorageHandler;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -420,6 +421,11 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
                 if (getItemInSlot(3) == Items.REDSTONE_BLOCK) {
                     startCrafting(60);
                     setCurrResult(RegistryHandler.ExtraRegHandler.redstoneSheepSpawnEgg.getItem(), 1); }
+            }
+            //frosted Vine
+            if (getItemInSlot(0)==RegistryHandler.vine_gene.get()&&getItemInSlot(1)==RegistryHandler.vegetal_gen_modifier.get()&&getItemInSlot(2)==Items.VINE&&getItemInSlot(3)== Items.PACKED_ICE&&getItemInSlot(4)==Items.WHEAT_SEEDS){
+                startCrafting(20);
+                setCurrResult(RegistryHandler.frosted_vines_item.get(),2);
             }
         }
     }
