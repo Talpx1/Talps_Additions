@@ -80,7 +80,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
 
     //handlers
     private ItemStackHandler itemHandler= createItemHandler();
-    private EnergyStorageHandler energyStorage= createEnergyHandler();
+    public EnergyStorageHandler energyStorage= createEnergyHandler();
     private LazyOptional<IItemHandler> handler =  LazyOptional.of(()->itemHandler);
     private LazyOptional<IEnergyStorage> energy =  LazyOptional.of(()->energyStorage);
 

@@ -125,7 +125,7 @@ public class RegistryHandler {
     public static final RegistryObject<ShinyPebbleBlock> shiny_pebble = BLOCKS.register("shiny_pebble", () -> new ShinyPebbleBlock(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(1F).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
     public static final RegistryObject<CauldronWithAcid> cauldron_with_acid = BLOCKS.register("cauldron_with_acid", () -> new CauldronWithAcid(AbstractBlock.Properties.create(Material.IRON, MaterialColor.STONE).setRequiresTool().hardnessAndResistance(2.0F).notSolid()));
     public static final RegistryObject<VineBlock> frosted_vines = BLOCKS.register("frosted_vines", () -> new VineBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.VINE)));
-
+    public static final RegistryObject<CoconutBlock> coconut_block = BLOCKS.register("coconut_block", () -> new CoconutBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.2F).sound(SoundType.BAMBOO)));
     //tile entities
     public static final RegistryObject<TileEntityType<GenLabTE>> gen_lab_te = TILE_ENTITIES.register("gen_lab_te", () -> TileEntityType.Builder.create(GenLabTE::new, RegistryHandler.gen_lab_block.get()).build(null));
 
@@ -186,6 +186,7 @@ public class RegistryHandler {
     public static final RegistryObject<Item> mysterious_sensory_organ = ITEMS.register("mysterious_sensory_organ",()->new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> frosted_vines_item = ITEMS.register("frosted_vines", () -> new BlockItem(frosted_vines.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> fancy_stick = ITEMS.register("fancy_stick", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> coconut_item = ITEMS.register("coconut_item", () -> new BlockItem(coconut_block.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
@@ -194,7 +195,7 @@ public class RegistryHandler {
     public static final RegistryObject<BlockNamedItem> blue_berries = ITEMS.register("blue_berries", () -> new BlockNamedItem(RegistryHandler.blue_berry_bush.get(), (new Item.Properties()).group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair().food(new Food.Builder().hunger(2).saturation(0.1F).build())));
     public static final RegistryObject<Item> earth_worm = ITEMS.register("earth_worm", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(0.7f).hunger(1).effect(new EffectInstance(Effects.NAUSEA,200,1),1).build())));
     public static final RegistryObject<Item> cooked_earth_worm = ITEMS.register("cooked_earth_worm", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(1.5f).hunger(2).build())));
-
+    public static final RegistryObject<Item> piece_of_coconut = ITEMS.register("piece_of_coconut", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(2).saturation(0.3F).build())));
     //sounds
     public static final RegistryObject<SoundEvent> shiny_ores_sound = SOUNDS.register("shiny_ores", ()->new SoundEvent(new ResourceLocation(Main.MODID, "shiny_ores")));
 

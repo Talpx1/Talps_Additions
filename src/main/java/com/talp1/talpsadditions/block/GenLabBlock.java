@@ -4,6 +4,8 @@ import com.talp1.talpsadditions.container.GenLabContainer;
 import com.talp1.talpsadditions.tile_entity.GenLabTE;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -20,6 +22,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -86,5 +91,14 @@ public class GenLabBlock extends Block {
             }
         }
         return ActionResultType.SUCCESS;
+    }
+
+    @Override
+    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
+        if(worldIn.getTileEntity(pos) instanceof GenLabTE && entityIn.getType()==EntityType.FALLING_BLOCK){
+            GenLabTE tile = (GenLabTE) worldIn.getTileEntity(pos);
+            tile.energyStorage.addEnergy(Math.round(fallDistance*1000));
+        }
+        super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
     }
 }

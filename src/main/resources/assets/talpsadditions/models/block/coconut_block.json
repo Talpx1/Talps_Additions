@@ -1,0 +1,21 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "talpsadditions:block/coconut_block",
+    "coconut": "talpsadditions:block/coconut_block",
+    "coconut_bottom": "talpsadditions:block/coconut_block_bottom"
+  },
+  "elements": [
+    { "from": [ 4, 0, 4 ],
+      "to": [ 12, 8, 12 ],
+      "faces": {
+        "down":  { "uv": [ 0, 0, 8, 8 ], "texture": "#coconut_bottom" },
+        "up":    { "uv": [ 0, 0, 8, 8 ], "texture": "#coconut_bottom" },
+        "north": { "uv": [ 0, 0, 8, 8 ], "texture": "#coconut" },
+        "south": { "uv": [ 0, 0, 8, 8 ], "texture": "#coconut" },
+        "west":  { "uv": [ 0, 0, 8, 8 ], "texture": "#coconut" },
+        "east":  { "uv": [ 0, 0, 8, 8 ], "texture": "#coconut" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "talpsadditions:coconut_item"
+    }
+  ],
+  "result": {
+    "item": "talpsadditions:piece_of_coconut",
+    "count": 4
+  }
+}
