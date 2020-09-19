@@ -14,6 +14,7 @@ import com.talp1.talpsadditions.entity.ResourceSheep.renderer.*;
 import com.talp1.talpsadditions.entity.ResourceSheep.types.*;
 import com.talp1.talpsadditions.gui.CustomItemGroup;
 import com.talp1.talpsadditions.gui.GenLabScreen;
+import com.talp1.talpsadditions.item.BedrockCutterItem;
 import com.talp1.talpsadditions.item.BottleOfAcidItem;
 import com.talp1.talpsadditions.item.GeneCollectorItem;
 import com.talp1.talpsadditions.item.MortarAndPestleItem;
@@ -184,9 +185,11 @@ public class RegistryHandler {
     public static final RegistryObject<Item> bat_eardrum = ITEMS.register("bat_eardrum",()->new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> mysterious_sensory_organ = ITEMS.register("mysterious_sensory_organ",()->new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> frosted_vines_item = ITEMS.register("frosted_vines", () -> new BlockItem(frosted_vines.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> fancy_stick = ITEMS.register("fancy_stick", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<BedrockCutterItem> bedrock_cutter = ITEMS.register("bedrock_cutter", ()-> new BedrockCutterItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //foods
     public static final RegistryObject<BlockNamedItem> blue_berries = ITEMS.register("blue_berries", () -> new BlockNamedItem(RegistryHandler.blue_berry_bush.get(), (new Item.Properties()).group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair().food(new Food.Builder().hunger(2).saturation(0.1F).build())));
     public static final RegistryObject<Item> earth_worm = ITEMS.register("earth_worm", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(0.7f).hunger(1).effect(new EffectInstance(Effects.NAUSEA,200,1),1).build())));

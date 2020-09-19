@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DIN",
+    "IS ",
+    "F  "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "F": {
+      "item": "talpsadditions:fancy_stick"
+    },
+    "D": {
+    "item": "minecraft:diamond"
+  }
+  },
+  "result": {
+    "item": "talpsadditions:bedrock_cutter",
+    "count": 1
+  }
+}
