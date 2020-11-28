@@ -56,6 +56,7 @@
   "item.talpsadditions.bedrock_cutter": "Lama per Bedrock",
   "item.talpsadditions.fancy_stick": "Manico Pregiato",
   "item.talpsadditions.piece_of_coconut": "Pezzo di Cocco",
+  "item.talpsadditions.yeti_spawn_egg": "Uovo di Yeti",
 
 
   "effect.talpsadditions.senses_effect": "Sensi",
@@ -86,6 +87,7 @@
   "block.talpsadditions.cauldron_with_acid": "Calderone Pieno d'Acido",
   "block.talpsadditions.frosted_vines": "Rampicante Ghiacciato",
   "block.talpsadditions.coconut_block": "Noce di Cocco",
+  "block.talpsadditions.flowery_water_lily": "Ninfea Fiorita",
 
   "screen.talpsadditions.gen_lab_block": "Gen-Lab",
 

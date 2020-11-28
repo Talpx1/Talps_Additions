@@ -4,8 +4,11 @@ import com.google.common.collect.ImmutableSet;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.block.BlueBerryBushBlock;
 import com.talp1.talpsadditions.block.NormalBushBlock;
+import com.talp1.talpsadditions.entity.YetiEntity.YetiEntity;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.GenerationStage;
@@ -38,7 +41,7 @@ public class BushGen {
         BlockClusterFeatureConfig GREEN_ROSE_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(RegistryHandler.green_rose.get().getDefaultState()),new DoublePlantBlockPlacer()).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
         BlockClusterFeatureConfig MULTICOLOR_ROSE_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(RegistryHandler.multicolor_rose.get().getDefaultState()),new DoublePlantBlockPlacer()).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
         BlockClusterFeatureConfig PURPLE_ROSE_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(RegistryHandler.purple_rose.get().getDefaultState()),new DoublePlantBlockPlacer()).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock())).func_227317_b_().build();
-        BlockClusterFeatureConfig COCONUT_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(RegistryHandler.coconut_block.get().getDefaultState()),new SimpleBlockPlacer()).tries(4).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock(),Blocks.DIRT.getBlock(),Blocks.SAND.getBlock(),Blocks.RED_SAND.getBlock())).func_227317_b_().build();
+        BlockClusterFeatureConfig COCONUT_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(RegistryHandler.coconut_block.get().getDefaultState()),new SimpleBlockPlacer()).tries(3).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock(),Blocks.DIRT.getBlock(),Blocks.SAND.getBlock(),Blocks.RED_SAND.getBlock())).func_227317_b_().build();
 
         for (Biome biome : ForgeRegistries.BIOMES) {
             //BLUE_BERRY_BUSH

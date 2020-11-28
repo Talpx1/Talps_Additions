@@ -12,6 +12,8 @@ import com.talp1.talpsadditions.entity.ResourceChicken.type.*;
 import com.talp1.talpsadditions.entity.ResourceSheep.ResourceSheepEntity;
 import com.talp1.talpsadditions.entity.ResourceSheep.renderer.*;
 import com.talp1.talpsadditions.entity.ResourceSheep.types.*;
+import com.talp1.talpsadditions.entity.YetiEntity.YetiEntity;
+import com.talp1.talpsadditions.entity.YetiEntity.YetiRenderer;
 import com.talp1.talpsadditions.gui.CustomItemGroup;
 import com.talp1.talpsadditions.gui.GenLabScreen;
 import com.talp1.talpsadditions.item.BedrockCutterItem;
@@ -126,6 +128,7 @@ public class RegistryHandler {
     public static final RegistryObject<CauldronWithAcid> cauldron_with_acid = BLOCKS.register("cauldron_with_acid", () -> new CauldronWithAcid(AbstractBlock.Properties.create(Material.IRON, MaterialColor.STONE).setRequiresTool().hardnessAndResistance(2.0F).notSolid()));
     public static final RegistryObject<VineBlock> frosted_vines = BLOCKS.register("frosted_vines", () -> new VineBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.VINE)));
     public static final RegistryObject<CoconutBlock> coconut_block = BLOCKS.register("coconut_block", () -> new CoconutBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.2F).sound(SoundType.BAMBOO)));
+    public static final RegistryObject<FloweryWaterLily> flowery_water_lily = BLOCKS.register("flowery_water_lily", () -> new FloweryWaterLily(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().sound(SoundType.field_235600_d_).notSolid()));
     //tile entities
     public static final RegistryObject<TileEntityType<GenLabTE>> gen_lab_te = TILE_ENTITIES.register("gen_lab_te", () -> TileEntityType.Builder.create(GenLabTE::new, RegistryHandler.gen_lab_block.get()).build(null));
 
@@ -187,6 +190,7 @@ public class RegistryHandler {
     public static final RegistryObject<Item> frosted_vines_item = ITEMS.register("frosted_vines", () -> new BlockItem(frosted_vines.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> fancy_stick = ITEMS.register("fancy_stick", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> coconut_item = ITEMS.register("coconut_item", () -> new BlockItem(coconut_block.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> flowery_water_lily_item = ITEMS.register("flowery_water_lily_item", () -> new BlockItem(flowery_water_lily.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
@@ -211,6 +215,9 @@ public class RegistryHandler {
     //mole
     public static final EntityType<MoleEntity> moleBuilder = EntityType.Builder.create(MoleEntity::new, EntityClassification.CREATURE).size(0.65f,0.25f).build(new ResourceLocation(Main.MODID, "mole_entity").toString());
     public static final RegistryObject<EntityType<MoleEntity>> mole_entity = ENTITIES.register("mole_entity", () -> moleBuilder);
+    //yeti
+    public static final EntityType<YetiEntity> yetiBuilder = EntityType.Builder.create(YetiEntity::new, EntityClassification.CREATURE).size(1.5f,3f).build(new ResourceLocation(Main.MODID, "yeti_entity").toString());
+    public static final RegistryObject<EntityType<YetiEntity>> yeti_entity = ENTITIES.register("yeti_entity", () -> yetiBuilder);
     //----------------------------------------------------
     //resource Sheeps
     //coal
@@ -281,6 +288,8 @@ public class RegistryHandler {
         public static void registerRenderer(FMLClientSetupEvent event) {
             //mole Renderer Registration
             RenderingRegistry.registerEntityRenderingHandler(RegistryHandler.mole_entity.get(), MoleRenderer::new);
+            //yeti Renderer Registration
+            RenderingRegistry.registerEntityRenderingHandler(RegistryHandler.yeti_entity.get(), YetiRenderer::new);
             //Sheeps Renderer Registration
             RenderingRegistry.registerEntityRenderingHandler(RegistryHandler.coal_sheep_entity.get(), CoalSheepRenderer::new);
             RenderingRegistry.registerEntityRenderingHandler(RegistryHandler.diamond_sheep_entity.get(), DimaondSheepRenderer::new);
@@ -323,6 +332,8 @@ public class RegistryHandler {
             RenderTypeLookup.setRenderLayer(RegistryHandler.green_rose.get(), RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(RegistryHandler.multicolor_rose.get(), RenderType.getCutout());
             RenderTypeLookup.setRenderLayer(RegistryHandler.purple_rose.get(), RenderType.getCutout());
+            //cutout renderer for flowery water lily
+            RenderTypeLookup.setRenderLayer(RegistryHandler.flowery_water_lily.get(), RenderType.getCutout());
             //renderer GUI genLab
             ScreenManager.registerFactory(RegistryHandler.gen_lab_container.get(), GenLabScreen::new);
         }
@@ -333,7 +344,10 @@ public class RegistryHandler {
         //registrazione attributi entity
         @SubscribeEvent
         public static void registerAttributes(FMLCommonSetupEvent event) {
+            //mole
             GlobalEntityTypeAttributes.put(RegistryHandler.mole_entity.get(), MoleEntity.setCustomAttributes().create());
+            //yeti
+            GlobalEntityTypeAttributes.put(RegistryHandler.yeti_entity.get(), YetiEntity.setCustomAttributes().create());
             //sheeps
             GlobalEntityTypeAttributes.put(RegistryHandler.coal_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
             GlobalEntityTypeAttributes.put(RegistryHandler.diamond_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
@@ -357,7 +371,10 @@ public class RegistryHandler {
         }
 
         //registrazione spawnEggs
+        //mole
         public static SpawnEggItem moleSpawnEgg = new SpawnEggItem(moleBuilder, 0x2B2B2B, 0x463125, new SpawnEggItem.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
+        //yeti
+        public static SpawnEggItem yetiSpawnEgg = new SpawnEggItem(yetiBuilder, 0xf5fffe, 0x084d46, new SpawnEggItem.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
         //sheeps
         public static SpawnEggItem coalSheepSpawnEgg = new SpawnEggItem(coalSheepBuilder, 0xfff4cf, 0x292929, new SpawnEggItem.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
         public static SpawnEggItem diamondSheepSpawnEgg = new SpawnEggItem(diamondSheepBuilder, 0xfff4cf, 0x19ffe0, new SpawnEggItem.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
@@ -381,7 +398,10 @@ public class RegistryHandler {
         @SubscribeEvent
         public static void registerSpawnEggs(RegistryEvent.Register<Item> event) {
             event.getRegistry().registerAll(
+                    //mole
                     moleSpawnEgg.setRegistryName("mole_spawn_egg"),
+                    //yeti
+                    yetiSpawnEgg.setRegistryName("yeti_spawn_egg"),
                     //sheeps
                     coalSheepSpawnEgg.setRegistryName("coal_sheep_spawn_egg"),
                     diamondSheepSpawnEgg.setRegistryName("diamond_sheep_spawn_egg"),
