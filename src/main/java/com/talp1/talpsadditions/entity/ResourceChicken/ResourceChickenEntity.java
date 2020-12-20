@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 public class ResourceChickenEntity  extends AnimalEntity {
     private Item itemToDrop;
@@ -67,6 +68,12 @@ public class ResourceChickenEntity  extends AnimalEntity {
             this.timeUntilNextEgg = compound.getInt("EggLayTime");
         }
 
+    }
+
+
+    @Override
+    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+        return null;
     }
 
     public void writeAdditional(CompoundNBT compound) {
@@ -138,7 +145,6 @@ public class ResourceChickenEntity  extends AnimalEntity {
         return false;
     }
 
-    @Override
     public ChickenEntity createChild(AgeableEntity ageable) {
         return null;
     }

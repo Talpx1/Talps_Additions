@@ -38,8 +38,8 @@ public class GenLabScreen extends ContainerScreen<GenLabContainer> {
         super.drawString(matrixStack, Minecraft.getInstance().fontRenderer, "Item to Inject into: ", 5, 80-60, 0xffffff);
         super.drawString(matrixStack, Minecraft.getInstance().fontRenderer, "Output: ", 35, 145-60, 0xffffff);
 
-        this.font.func_238422_b_(matrixStack, this.title, (float)this.titleX, (float)this.titleY-75, 0xFFFFFF);
-        this.font.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY+25, 0xFFFFFF);
+        this.font.func_238422_b_(matrixStack, this.title.func_241878_f(), (float)this.titleX, (float)this.titleY-75, 0xFFFFFF);
+        this.font.func_238422_b_(matrixStack, this.playerInventory.getDisplayName().func_241878_f(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY+25, 0xFFFFFF);
     }
 
     @Override

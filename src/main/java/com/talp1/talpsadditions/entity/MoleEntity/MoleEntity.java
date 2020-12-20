@@ -1,12 +1,14 @@
 package com.talp1.talpsadditions.entity.MoleEntity;
 
 import com.talp1.talpsadditions.utils.RegistryHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.PolarBearEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -14,6 +16,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.spawner.WorldEntitySpawner;
+import net.minecraftforge.server.permission.context.WorldContext;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -24,13 +29,17 @@ public class MoleEntity extends AnimalEntity {
         super(type, worldIn);
     }
 
-
+    @Override
+    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+        MoleEntity entity = (MoleEntity)((EntityType)RegistryHandler.mole_entity.get()).create(p_241840_1_);
+        entity.onInitialSpawn(p_241840_1_, p_241840_1_.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.BREEDING, (ILivingEntityData)null, (CompoundNBT)null);
+        return entity;
+    }
 
     @Nullable
-    @Override
     public MoleEntity createChild(AgeableEntity ageable) {
         MoleEntity entity = (MoleEntity)((EntityType)RegistryHandler.mole_entity.get()).create(this.world);
-        entity.onInitialSpawn(this.world, this.world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.BREEDING, (ILivingEntityData)null, (CompoundNBT)null);
+        entity.onInitialSpawn(this.world.getServer().func_241755_D_(), this.world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.BREEDING, (ILivingEntityData)null, (CompoundNBT)null);
         return entity;
     }
 
@@ -58,11 +67,11 @@ public class MoleEntity extends AnimalEntity {
         return stack.getItem()==RegistryHandler.earth_worm.get();
     }
 
-    //used to spawn a Mole when HeapOfDirt get waterlogged
+    /* //OLD-used to spawn a Mole when HeapOfDirt get waterlogged
     public static void spawnMole(BlockPos pos, World worldIn) {
         EntityType<MoleEntity> entity = RegistryHandler.moleBuilder;
-        entity.spawn(worldIn,null,null,null,pos.up(),SpawnReason.MOB_SUMMONED,true, true);
-    }
+        entity.spawn(worldIn.getServer().getWorld(worldIn.getDimensionKey()), null,null,null,pos.up(),SpawnReason.MOB_SUMMONED,true, true);
+    }*/
 
     public static boolean canSpawn(EntityType<MoleEntity> moleEntityEntityType, IWorld iWorld, SpawnReason spawnReason, BlockPos blockPos, Random random) {
         return !iWorld.canBlockSeeSky(blockPos);

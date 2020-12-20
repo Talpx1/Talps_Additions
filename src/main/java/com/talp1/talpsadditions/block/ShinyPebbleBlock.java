@@ -39,8 +39,13 @@ public class ShinyPebbleBlock extends Block {
     }
 
     @Override
+    public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silktouch) {
+        return MathHelper.nextInt(new Random(), 1, 2);
+    }
+
+    @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        dropXpOnBlockBreak(worldIn,pos, MathHelper.nextInt(new Random(), 1, 2));
+        //dropXpOnBlockBreak(, pos, MathHelper.nextInt(new Random(), 1, 2));
         ItemStack randItem = null;
         do{
            randItem = new ItemStack(Item.getItemById(MathHelper.nextInt(new Random(), 0, 10000)));

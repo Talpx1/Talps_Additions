@@ -155,5 +155,12 @@ public class EventHandler{
         }
     }
 
+//----------------------------------YETI DROPS ICECREAM ON RIGHTCLICK------------------------------
+    @SubscribeEvent
+    public static void yetiDropsIcecream(PlayerInteractEvent.EntityInteract event){
+       if(event.getTarget().getType()==RegistryHandler.yeti_entity.get()){
+           event.getTarget().entityDropItem(RegistryHandler.yetis_icecream.get());
+       }
+    }
 
 }

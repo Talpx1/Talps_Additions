@@ -28,7 +28,6 @@ public class FloweryWaterLily extends BushBlock{
         if (worldIn instanceof ServerWorld && entityIn instanceof BoatEntity) {
             worldIn.destroyBlock(new BlockPos(pos), true, entityIn);
         }
-
     }
 
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
@@ -36,7 +35,11 @@ public class FloweryWaterLily extends BushBlock{
     }
 
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-       return worldIn.getFluidState(pos)==Fluids.WATER.getStillFluidState(false)&&worldIn.getBlockState(pos.up())==Blocks.AIR.getDefaultState();
+       //return worldIn.getFluidState(pos)==Fluids.WATER.getStillFluidState(false)&&worldIn.getBlockState(pos.up())==Blocks.AIR.getDefaultState();
+        FluidState fluidstate = worldIn.getFluidState(pos);
+        FluidState fluidstate1 = worldIn.getFluidState(pos.up());
+        return (fluidstate.getFluid() == Fluids.WATER || state.getMaterial() == Material.ICE) && fluidstate1.getFluid() == Fluids.EMPTY;
+
     }
 
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {

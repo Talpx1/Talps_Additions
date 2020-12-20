@@ -40,7 +40,7 @@ public class BottleOfAcidItem extends Item {
     }
 
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        return DrinkHelper.func_234707_a_(worldIn, playerIn, handIn);
+        return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
     }
 
     public int getUseDuration(ItemStack stack) {
@@ -70,7 +70,7 @@ public class BottleOfAcidItem extends Item {
                     playerIn.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
                     stack.shrink(1);
                 }
-                worldIn.getChunk(pos).getWorldForge().getWorld().setBlockState(pos,RegistryHandler.cauldron_with_acid.get().getDefaultState(),2);
+                playerIn.getEntityWorld().setBlockState(pos,RegistryHandler.cauldron_with_acid.get().getDefaultState(),2);
                 return true;
             }
         }

@@ -23,7 +23,7 @@ public class ColorHandler {
     static class BlockColorImpl implements IBlockColor{
         @Override
         public int getColor(BlockState blockStateIn, @Nullable IBlockDisplayReader p_getColor_2_, @Nullable BlockPos blockPosIn, int p_getColor_4_) {
-            return Minecraft.getInstance().world.getWorld().getBiome(blockPosIn).getFoliageColor();
+            return Minecraft.getInstance().world.getBiome(blockPosIn).getFoliageColor();
         }
     }
 }

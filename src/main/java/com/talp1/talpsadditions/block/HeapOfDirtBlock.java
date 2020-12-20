@@ -1,20 +1,31 @@
 package com.talp1.talpsadditions.block;
 
+import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
+import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.block.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.*;
+import net.minecraft.world.storage.DimensionSavedDataManager;
 
 public class HeapOfDirtBlock extends Block implements IWaterLoggable {
 
@@ -37,7 +48,6 @@ public class HeapOfDirtBlock extends Block implements IWaterLoggable {
             if (!worldIn.isRemote()) {
                 worldIn.setBlockState(pos, state.with(BlockStateProperties.WATERLOGGED, Boolean.TRUE), 3);
                 worldIn.getPendingFluidTicks().scheduleTick(pos, fluidStateIn.getFluid(), fluidStateIn.getFluid().getTickRate(worldIn));
-                MoleEntity.spawnMole(pos, worldIn.getWorld());
             }
             worldIn.destroyBlock(pos, false);
             return true;
@@ -93,5 +103,17 @@ public class HeapOfDirtBlock extends Block implements IWaterLoggable {
 
     public FluidState getFluidState(BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if(!worldIn.isRemote){
+            if(player.getHeldItem(handIn).equals(Items.WATER_BUCKET.getDefaultInstance(), false)){
+                EntityType<MoleEntity> mole = RegistryHandler.mole_entity.get();
+                mole.spawn(worldIn.getServer().getWorld(worldIn.getDimensionKey()), null,null,pos, SpawnReason.MOB_SUMMONED,true,true);
+            }
+        }
+
+        return ActionResultType.PASS;
     }
 }

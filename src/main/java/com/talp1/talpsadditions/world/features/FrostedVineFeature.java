@@ -22,65 +22,65 @@ import net.minecraftforge.common.Tags;
 
 public class FrostedVineFeature extends Feature<NoFeatureConfig> {
     private final ArrayList<Block> validBlocks = new ArrayList<>(Arrays.asList(Blocks.ICE, Blocks.BLUE_ICE, Blocks.FROSTED_ICE, Blocks.PACKED_ICE));
+    private static final Direction[] DIRECTIONS = Direction.values();
 
     public FrostedVineFeature(Codec<NoFeatureConfig> p_i232002_1_) {
         super(p_i232002_1_);
     }
 
-    public boolean func_230362_a_(ISeedReader worldIn, StructureManager strucManager, ChunkGenerator chucnkGen, Random rand, BlockPos pos, NoFeatureConfig config) {
+    public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random rand, BlockPos startPos, NoFeatureConfig config) {
+        return this.generate(world,chunkGenerator,rand,startPos,config);
+    }
 
-        BlockPos.Mutable blockPos = new BlockPos.Mutable().setPos(pos.getX(), pos.getY(), pos.getZ());
-        BlockState currentBlockState = worldIn.getBlockState(blockPos);
+    @Override
+    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+        BlockPos.Mutable blockpos$mutable = pos.toMutable();
 
-        for (Direction direction : Direction.Plane.HORIZONTAL) {
-            if (blockPos.getY()>63 && currentBlockState==Blocks.AIR.getDefaultState()){
-                checkSorroundingBlocks(blockPos, worldIn, rand, direction);
-            }
-        }
+        //try to find place 10 times with different y vals for each block pos passed
+        for(int i=0;i<10;i++)
+            tryToPlace(blockpos$mutable, reader, getValidRand(rand));
+
         return true;
     }
 
-    private boolean checkValidSpot(Direction dir, BlockPos pos, ISeedReader worldIn,BlockPos originalPos){
-        if(validBlocks.contains(worldIn.getBlockState(pos).getBlock())){
-            return RegistryHandler.frosted_vines.get().isValidPosition(RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE),worldIn,originalPos);
-        }
-        return false;
+    //generate a rand between 63 and 255
+    private int getValidRand(Random random){
+        int currRand=random.nextInt(255);
+        while(currRand<63){currRand=random.nextInt(255);}
+        return currRand;
     }
 
-    private void checkSorroundingBlocks(BlockPos blockPos, ISeedReader worldIn, Random rand, Direction dir){
+    //start the process of (eventually) placing
+    private void tryToPlace(BlockPos pos, ISeedReader reader, int yIn){
+        BlockPos currPos=new BlockPos(pos.getX(), yIn, pos.getZ());
+        checkValidSpot(currPos, reader);
+    }
 
-        if (checkValidSpot(dir, blockPos.east(),worldIn,blockPos)){
-            worldIn.setBlockState(blockPos, RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
-            for (int i=0; i<=rand.nextInt(3);i++) {
-                if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
-                    worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+    //check if the block passed is next to a leave block
+    private void checkValidSpot(BlockPos pos, ISeedReader worldIn){
+        if (worldIn.isAirBlock(pos)){
+            for (Direction dir : DIRECTIONS){
+                if(dir!= Direction.DOWN){
+                    if(validBlocks.contains(worldIn.getBlockState(pos.offset(dir)).getBlock())){
+                        setVine(worldIn, pos, dir);
+                        tryToCreateHanging(pos, worldIn, dir);
+                    }
                 }
             }
         }
+    }
 
-        if (checkValidSpot(dir, blockPos.west(),worldIn,blockPos)){
-            worldIn.setBlockState(blockPos, RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
-            for (int i=0; i<=rand.nextInt(3);i++) {
-                if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
-                    worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
-                }
-            }
-        }
+    //place the vine
+    private void setVine(ISeedReader worldIn, BlockPos pos, Direction dir){
+        worldIn.setBlockState(pos, RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+    }
 
-        if (checkValidSpot(dir, blockPos.north(),worldIn,blockPos)){
-            worldIn.setBlockState(blockPos, RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
-            for (int i=0; i<=rand.nextInt(3);i++) {
-                if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
-                    worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
-                }
-            }
-        }
-
-        if (checkValidSpot(dir, blockPos.south(),worldIn,blockPos)){
-            worldIn.setBlockState(blockPos, RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
-            for (int i=0; i<=rand.nextInt(3);i++) {
-                if (worldIn.getBlockState(blockPos.add(0, -(i), 0)) == Blocks.AIR.getDefaultState()) {
-                    worldIn.setBlockState(blockPos.add(0, -(i), 0), RegistryHandler.frosted_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+    //try to create the vines hanging from the vine block placed
+    private void tryToCreateHanging(BlockPos pos, ISeedReader reader, Direction direction){
+        if(direction!=Direction.UP){
+            for (int i=0; i<new Random().nextInt(11)+1;i++){
+                if (reader.isAirBlock(pos.down(i))){
+                    setVine(reader, pos.down(i), direction);
                 }
             }
         }

@@ -25,6 +25,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -60,15 +61,14 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
         this.sheared=false;
     }
 
-    @Nullable
+    /*@Nullable
     public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
         setSheared(false);
         return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-    }
+    }*/
 
 
     @Nullable
-    @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
         return null;
     }
@@ -142,6 +142,11 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
             case "netherite": return Items.NETHERITE_INGOT;
             default: return Items.COAL;
         }
+    }
+
+    @Override
+    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+        return null;
     }
 
     public void writeAdditional(CompoundNBT compound) {
