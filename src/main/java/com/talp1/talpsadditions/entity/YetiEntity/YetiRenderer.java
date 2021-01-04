@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 public class YetiRenderer extends MobRenderer<YetiEntity, YetiModel<YetiEntity>> {
     public YetiRenderer(EntityRendererManager renderManagerIn) {
-        super(renderManagerIn, new  YetiModel(), 0.2f);
+        super(renderManagerIn, new  YetiModel(), 1.1f);
     }
 
     @Override

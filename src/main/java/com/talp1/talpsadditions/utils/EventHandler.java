@@ -162,5 +162,4 @@ public class EventHandler{
            event.getTarget().entityDropItem(RegistryHandler.yetis_icecream.get());
        }
     }
-
 }

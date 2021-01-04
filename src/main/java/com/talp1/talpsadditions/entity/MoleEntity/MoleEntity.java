@@ -1,18 +1,22 @@
 package com.talp1.talpsadditions.entity.MoleEntity;
 
+import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.utils.RegistryHandler;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.PolarBearEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -21,6 +25,9 @@ import net.minecraft.world.spawner.WorldEntitySpawner;
 import net.minecraftforge.server.permission.context.WorldContext;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MoleEntity extends AnimalEntity {
@@ -57,6 +64,17 @@ public class MoleEntity extends AnimalEntity {
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_FOX_AMBIENT;
+    }
+
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return SoundEvents.ENTITY_BAT_HURT;
+    }
+
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_BAT_DEATH;
+    }
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D).createMutableAttribute(Attributes.MAX_HEALTH, 5.0D);
@@ -67,13 +85,11 @@ public class MoleEntity extends AnimalEntity {
         return stack.getItem()==RegistryHandler.earth_worm.get();
     }
 
-    /* //OLD-used to spawn a Mole when HeapOfDirt get waterlogged
-    public static void spawnMole(BlockPos pos, World worldIn) {
-        EntityType<MoleEntity> entity = RegistryHandler.moleBuilder;
-        entity.spawn(worldIn.getServer().getWorld(worldIn.getDimensionKey()), null,null,null,pos.up(),SpawnReason.MOB_SUMMONED,true, true);
-    }*/
-
-    public static boolean canSpawn(EntityType<MoleEntity> moleEntityEntityType, IWorld iWorld, SpawnReason spawnReason, BlockPos blockPos, Random random) {
-        return !iWorld.canBlockSeeSky(blockPos);
+    //TODO -> moles only spawn in caves
+    public static boolean canSpawn(EntityType<MoleEntity> moleIn, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
+        //Main.LOGGER.info("trying at: " + pos.getY());
+        //return pos.getY()<64 && (worldIn.canBlockSeeSky(pos)||worldIn.canSeeSky(pos));
+        return worldIn.canBlockSeeSky(pos)||worldIn.canSeeSky(pos);
     }
+
 }

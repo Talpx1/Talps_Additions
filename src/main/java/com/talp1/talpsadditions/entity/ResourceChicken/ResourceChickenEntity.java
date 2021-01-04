@@ -10,6 +10,7 @@ import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
@@ -70,7 +71,9 @@ public class ResourceChickenEntity  extends AnimalEntity {
 
     }
 
-
+    public boolean isChickenJockey(){
+        return false;
+    }
     @Override
     public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
         return null;
@@ -129,7 +132,7 @@ public class ResourceChickenEntity  extends AnimalEntity {
         }
 
         this.wingRotation += this.wingRotDelta * 2.0F;
-        if (!this.world.isRemote && this.isAlive() && !this.isChild() && --this.timeUntilNextEgg <= 0) {
+        if (!this.world.isRemote && this.isAlive() && !this.isChild() && !this.isChickenJockey() && --this.timeUntilNextEgg <= 0) {
             this.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
             this.entityDropItem(this.getItemToDrop());
             this.timeUntilNextEgg = this.rand.nextInt(6000) + 6000;

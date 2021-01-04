@@ -30,7 +30,7 @@ public class GenLabScreen extends ContainerScreen<GenLabContainer> {
 
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
-        super.drawString(matrixStack, Minecraft.getInstance().fontRenderer, "Energy: " + container.getEnergy(), 90, 120-60, 0xffffff);
+        super.drawString(matrixStack, Minecraft.getInstance().fontRenderer, "Energy: " + container.getEnergy() + " RF", 90, 120-60, 0xffffff);
         super.drawString(matrixStack, Minecraft.getInstance().fontRenderer, "Gene: ", 20, 15-60, 0xffffff);
         super.drawString(matrixStack, Minecraft.getInstance().fontRenderer, "Modifier: ", 68, 15-60, 0xffffff);
         super.drawString(matrixStack, Minecraft.getInstance().fontRenderer, "Base: ", 20, 39-60, 0xffffff);

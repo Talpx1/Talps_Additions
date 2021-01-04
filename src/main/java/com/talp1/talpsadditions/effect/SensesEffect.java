@@ -1,39 +1,17 @@
 package com.talp1.talpsadditions.effect;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.talp1.talpsadditions.Main;
-import com.talp1.talpsadditions.gui.OverlayLineRenderer;
 import com.talp1.talpsadditions.utils.RegistryHandler;
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.Sound;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
-import java.util.concurrent.BlockingQueue;
 
 public class SensesEffect extends Effect {
 
@@ -66,17 +44,18 @@ public class SensesEffect extends Effect {
     }
 
     public static ArrayList<BlockPos> getOrePos(LivingEntity playerIn) {
+        int detectDistance = 5;
         ArrayList<BlockPos> foundOres = new ArrayList<>();
         Vector3d playerPosIn =playerIn.getPositionVec();
-        int xStart =(int)playerPosIn.getX()-3;
-        int xEnd = (int)playerPosIn.getX()+3;
-        int zStart = (int)playerPosIn.getZ()-3;
-        int zEnd =(int)playerPosIn.getZ()+3;
-        int maxOreGen = (int)playerPosIn.getY()+3;
-        int minOreGen = (int)playerPosIn.getY()-3;
+        int xStart =(int)playerPosIn.getX()-detectDistance;
+        int xEnd = (int)playerPosIn.getX()+detectDistance;
+        int zStart = (int)playerPosIn.getZ()-detectDistance;
+        int zEnd =(int)playerPosIn.getZ()+detectDistance;
+        int yEnd = (int)playerPosIn.getY()+detectDistance;
+        int yStart = (int)playerPosIn.getY()-detectDistance;
         for (int x = xStart; x <= xEnd; x++) {
             for (int z = zStart; z <= zEnd; z++) {
-                for (int y = minOreGen; y <= maxOreGen; y++) {
+                for (int y = yStart; y <= yEnd; y++) {
                     if(y>0) {
                         BlockPos currBlockPos = new BlockPos(x, y, z);
                         Block currBlock = playerIn.getEntityWorld().getBlockState(currBlockPos).getBlock();
@@ -101,7 +80,7 @@ public class SensesEffect extends Effect {
     }
 
     public void playSound(World worldIn, BlockPos pos){
-        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), RegistryHandler.shiny_ores_sound.get(), SoundCategory.BLOCKS,0.6f,0.6f,false);
+        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), RegistryHandler.shiny_ores_sound.get(), SoundCategory.BLOCKS,0.75f,0.75f,false);
     }
 
 }

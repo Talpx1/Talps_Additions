@@ -23,7 +23,7 @@ public class LilyGen {
     public static void generateLily(BiomeLoadingEvent biome){
 
         BlockClusterFeatureConfig FLOWERY_WATER_LILY_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(RegistryHandler.flowery_water_lily.get().getDefaultState()), SimpleBlockPlacer.PLACER)).tries(10).build();
-        if (biome.getCategory() == Biome.Category.SWAMP || biome.getName().equals(Biomes.FLOWER_FOREST.getLocation())){
+        if (biome.getCategory() == Biome.Category.JUNGLE || biome.getCategory() == Biome.Category.SWAMP || biome.getName().equals(Biomes.FLOWER_FOREST.getLocation())){
             biome.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(FLOWERY_WATER_LILY_CONFIG).withPlacement(Features.Placements.PATCH_PLACEMENT).func_242731_b(4));
         }
     }

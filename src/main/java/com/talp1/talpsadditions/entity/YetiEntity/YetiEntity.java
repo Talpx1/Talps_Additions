@@ -31,7 +31,6 @@ import java.util.function.Predicate;
 
 public class YetiEntity extends CreatureEntity implements IAngerable {
 
-    private int warningSoundTicks;
     private static final RangedInteger field_234217_by_ = TickRangeConverter.convertRange(20, 39);
     private int field_234218_bz_;
     private UUID field_234216_bA_;
@@ -55,7 +54,6 @@ public class YetiEntity extends CreatureEntity implements IAngerable {
 
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new YetiEntity.MeleeAttackGoal());
         this.goalSelector.addGoal(2, new YetiEntity.PanicGoal());
         this.goalSelector.addGoal(3, new RandomWalkingGoal(this, 1.0D));
@@ -99,6 +97,14 @@ public class YetiEntity extends CreatureEntity implements IAngerable {
     @Override
     public void setAngerTarget(@Nullable UUID target) {
         this.field_234216_bA_ = target;
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if(!world.isRemote && source.getTrueSource() instanceof PlayerEntity){
+            setAngerTarget(source.getTrueSource().getUniqueID());
+        }
+        return super.attackEntityFrom(source, amount);
     }
 
     @Override
@@ -175,14 +181,9 @@ public class YetiEntity extends CreatureEntity implements IAngerable {
         }
 
         protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
-            double d0 = this.getAttackReachSqr(enemy);
-            if (distToEnemySqr <= d0 && this.func_234040_h_()) {
+            if (distToEnemySqr <= getAttackReachSqr(enemy) && enemy.getUniqueID()==getAngerTarget()) {
                 this.func_234039_g_();
                 this.attacker.attackEntityAsMob(enemy);
-            } else if (distToEnemySqr <= d0 * 2.0D) {
-                if (this.func_234040_h_()) {
-                    this.func_234039_g_();
-                }
             }
         }
 

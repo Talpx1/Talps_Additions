@@ -59,7 +59,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.function.ToIntFunction;
 
+//TODO -> split this nightmare in different classes
 public class RegistryHandler {
     //DefReg per Items
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
@@ -96,8 +98,8 @@ public class RegistryHandler {
     }
 
     // registrazione blocchi
-    public static final RegistryObject<Block> shiny_shard_ore = BLOCKS.register("shiny_shard_ore", () -> new Block(Block.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f, 6.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE)));
-    public static final RegistryObject<Block> shiny_shard_block = BLOCKS.register("shiny_shard_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 6.0f).sound(SoundType.GLASS).harvestTool(ToolType.PICKAXE)));
+    public static final RegistryObject<Block> shiny_shard_ore = BLOCKS.register("shiny_shard_ore", () -> new Block(Block.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f, 6.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).setLightLevel(state -> 6)));
+    public static final RegistryObject<Block> shiny_shard_block = BLOCKS.register("shiny_shard_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 6.0f).sound(SoundType.GLASS).harvestTool(ToolType.PICKAXE).setLightLevel(state -> 8)));
     public static final RegistryObject<BlueBerryBushBlock> blue_berry_bush = BLOCKS.register("blue_berry_bush", () -> new BlueBerryBushBlock(AbstractBlock.Properties.create(Material.PLANTS).tickRandomly().doesNotBlockMovement().sound(SoundType.SWEET_BERRY_BUSH)));
     public static final RegistryObject<HeapOfDirtBlock> heap_of_dirt = BLOCKS.register("heap_of_dirt", () -> new HeapOfDirtBlock(AbstractBlock.Properties.create(Material.EARTH).hardnessAndResistance(1.0f, 1.0f).sound(SoundType.WET_GRASS).harvestTool(ToolType.SHOVEL)));
     public static final RegistryObject<VineBlock> floreal_vines = BLOCKS.register("floreal_vines", () -> new VineBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.VINE)));
@@ -191,8 +193,7 @@ public class RegistryHandler {
     public static final RegistryObject<Item> frosted_vines_item = ITEMS.register("frosted_vines", () -> new BlockItem(frosted_vines.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> fancy_stick = ITEMS.register("fancy_stick", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> coconut_item = ITEMS.register("coconut_item", () -> new BlockItem(coconut_block.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
-    public static final RegistryObject<Item> flowery_water_lily_item = ITEMS.register("flowery_water_lily_item", () -> new BlockItem(flowery_water_lily.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
-    public static final RegistryObject<Item> yetis_icecream = ITEMS.register("yetis_icecream", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<LilyPadItem> flowery_water_lily_item = ITEMS.register("flowery_water_lily_item", () -> new LilyPadItem(flowery_water_lily.get(), new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
@@ -202,6 +203,7 @@ public class RegistryHandler {
     public static final RegistryObject<Item> earth_worm = ITEMS.register("earth_worm", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(0.7f).hunger(1).effect(new EffectInstance(Effects.NAUSEA,200,1),1).build())));
     public static final RegistryObject<Item> cooked_earth_worm = ITEMS.register("cooked_earth_worm", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(1.5f).hunger(2).build())));
     public static final RegistryObject<Item> piece_of_coconut = ITEMS.register("piece_of_coconut", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(2).saturation(0.3F).build())));
+    public static final RegistryObject<Item> yetis_icecream = ITEMS.register("yetis_icecream", () -> new Item(new Item.Properties().group(CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(1).saturation(0.1f).build())));
     //sounds
     public static final RegistryObject<SoundEvent> shiny_ores_sound = SOUNDS.register("shiny_ores", ()->new SoundEvent(new ResourceLocation(Main.MODID, "shiny_ores")));
 

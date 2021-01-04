@@ -270,6 +270,8 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
     }
 
     @Override
+    //TODO -> rework code
+    //TODO -> custom recipes
     public void tick() {
         if (world.isRemote){
             return;
@@ -285,9 +287,15 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
 
         //crafting actions
         if (isCrafting){
-            energyStorage.consumeEnergy(USAGE_PER_TICK);
+            energyStorage.consumeEnergy(USAGE_PER_TICK);//consume RF
             decreaseTimer();
-            checkSlots();
+            checkSlots();//check if items got remove from slots
+            //check if there's still energy
+            if(energyStorage.getEnergyStored()<=0){
+                disbleTimer();
+                this.isCrafting=false;
+            }
+            //check if done
             if (checkIfDone()){
                 this.isCrafting=false;
                 disbleTimer();

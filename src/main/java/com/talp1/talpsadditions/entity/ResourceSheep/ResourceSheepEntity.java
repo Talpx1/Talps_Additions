@@ -16,13 +16,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -61,11 +59,11 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
         this.sheared=false;
     }
 
-    /*@Nullable
-    public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+    @Nullable
+    public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
         setSheared(false);
         return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-    }*/
+    }
 
 
     @Nullable
@@ -143,6 +141,24 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
             default: return Items.COAL;
         }
     }
+
+    public ActionResultType func_230254_b_(PlayerEntity p_230254_1_, Hand p_230254_2_) {
+        ItemStack itemstack = p_230254_1_.getHeldItem(p_230254_2_);
+        if (false && itemstack.getItem() == Items.SHEARS) { //Forge: Moved to onSheared
+            if (!this.world.isRemote && this.isShearable()) {
+                this.shear(SoundCategory.PLAYERS);
+                itemstack.damageItem(1, p_230254_1_, (p_213613_1_) -> {
+                    p_213613_1_.sendBreakAnimation(p_230254_2_);
+                });
+                return ActionResultType.SUCCESS;
+            } else {
+                return ActionResultType.CONSUME;
+            }
+        } else {
+            return super.func_230254_b_(p_230254_1_, p_230254_2_);
+        }
+    }
+
 
     @Override
     public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
