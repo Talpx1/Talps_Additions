@@ -60,8 +60,6 @@
   "item.talpsadditions.yeti_spawn_egg": "Yeti Egg",
   "item.talpsadditions.yetis_icecream": "Yeti's Icecream",
 
-
-
   "effect.talpsadditions.senses_effect": "Senses",
 
   "block.talpsadditions.shiny_shard_ore": "Shiny Shard Ore",
@@ -92,9 +90,30 @@
   "block.talpsadditions.coconut_block": "Coconut",
   "block.talpsadditions.flowery_water_lily": "Flowery Water Lily",
 
+  "entity.talpsadditions.mole_entity": "Mole",
+  "entity.talpsadditions.yeti_entity": "Yeti",
+  "entity.talpsadditions.coal_resource_sheep_entity": "Coal Resource Sheep",
+  "entity.talpsadditions.diamond_resource_sheep_entity": "Diamond Resource Sheep",
+  "entity.talpsadditions.emerald_resource_sheep_entity": "Emerald Resource Sheep",
+  "entity.talpsadditions.gold_resource_sheep_entity": "Gold Resource Sheep",
+  "entity.talpsadditions.iron_resource_sheep_entity": "Iron Resource Sheep",
+  "entity.talpsadditions.lapis_resource_sheep_entity": "Lapis Resource Sheep",
+  "entity.talpsadditions.netherite_resource_sheep_entity": "Netherite Resource Sheep",
+  "entity.talpsadditions.quartz_resource_sheep_entity": "Quartz Resource Sheep",
+  "entity.talpsadditions.redstone_resource_sheep_entity": "Redstone Resource Sheep",
+  "entity.talpsadditions.coal_resource_chicken_entity": "Coal Resource Chicken",
+  "entity.talpsadditions.diamond_resource_chicken_entity": "Diamond Resource Chicken",
+  "entity.talpsadditions.emerald_resource_chicken_entity": "Emerald Resource Chicken",
+  "entity.talpsadditions.gold_resource_chicken_entity": "Gold Resource Chicken",
+  "entity.talpsadditions.iron_resource_chicken_entity": "Iron Resource Chicken",
+  "entity.talpsadditions.lapis_resource_chicken_entity": "Lapis Resource Chicken",
+  "entity.talpsadditions.netherite_resource_chicken_entity": "Netherite Resource Chicken",
+  "entity.talpsadditions.quartz_resource_chicken_entity": "Quartz Resource Chicken",
+  "entity.talpsadditions.redstone_resource_chicken_entity": "Redstone Resource Chicken",
+
   "screen.talpsadditions.gen_lab_block": "Gen-Lab",
 
-  "talpsadditions.subtitle.shiny_ores_sound": "Shiny Ore Sound",
+  "talpsadditions.subtitle.shiny_ores_sound": "Shiny Shard Ore Sound",
 
   "itemGroup.talpsadditions": "Talp's Additions"
 }

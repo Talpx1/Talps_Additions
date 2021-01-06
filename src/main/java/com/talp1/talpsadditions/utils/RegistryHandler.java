@@ -429,20 +429,5 @@ public class RegistryHandler {
                     redstoneChickenSpawnEgg.setRegistryName("redstone_chicken_spawn_egg")
             );
         }
-
-        //registrazione ricette Pozioni
-        @SubscribeEvent
-        public static void registerPotionRecepies(FMLCommonSetupEvent event) {
-            try {
-                Method addMix = PotionBrewing.class.getDeclaredMethod("addMix", Potion.class, Item.class, Potion.class);
-                addMix.setAccessible(true);
-                //luck
-                addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.shiny_shard_dust.get(), RegistryHandler.luck_potion.get());
-                //senses
-                addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.mysterious_sensory_organ.get(), RegistryHandler.senses_potion.get());
-            }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
-                e.printStackTrace();
-            }
-        }
     }
 }

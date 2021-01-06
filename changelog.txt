@@ -1,0 +1,33 @@
+UPDATED TO 1.16.4
+
+ 
+
+NEW FEATURES:
+
+    added frosted vines
+    added bedrock cutter
+    added coconut
+    added flowery water lily
+    added Yeti
+
+ 
+
+ADDITION TO EXISTING FEATURES:
+
+    added mechanic to power the gen-lab
+    added sounds to moles
+    Shiny blocks (Shiny Shard Ore & Shiny Shard Block) now emits light
+    added recipe for purple basket of flower
+    improved generation for vines
+
+ 
+
+FIXES:
+
+    fixed a problem with baskets block states
+    fixed gen-lab processing without power in some cases
+    added i18n to all mobs
+    fixed uncraftable netherite resource chicken and sheep
+    fixed potion brewing, potions are now brewable
+
+ 

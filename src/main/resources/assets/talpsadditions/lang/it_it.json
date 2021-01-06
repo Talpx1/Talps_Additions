@@ -59,7 +59,6 @@
   "item.talpsadditions.yeti_spawn_egg": "Uovo di Yeti",
   "item.talpsadditions.yetis_icecream": "Gelato dello Yeti",
 
-
   "effect.talpsadditions.senses_effect": "Sensi",
 
   "block.talpsadditions.shiny_shard_ore": "Scheggia Lucente Grezza",
@@ -90,9 +89,30 @@
   "block.talpsadditions.coconut_block": "Noce di Cocco",
   "block.talpsadditions.flowery_water_lily": "Ninfea Fiorita",
 
+  "entity.talpsadditions.mole_entity": "Talpa",
+  "entity.talpsadditions.yeti_entity": "Yeti",
+  "entity.talpsadditions.coal_resource_sheep_entity": "Percora Carbone",
+  "entity.talpsadditions.diamond_resource_sheep_entity": "Percora Diamante",
+  "entity.talpsadditions.emerald_resource_sheep_entity": "Percora Smeraldo",
+  "entity.talpsadditions.gold_resource_sheep_entity": "Percora Oro",
+  "entity.talpsadditions.iron_resource_sheep_entity": "Percora Ferro",
+  "entity.talpsadditions.lapis_resource_sheep_entity": "Percora Lapislazzulo",
+  "entity.talpsadditions.netherite_resource_sheep_entity": "Percora Netherite",
+  "entity.talpsadditions.quartz_resource_sheep_entity": "Percora Quarzo",
+  "entity.talpsadditions.redstone_resource_sheep_entity": "Percora Pietrarossa",
+  "entity.talpsadditions.coal_resource_chicken_entity": "Pollo Carbone",
+  "entity.talpsadditions.diamond_resource_chicken_entity": "Pollo Diamante",
+  "entity.talpsadditions.emerald_resource_chicken_entity": "Pollo Smeraldo",
+  "entity.talpsadditions.gold_resource_chicken_entity": "Pollo Oro",
+  "entity.talpsadditions.iron_resource_chicken_entity": "Pollo Ferro",
+  "entity.talpsadditions.lapis_resource_chicken_entity": "Pollo Lapislazzulo",
+  "entity.talpsadditions.netherite_resource_chicken_entity": "Pollo Netherite",
+  "entity.talpsadditions.quartz_resource_chicken_entity": "Pollo Quarzo",
+  "entity.talpsadditions.redstone_resource_chicken_entity": "Pollo Redstone",
+
   "screen.talpsadditions.gen_lab_block": "Gen-Lab",
 
-  "talpsadditions.subtitle.shiny_ores_sound": "Shiny Ore Sound",
+  "talpsadditions.subtitle.shiny_ores_sound": "Rumore di Scheggia Lucente Greza",
 
   "itemGroup.talpsadditions": "Talp's Additions"
 }

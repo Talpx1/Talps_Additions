@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class GenLabTE extends TileEntity implements ITickableTileEntity {
+public class GenLabTE extends TileEntity implements ITickableTileEntity{
 
     private final int USAGE_PER_TICK=50;//RF per Tick
     private int timer;//timer for recipes
@@ -289,11 +289,10 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
         if (isCrafting){
             energyStorage.consumeEnergy(USAGE_PER_TICK);//consume RF
             decreaseTimer();
-            checkSlots();//check if items got remove from slots
+            checkSlots();//check if items got removed from slots
             //check if there's still energy
-            if(energyStorage.getEnergyStored()<=0){
-                disbleTimer();
-                this.isCrafting=false;
+            if(energyStorage.getEnergyStored()<USAGE_PER_TICK){
+                stopCrafting();
             }
             //check if done
             if (checkIfDone()){
@@ -373,7 +372,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
                     setCurrResult(RegistryHandler.ExtraRegHandler.quartzChickenSpawnEgg.getItem(), 1);
                 }
                 //netherite
-                if (getItemInSlot(3) == Items.NETHER_BRICK) {
+                if (getItemInSlot(3) == Items.NETHERITE_BRICKS) {
                     startCrafting(60);
                     setCurrResult(RegistryHandler.ExtraRegHandler.netheriteChickenSpawnEgg.getItem(), 1);
                 }
@@ -421,7 +420,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity {
                     setCurrResult(RegistryHandler.ExtraRegHandler.quartzSheepSpawnEgg.getItem(), 1);
                 }
                 //netherite
-                if (getItemInSlot(3) == Items.NETHER_BRICK) {
+                if (getItemInSlot(3) == Items.NETHERITE_BRICKS) {
                     startCrafting(60);
                     setCurrResult(RegistryHandler.ExtraRegHandler.netheriteSheepSpawnEgg.getItem(), 1);
                 }
