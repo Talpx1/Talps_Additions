@@ -2,7 +2,7 @@ package com.talp1.talpsadditions.block;
 
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModEntities;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityType;
@@ -109,7 +109,7 @@ public class HeapOfDirtBlock extends Block implements IWaterLoggable {
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if(!worldIn.isRemote){
             if(player.getHeldItem(handIn).equals(Items.WATER_BUCKET.getDefaultInstance(), false)){
-                EntityType<MoleEntity> mole = RegistryHandler.mole_entity.get();
+                EntityType<MoleEntity> mole = ModEntities.mole_entity.get();
                 mole.spawn(worldIn.getServer().getWorld(worldIn.getDimensionKey()), null,null,pos, SpawnReason.MOB_SUMMONED,true,true);
             }
         }

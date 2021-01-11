@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.talp1.talpsadditions.Main;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import net.minecraft.block.*;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -68,7 +68,7 @@ public class FlorealVineFeature extends Feature<NoFeatureConfig> {
 
     //place the vine
     private void setVine(ISeedReader worldIn, BlockPos pos, Direction dir){
-        worldIn.setBlockState(pos, RegistryHandler.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
+        worldIn.setBlockState(pos, ModBlocks.floreal_vines.get().getDefaultState().with(VineBlock.getPropertyFor(dir), Boolean.TRUE), 2);
     }
 
     //try to create the vines hanging from the vine block placed

@@ -1,7 +1,7 @@
 package com.talp1.talpsadditions.item;
 
 import com.talp1.talpsadditions.block.FlorealDecorationBlock;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.block.VineBlock;
@@ -23,11 +23,11 @@ public class GeneCollectorItem extends Item {
         if(stack.getItem() instanceof GeneCollectorItem){
             if(entity.getType()== EntityType.SHEEP){
                 stack.shrink(1);
-                player.addItemStackToInventory(new ItemStack(RegistryHandler.sheep_gene.get()));
+                player.addItemStackToInventory(new ItemStack(ModItems.sheep_gene.get()));
             }
             if(entity.getType()== EntityType.CHICKEN){
                 stack.shrink(1);
-                player.addItemStackToInventory(new ItemStack(RegistryHandler.chicken_gene.get()));
+                player.addItemStackToInventory(new ItemStack(ModItems.chicken_gene.get()));
             }
         }
         return true;
@@ -39,11 +39,11 @@ public class GeneCollectorItem extends Item {
             Block clicked = player.getEntityWorld().getBlockState(pos).getBlock();
             if (clicked instanceof SweetBerryBushBlock){
                 itemstack.shrink(1);
-                player.addItemStackToInventory(new ItemStack(RegistryHandler.bush_gene.get()));
+                player.addItemStackToInventory(new ItemStack(ModItems.bush_gene.get()));
             }
             if (clicked instanceof VineBlock && !(clicked instanceof FlorealDecorationBlock)){
                 itemstack.shrink(1);
-                player.addItemStackToInventory(new ItemStack(RegistryHandler.vine_gene.get()));
+                player.addItemStackToInventory(new ItemStack(ModItems.vine_gene.get()));
             }
         }
         return true;

@@ -1,0 +1,23 @@
+{
+    "type": "talpsadditions:gen_lab_recipe",
+    "gene-type": {
+        "item": "talpsadditions:vine_gene"
+    },
+    "gene-modifier": {
+        "item": "talpsadditions:vegetal_gene_modifier"
+    },
+    "base": {
+        "item": "minecraft:vine"
+    },
+    "item-to-inject": {
+        "item": "minecraft:blue_ice"
+    },
+    "item-to-inject-into": {
+        "item": "minecraft:wheat_seeds"
+    },
+    "time-to-craft": 75,
+    "output-amount":2,
+    "output": {
+        "item": "talpsadditions:frosted_vines"
+    }
+}

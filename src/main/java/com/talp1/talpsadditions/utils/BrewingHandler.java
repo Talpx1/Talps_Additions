@@ -1,6 +1,8 @@
 package com.talp1.talpsadditions.utils;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.utils.registration.ModItems;
+import com.talp1.talpsadditions.utils.registration.ModPotions;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -26,9 +28,9 @@ public class BrewingHandler {
             Method addMix = PotionBrewing.class.getDeclaredMethod("addMix", Potion.class, Item.class, Potion.class);
             addMix.setAccessible(true);
             //luck
-            addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.shiny_shard_dust.get(), RegistryHandler.luck_potion.get());
+            addMix.invoke(addMix, Potions.AWKWARD, ModPotions.shiny_shard_dust.get(), ModPotions.luck_potion.get());
             //senses
-            addMix.invoke(addMix, Potions.AWKWARD, RegistryHandler.mysterious_sensory_organ.get(), RegistryHandler.senses_potion.get());
+            addMix.invoke(addMix, Potions.AWKWARD, ModPotions.mysterious_sensory_organ.get(), ModPotions.senses_potion.get());
         }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
             e.printStackTrace();
         }
@@ -38,13 +40,13 @@ public class BrewingHandler {
     public static void setup(FMLCommonSetupEvent event) {
         ItemStack AWKWARD = PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.AWKWARD);
         //luck recipes
-        basicBrewing(AWKWARD.copy(), RegistryHandler.luck_potion.get(), RegistryHandler.shiny_shard_dust.get());
-        splashBrewing(RegistryHandler.luck_potion.get(), RegistryHandler.shiny_shard_dust.get());
-        lingerBrewing(RegistryHandler.luck_potion.get(), RegistryHandler.shiny_shard_dust.get());
+        basicBrewing(AWKWARD.copy(), ModPotions.luck_potion.get(), ModItems.shiny_shard_dust.get());
+        splashBrewing(ModPotions.luck_potion.get(), ModItems.shiny_shard_dust.get());
+        lingerBrewing(ModPotions.luck_potion.get(), ModItems.shiny_shard_dust.get());
         //senses recipes
-        basicBrewing(AWKWARD.copy(), RegistryHandler.senses_potion.get(), RegistryHandler.mysterious_sensory_organ.get());
-        splashBrewing(RegistryHandler.senses_potion.get(), RegistryHandler.mysterious_sensory_organ.get());
-        lingerBrewing(RegistryHandler.senses_potion.get(), RegistryHandler.mysterious_sensory_organ.get());
+        basicBrewing(AWKWARD.copy(), ModPotions.senses_potion.get(), ModItems.mysterious_sensory_organ.get());
+        splashBrewing(ModPotions.senses_potion.get(), ModItems.mysterious_sensory_organ.get());
+        lingerBrewing(ModPotions.senses_potion.get(), ModItems.mysterious_sensory_organ.get());
     }
 
     private static void basicBrewing(ItemStack AWKWARD, Potion pot, Item item) {

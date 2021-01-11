@@ -1,7 +1,8 @@
 package com.talp1.talpsadditions.entity.MoleEntity;
 
 import com.talp1.talpsadditions.Main;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModEntities;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
@@ -38,14 +39,14 @@ public class MoleEntity extends AnimalEntity {
 
     @Override
     public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        MoleEntity entity = (MoleEntity)((EntityType)RegistryHandler.mole_entity.get()).create(p_241840_1_);
+        MoleEntity entity = (MoleEntity)((EntityType) ModEntities.mole_entity.get()).create(p_241840_1_);
         entity.onInitialSpawn(p_241840_1_, p_241840_1_.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.BREEDING, (ILivingEntityData)null, (CompoundNBT)null);
         return entity;
     }
 
     @Nullable
     public MoleEntity createChild(AgeableEntity ageable) {
-        MoleEntity entity = (MoleEntity)((EntityType)RegistryHandler.mole_entity.get()).create(this.world);
+        MoleEntity entity = (MoleEntity)((EntityType)ModEntities.mole_entity.get()).create(this.world);
         entity.onInitialSpawn(this.world.getServer().func_241755_D_(), this.world.getDifficultyForLocation(new BlockPos(entity.getPositionVec())), SpawnReason.BREEDING, (ILivingEntityData)null, (CompoundNBT)null);
         return entity;
     }
@@ -56,7 +57,7 @@ public class MoleEntity extends AnimalEntity {
         this.goalSelector.addGoal(0, new PanicGoal(this,1.25D));
         this.goalSelector.addGoal(1, new BreedGoal(this,1D));
         this.goalSelector.addGoal(2, new AvoidEntityGoal(this, CatEntity.class,8f,1.25f,1.25f));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Ingredient.fromItems(RegistryHandler.earth_worm.get()), true));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Ingredient.fromItems(ModItems.earth_worm.get()), true));
         this.goalSelector.addGoal(4, new AvoidEntityGoal(this, PlayerEntity.class,8f,1.25f,1.25f));
         this.goalSelector.addGoal(5, new FollowParentGoal(this,1.1D));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this,1D));
@@ -82,7 +83,7 @@ public class MoleEntity extends AnimalEntity {
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem()==RegistryHandler.earth_worm.get();
+        return stack.getItem()==ModItems.earth_worm.get();
     }
 
     //TODO -> moles only spawn in caves

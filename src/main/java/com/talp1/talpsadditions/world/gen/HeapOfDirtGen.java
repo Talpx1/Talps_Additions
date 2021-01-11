@@ -2,7 +2,7 @@ package com.talp1.talpsadditions.world.gen;
 
 import com.google.common.collect.ImmutableSet;
 import com.talp1.talpsadditions.Main;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -23,7 +23,7 @@ public class HeapOfDirtGen {
     @SubscribeEvent
     public static void generateBushes(BiomeLoadingEvent biome){
         if(biome.getCategory()!= Biome.Category.NETHER && biome.getCategory()!= Biome.Category.THEEND){
-            BlockClusterFeatureConfig HEAP_OF_DIRT_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(RegistryHandler.heap_of_dirt.get().getDefaultState()),new SimpleBlockPlacer()).tries(2).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock(),Blocks.DIRT.getBlock(),Blocks.PODZOL.getBlock(),Blocks.COARSE_DIRT.getBlock())).func_227317_b_().build();
+            BlockClusterFeatureConfig HEAP_OF_DIRT_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(ModBlocks.heap_of_dirt.get().getDefaultState()),new SimpleBlockPlacer()).tries(2).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK.getBlock(),Blocks.DIRT.getBlock(),Blocks.PODZOL.getBlock(),Blocks.COARSE_DIRT.getBlock())).func_227317_b_().build();
             biome.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.FLOWER.withConfiguration(HEAP_OF_DIRT_CONFIG).withPlacement(Placement.HEIGHTMAP.configure(NoPlacementConfig.INSTANCE)));
         }
     }

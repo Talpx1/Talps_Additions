@@ -3,7 +3,9 @@ package com.talp1.talpsadditions.container;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.tile_entity.GenLabTE;
 import com.talp1.talpsadditions.utils.EnergyStorageHandler;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
+import com.talp1.talpsadditions.utils.registration.ModContainers;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -41,7 +43,7 @@ public class GenLabContainer extends Container {
     }
 
     public GenLabContainer(int windowId, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray genLabDataIn) {
-        super(RegistryHandler.gen_lab_container.get(), windowId);
+        super(ModContainers.gen_lab_container.get(), windowId);
 
         //setting variables
         tileEntity = world.getTileEntity(pos);
@@ -72,8 +74,6 @@ public class GenLabContainer extends Container {
     //--cretits to McJty--
     // Setup syncing of power from server to client so that the GUI can show the amount of power in the block
     private void trackPower() {
-        // Unfortunatelly on a dedicated server ints are actually truncated to short so we need
-        // to split our integer here (split our 32 bit integer into two 16 bit integers)
         trackInt(new IntReferenceHolder() {
             @Override
             public int get() {
@@ -110,15 +110,15 @@ public class GenLabContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, RegistryHandler.gen_lab_block.get());
+        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.gen_lab_block.get());
     }
 
-    private static ArrayList<Item> baseItems = new ArrayList<>(Arrays.asList(Items.FEATHER, Items.WHITE_WOOL, RegistryHandler.bush_leaf.get(), Items.VINE));
-    private static ArrayList<Item> toInjItems = new ArrayList<>(Arrays.asList(RegistryHandler.petal.get(),Items.BONE_MEAL, Items.BLUE_DYE, Items.RED_DYE, Items.PINK_DYE, Items.WHITE_DYE, Items.PURPLE_DYE, Items.DIAMOND_BLOCK, Items.COAL_BLOCK,Items.IRON_BLOCK, Items.EMERALD_BLOCK, Items.LAPIS_BLOCK, Items.REDSTONE_BLOCK, Items.GOLD_BLOCK, Items.QUARTZ_BLOCK, Items.NETHERITE_BRICKS));
-    private static ArrayList<Item> injIntoItems = new ArrayList<>(Arrays.asList(Items.EGG, Items.WHEAT_SEEDS, RegistryHandler.bush_sprout.get()));
-    private static ArrayList<Item> geneItems = new ArrayList<>(Arrays.asList(RegistryHandler.bush_gene.get(), RegistryHandler.chicken_gene.get(), RegistryHandler.vine_gene.get(), RegistryHandler.sheep_gene.get()));
-    private static ArrayList<Item> geneMod = new ArrayList<>(Arrays.asList(RegistryHandler.animal_gen_modifier.get(), RegistryHandler.vegetal_gen_modifier.get()));
-    //private static ArrayList<Item> outputItems = new ArrayList<>(Arrays.asList(RegistryHandler.blue_hydrangea_sprout.get(),RegistryHandler.red_hydrangea_sprout.get(),RegistryHandler.pink_hydrangea_sprout.get(),RegistryHandler.lilac_hydrangea_sprout.get(), RegistryHandler.bush_sprout.get(), RegistryHandler.floreal_vines_item.get()));
+    private static ArrayList<Item> baseItems = new ArrayList<>(Arrays.asList(Items.FEATHER, Items.WHITE_WOOL, ModItems.bush_leaf.get(), Items.VINE));
+    private static ArrayList<Item> toInjItems = new ArrayList<>(Arrays.asList(ModItems.petal.get(),Items.BONE_MEAL, Items.BLUE_DYE, Items.RED_DYE, Items.PINK_DYE, Items.WHITE_DYE, Items.PURPLE_DYE, Items.DIAMOND_BLOCK, Items.COAL_BLOCK,Items.IRON_BLOCK, Items.EMERALD_BLOCK, Items.LAPIS_BLOCK, Items.REDSTONE_BLOCK, Items.GOLD_BLOCK, Items.QUARTZ_BLOCK, Items.NETHERITE_BRICKS));
+    private static ArrayList<Item> injIntoItems = new ArrayList<>(Arrays.asList(Items.EGG, Items.WHEAT_SEEDS, ModItems.bush_sprout.get()));
+    private static ArrayList<Item> geneItems = new ArrayList<>(Arrays.asList(ModItems.bush_gene.get(), ModItems.chicken_gene.get(), ModItems.vine_gene.get(), ModItems.sheep_gene.get()));
+    private static ArrayList<Item> geneMod = new ArrayList<>(Arrays.asList(ModItems.animal_gen_modifier.get(), ModItems.vegetal_gen_modifier.get()));
+    //private static ArrayList<Item> outputItems = new ArrayList<>(Arrays.asList(ModItems.blue_hydrangea_sprout.get(),ModItems.red_hydrangea_sprout.get(),ModItems.pink_hydrangea_sprout.get(),ModItems.lilac_hydrangea_sprout.get(), ModItems.bush_sprout.get(), ModItems.floreal_vines_item.get()));
 
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {

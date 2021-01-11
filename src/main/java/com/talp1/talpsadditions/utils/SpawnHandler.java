@@ -3,6 +3,8 @@ package com.talp1.talpsadditions.utils;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
 import com.talp1.talpsadditions.entity.YetiEntity.YetiEntity;
+import com.talp1.talpsadditions.utils.registration.ModEffects;
+import com.talp1.talpsadditions.utils.registration.ModEntities;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.passive.BatEntity;
@@ -19,7 +21,7 @@ public class SpawnHandler {
 
     @SubscribeEvent
     public static void registerEntitySpawnPlacements(FMLCommonSetupEvent event) {
-        EntitySpawnPlacementRegistry.register(RegistryHandler.mole_entity.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoleEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(RegistryHandler.yeti_entity.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, YetiEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(ModEntities.mole_entity.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MoleEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(ModEntities.yeti_entity.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, YetiEntity::canSpawn);
     }
 }

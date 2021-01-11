@@ -1,25 +1,36 @@
 package com.talp1.talpsadditions.tile_entity;
 
+import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.container.GenLabContainer;
+import com.talp1.talpsadditions.recipe.gen_lab_recipe.GenLabRecipe;
 import com.talp1.talpsadditions.utils.EnergyStorageHandler;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModItems;
+import com.talp1.talpsadditions.utils.registration.ModRecipes;
+import com.talp1.talpsadditions.utils.registration.ModSpawnEggs;
+import com.talp1.talpsadditions.utils.registration.ModTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -27,6 +38,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 public class GenLabTE extends TileEntity implements ITickableTileEntity{
 
@@ -85,15 +97,15 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
     private LazyOptional<IEnergyStorage> energy =  LazyOptional.of(()->energyStorage);
 
     //items valid in each slot, used to check where to put an itemstack on shift-click
-    private static ArrayList<Item> baseItems = new ArrayList<>(Arrays.asList(Items.FEATHER, Items.WHITE_WOOL, RegistryHandler.bush_leaf.get(), Items.VINE));
-    private static ArrayList<Item> toInjItems = new ArrayList<>(Arrays.asList(RegistryHandler.petal.get(),Items.BONE_MEAL, Items.BLUE_DYE, Items.RED_DYE, Items.PINK_DYE, Items.WHITE_DYE, Items.PURPLE_DYE, Items.DIAMOND_BLOCK, Items.COAL_BLOCK,Items.IRON_BLOCK, Items.EMERALD_BLOCK, Items.LAPIS_BLOCK, Items.REDSTONE_BLOCK, Items.GOLD_BLOCK, Items.QUARTZ_BLOCK, Items.NETHERITE_BRICKS));
-    private static ArrayList<Item> injIntoItems = new ArrayList<>(Arrays.asList(Items.EGG, Items.WHEAT_SEEDS, RegistryHandler.bush_sprout.get()));
-    private static ArrayList<Item> geneItems = new ArrayList<>(Arrays.asList(RegistryHandler.bush_gene.get(), RegistryHandler.chicken_gene.get(), RegistryHandler.vine_gene.get(), RegistryHandler.sheep_gene.get()));
-    private static ArrayList<Item> geneMod = new ArrayList<>(Arrays.asList(RegistryHandler.animal_gen_modifier.get(), RegistryHandler.vegetal_gen_modifier.get()));
-    //private static ArrayList<Item> outputItems = new ArrayList<>(Arrays.asList(RegistryHandler.blue_hydrangea_sprout.get(),RegistryHandler.red_hydrangea_sprout.get(),RegistryHandler.pink_hydrangea_sprout.get(),RegistryHandler.lilac_hydrangea_sprout.get(), RegistryHandler.bush_sprout.get(), RegistryHandler.floreal_vines_item.get(), RegistryHandler.ExtraRegHandler.coalChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.diamondChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.emeraldChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.goldChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.ironChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.quartzChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.netheriteChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.lapisChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.redstoneChickenSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.coalSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.diamondSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.emeraldSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.goldSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.ironSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.quartzSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.netheriteSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.lapisSheepSpawnEgg.getItem(),RegistryHandler.ExtraRegHandler.redstoneSheepSpawnEgg.getItem() ));
+    private static ArrayList<Item> baseItems = new ArrayList<>(Arrays.asList(Items.FEATHER, Items.WHITE_WOOL, ModItems.bush_leaf.get(), Items.VINE));
+    private static ArrayList<Item> toInjItems = new ArrayList<>(Arrays.asList(ModItems.petal.get(),Items.BONE_MEAL, Items.BLUE_DYE, Items.RED_DYE, Items.PINK_DYE, Items.WHITE_DYE, Items.PURPLE_DYE, Items.DIAMOND_BLOCK, Items.COAL_BLOCK,Items.IRON_BLOCK, Items.EMERALD_BLOCK, Items.LAPIS_BLOCK, Items.REDSTONE_BLOCK, Items.GOLD_BLOCK, Items.QUARTZ_BLOCK, Items.NETHERITE_BRICKS));
+    private static ArrayList<Item> injIntoItems = new ArrayList<>(Arrays.asList(Items.EGG, Items.WHEAT_SEEDS, ModItems.bush_sprout.get()));
+    private static ArrayList<Item> geneItems = new ArrayList<>(Arrays.asList(ModItems.bush_gene.get(), ModItems.chicken_gene.get(), ModItems.vine_gene.get(), ModItems.sheep_gene.get()));
+    private static ArrayList<Item> geneMod = new ArrayList<>(Arrays.asList(ModItems.animal_gen_modifier.get(), ModItems.vegetal_gen_modifier.get()));
+    //private static ArrayList<Item> outputItems = new ArrayList<>(Arrays.asList(ModItems.blue_hydrangea_sprout.get(),ModItems.red_hydrangea_sprout.get(),ModItems.pink_hydrangea_sprout.get(),ModItems.lilac_hydrangea_sprout.get(), ModItems.bush_sprout.get(), ModItems.floreal_vines_item.get(), ModSpawnEggs.coalChickenSpawnEgg.getItem(),ModSpawnEggs.diamondChickenSpawnEgg.getItem(),ModSpawnEggs.emeraldChickenSpawnEgg.getItem(),ModSpawnEggs.goldChickenSpawnEgg.getItem(),ModSpawnEggs.ironChickenSpawnEgg.getItem(),ModSpawnEggs.quartzChickenSpawnEgg.getItem(),ModSpawnEggs.netheriteChickenSpawnEgg.getItem(),ModSpawnEggs.lapisChickenSpawnEgg.getItem(),ModSpawnEggs.redstoneChickenSpawnEgg.getItem(),ModSpawnEggs.coalSheepSpawnEgg.getItem(),ModSpawnEggs.diamondSheepSpawnEgg.getItem(),ModSpawnEggs.emeraldSheepSpawnEgg.getItem(),ModSpawnEggs.goldSheepSpawnEgg.getItem(),ModSpawnEggs.ironSheepSpawnEgg.getItem(),ModSpawnEggs.quartzSheepSpawnEgg.getItem(),ModSpawnEggs.netheriteSheepSpawnEgg.getItem(),ModSpawnEggs.lapisSheepSpawnEgg.getItem(),ModSpawnEggs.redstoneSheepSpawnEgg.getItem() ));
 
     public GenLabTE() {
-        super(RegistryHandler.gen_lab_te.get());
+        super(ModTiles.gen_lab_te.get());
         this.isCrafting=false;
         this.timer=-1;
         this.currResult=null;
@@ -270,8 +282,6 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
     }
 
     @Override
-    //TODO -> rework code
-    //TODO -> custom recipes
     public void tick() {
         if (world.isRemote){
             return;
@@ -296,143 +306,26 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
             }
             //check if done
             if (checkIfDone()){
-                this.isCrafting=false;
-                disbleTimer();
+                stopCrafting();
                 produceResult();
             }
         }else{
-            //check if is a hydrangea recipe
-            if (getItemInSlot(0)==RegistryHandler.bush_gene.get()&&getItemInSlot(1)==RegistryHandler.vegetal_gen_modifier.get()&&getItemInSlot(2)==RegistryHandler.bush_leaf.get()&&getItemInSlot(4)==RegistryHandler.bush_sprout.get()){
-                //blue
-                if (getItemInSlot(3)==Items.BLUE_DYE){
-                    startCrafting(15);
-                    setCurrResult(RegistryHandler.blue_hydrangea_sprout.get(),1);}
-                //red
-                if (getItemInSlot(3)==Items.RED_DYE){
-                    startCrafting(15);
-                    setCurrResult(RegistryHandler.red_hydrangea_sprout.get(),1);}
-                //pink
-                if (getItemInSlot(3)==Items.PINK_DYE){
-                    startCrafting(15);
-                    setCurrResult(RegistryHandler.pink_hydrangea_sprout.get(),1); }
-                //white
-                if (getItemInSlot(3)==Items.WHITE_DYE){
-                    startCrafting(15);
-                    setCurrResult(RegistryHandler.white_hydrangea_sprout.get(),1); }
-                //lilac
-                if (getItemInSlot(3)==Items.PURPLE_DYE){
-                    startCrafting(15);
-                    setCurrResult(RegistryHandler.lilac_hydrangea_sprout.get(),1); }
+            //check if slots are not empty
+            boolean isValidInput=true;
+            for (int i=0; i<itemHandler.getSlots()-1; i++){
+                if(itemHandler.getStackInSlot(i).isEmpty())
+                    isValidInput=false;
             }
-            //normal bush
-            if (getItemInSlot(0)==RegistryHandler.bush_gene.get()&&getItemInSlot(1)==RegistryHandler.vegetal_gen_modifier.get()&&getItemInSlot(2)==RegistryHandler.bush_leaf.get()&&getItemInSlot(3)==Items.BONE_MEAL&&getItemInSlot(4)==Items.WHEAT_SEEDS){
-                startCrafting(15);
-                setCurrResult(RegistryHandler.bush_sprout.get(),1);
-            }
-            //floreal Vine
-            if (getItemInSlot(0)==RegistryHandler.vine_gene.get()&&getItemInSlot(1)==RegistryHandler.vegetal_gen_modifier.get()&&getItemInSlot(2)==Items.VINE&&getItemInSlot(3)==RegistryHandler.petal.get()&&getItemInSlot(4)==Items.WHEAT_SEEDS){
-                startCrafting(20);
-                setCurrResult(RegistryHandler.floreal_vines_item.get(),2);
-            }
-            //check if is chicken recipe
-            if (getItemInSlot(0)==RegistryHandler.chicken_gene.get()&&getItemInSlot(1)==RegistryHandler.animal_gen_modifier.get()&&getItemInSlot(2)==Items.FEATHER&&getItemInSlot(4)==Items.EGG) {
-                //coal
-                if (getItemInSlot(3) == Items.COAL_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.coalChickenSpawnEgg.getItem(), 1);
+            //get the right recipe (if exists) for the items in the genlabs
+            if (isValidInput){
+                for (final IRecipe<?> recipe : getWorld().getRecipeManager().getRecipesForType(ModRecipes.GEN_LAB_RECIPE_TYPE)) {
+                    final GenLabRecipe genLabRecipe = (GenLabRecipe) recipe;
+                    if (genLabRecipe.isValid(itemHandler.getStackInSlot(0), itemHandler.getStackInSlot(1), itemHandler.getStackInSlot(2), itemHandler.getStackInSlot(3), itemHandler.getStackInSlot(4))) {
+                        startCrafting(genLabRecipe.getTimeToCraft());
+                        setCurrResult(genLabRecipe.getRecipeOutput().getItem(), genLabRecipe.getOutputAmount());
+                        break;
+                    }
                 }
-                //diamond
-                if (getItemInSlot(3) == Items.DIAMOND_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.diamondChickenSpawnEgg.getItem(), 1);
-                }
-                //emerald
-                if (getItemInSlot(3) == Items.EMERALD_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.emeraldChickenSpawnEgg.getItem(), 1);
-                }
-                //gold
-                if (getItemInSlot(3) == Items.GOLD_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.goldChickenSpawnEgg.getItem(), 1);
-                }
-                //iron
-                if (getItemInSlot(3) == Items.IRON_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.ironChickenSpawnEgg.getItem(), 1);
-                }
-                //lapis
-                if (getItemInSlot(3) == Items.LAPIS_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.lapisChickenSpawnEgg.getItem(), 1);
-                }
-                //quartz
-                if (getItemInSlot(3) == Items.QUARTZ_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.quartzChickenSpawnEgg.getItem(), 1);
-                }
-                //netherite
-                if (getItemInSlot(3) == Items.NETHERITE_BRICKS) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.netheriteChickenSpawnEgg.getItem(), 1);
-                }
-                //redstone
-                if (getItemInSlot(3) == Items.REDSTONE_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.redstoneChickenSpawnEgg.getItem(), 1);
-                }
-            }
-            //check if is sheep recipe
-            if (getItemInSlot(0)==RegistryHandler.sheep_gene.get()&&getItemInSlot(1)==RegistryHandler.animal_gen_modifier.get()&&getItemInSlot(2)==Items.WHITE_WOOL&&getItemInSlot(4)==Items.EGG) {
-                //coal
-                if (getItemInSlot(3) == Items.COAL_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.coalSheepSpawnEgg.getItem(), 1);
-                }
-                //diamond
-                if (getItemInSlot(3) == Items.DIAMOND_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.diamondSheepSpawnEgg.getItem(), 1);
-                }
-                //emerald
-                if (getItemInSlot(3) == Items.EMERALD_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.emeraldSheepSpawnEgg.getItem(), 1);
-                }
-                //gold
-                if (getItemInSlot(3) == Items.GOLD_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.goldSheepSpawnEgg.getItem(), 1);
-                }
-                //iron
-                if (getItemInSlot(3) == Items.IRON_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.ironSheepSpawnEgg.getItem(), 1);
-                }
-                //lapis
-                if (getItemInSlot(3) == Items.LAPIS_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.lapisSheepSpawnEgg.getItem(), 1);
-                }
-                //quartz
-                if (getItemInSlot(3) == Items.QUARTZ_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.quartzSheepSpawnEgg.getItem(), 1);
-                }
-                //netherite
-                if (getItemInSlot(3) == Items.NETHERITE_BRICKS) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.netheriteSheepSpawnEgg.getItem(), 1);
-                }
-                //redstone
-                if (getItemInSlot(3) == Items.REDSTONE_BLOCK) {
-                    startCrafting(60);
-                    setCurrResult(RegistryHandler.ExtraRegHandler.redstoneSheepSpawnEgg.getItem(), 1); }
-            }
-            //frosted Vine
-            if (getItemInSlot(0)==RegistryHandler.vine_gene.get()&&getItemInSlot(1)==RegistryHandler.vegetal_gen_modifier.get()&&getItemInSlot(2)==Items.VINE&&getItemInSlot(3)== Items.PACKED_ICE&&getItemInSlot(4)==Items.WHEAT_SEEDS){
-                startCrafting(20);
-                setCurrResult(RegistryHandler.frosted_vines_item.get(),2);
             }
         }
     }

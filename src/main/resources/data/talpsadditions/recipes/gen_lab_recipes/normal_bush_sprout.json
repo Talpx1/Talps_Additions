@@ -1,0 +1,23 @@
+{
+    "type": "talpsadditions:gen_lab_recipe",
+    "gene-type": {
+        "item": "talpsadditions:bush_gene"
+    },
+    "gene-modifier": {
+        "item": "talpsadditions:vegetal_gene_modifier"
+    },
+    "base": {
+        "item": "talpsadditions:bush_leaf"
+    },
+    "item-to-inject": {
+        "item": "minecraft:bonemeal"
+    },
+    "item-to-inject-into": {
+        "item": "minecraft:wheat_seeds"
+    },
+    "time-to-craft": 45,
+    "output-amount":1,
+    "output": {
+        "item": "talpsadditions:bush_sprout"
+    }
+}

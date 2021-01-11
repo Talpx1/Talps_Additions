@@ -1,6 +1,6 @@
 package com.talp1.talpsadditions.block;
 
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class WhiteHydrangeaBlock extends NormalBushBlock {
 
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(RegistryHandler.white_hydrangea_sprout.get());
+        return new ItemStack(ModItems.white_hydrangea_sprout.get());
     }
 
     @Override
@@ -32,8 +32,8 @@ public class WhiteHydrangeaBlock extends NormalBushBlock {
             return ActionResultType.PASS;
         } else if (i > 1) {
             int j = 1 + worldIn.rand.nextInt(2);
-            spawnAsEntity(worldIn, pos, new ItemStack(RegistryHandler.bush_leaf.get(), 1));
-            spawnAsEntity(worldIn, pos, new ItemStack(RegistryHandler.petal.get(), j + (flag ? 1 : 0)));
+            spawnAsEntity(worldIn, pos, new ItemStack(ModItems.bush_leaf.get(), 1));
+            spawnAsEntity(worldIn, pos, new ItemStack(ModItems.petal.get(), j + (flag ? 1 : 0)));
             worldIn.playSound((PlayerEntity)null, pos, SoundEvents.ITEM_SWEET_BERRIES_PICK_FROM_BUSH, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
             worldIn.setBlockState(pos, state.with(AGE, 1), 2);
             return ActionResultType.func_233537_a_(worldIn.isRemote);

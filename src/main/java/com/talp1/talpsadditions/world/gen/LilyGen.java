@@ -1,7 +1,7 @@
 package com.talp1.talpsadditions.world.gen;
 
 import com.talp1.talpsadditions.Main;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeMaker;
 import net.minecraft.world.biome.Biomes;
@@ -22,7 +22,7 @@ public class LilyGen {
     @SubscribeEvent
     public static void generateLily(BiomeLoadingEvent biome){
 
-        BlockClusterFeatureConfig FLOWERY_WATER_LILY_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(RegistryHandler.flowery_water_lily.get().getDefaultState()), SimpleBlockPlacer.PLACER)).tries(10).build();
+        BlockClusterFeatureConfig FLOWERY_WATER_LILY_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(ModBlocks.flowery_water_lily.get().getDefaultState()), SimpleBlockPlacer.PLACER)).tries(10).build();
         if (biome.getCategory() == Biome.Category.JUNGLE || biome.getCategory() == Biome.Category.SWAMP || biome.getName().equals(Biomes.FLOWER_FOREST.getLocation())){
             biome.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(FLOWERY_WATER_LILY_CONFIG).withPlacement(Features.Placements.PATCH_PLACEMENT).func_242731_b(4));
         }

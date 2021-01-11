@@ -1,7 +1,7 @@
 package com.talp1.talpsadditions.item;
 
 import com.talp1.talpsadditions.Main;
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
@@ -70,7 +70,7 @@ public class BottleOfAcidItem extends Item {
                     playerIn.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
                     stack.shrink(1);
                 }
-                playerIn.getEntityWorld().setBlockState(pos,RegistryHandler.cauldron_with_acid.get().getDefaultState(),2);
+                playerIn.getEntityWorld().setBlockState(pos, ModBlocks.cauldron_with_acid.get().getDefaultState(),2);
                 return true;
             }
         }

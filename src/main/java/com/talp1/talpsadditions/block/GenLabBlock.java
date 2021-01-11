@@ -98,6 +98,7 @@ public class GenLabBlock extends Block {
         if(worldIn.getTileEntity(pos) instanceof GenLabTE && entityIn.getType()==EntityType.FALLING_BLOCK){
             GenLabTE tile = (GenLabTE) worldIn.getTileEntity(pos);
             tile.energyStorage.addEnergy(Math.round(fallDistance*1000));
+            tile.markDirty();
         }
         super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
     }

@@ -1,6 +1,6 @@
 package com.talp1.talpsadditions.block;
 
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
@@ -62,8 +62,8 @@ public class CauldronWithAcid extends CauldronBlock {
         itemEntityToss.remove();
         Item drop;
         switch (type){
-            case 1: drop = RegistryHandler.animal_dna_helix.get(); break;
-            case 2: drop = RegistryHandler.vegetal_dna_helix.get(); break;
+            case 1: drop = ModItems.animal_dna_helix.get(); break;
+            case 2: drop = ModItems.vegetal_dna_helix.get(); break;
             default: drop= itemEntityToss.getItem().getItem();
         }
         worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(drop, count)));

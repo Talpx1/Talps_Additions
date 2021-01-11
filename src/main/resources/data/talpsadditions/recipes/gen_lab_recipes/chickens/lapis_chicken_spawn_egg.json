@@ -1,0 +1,23 @@
+{
+    "type": "talpsadditions:gen_lab_recipe",
+    "gene-type": {
+        "item": "talpsadditions:chicken_gene"
+    },
+    "gene-modifier": {
+        "item": "talpsadditions:animal_gene_modifier"
+    },
+    "base": {
+        "item": "minecraft:feather"
+    },
+    "item-to-inject": {
+        "item": "minecraft:lapis_block"
+    },
+    "item-to-inject-into": {
+        "item": "minecraft:egg"
+    },
+    "time-to-craft": 120,
+    "output-amount":1,
+    "output": {
+        "item": "talpsadditions:lapis_chicken_spawn_egg"
+    }
+}

@@ -1,6 +1,9 @@
 package com.talp1.talpsadditions.utils;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
+import com.talp1.talpsadditions.utils.registration.ModEntities;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
@@ -35,7 +38,7 @@ public class EventHandler{
             Random random = new Random();
             if(random.nextInt(3)+1==1){
                 World worldIn = event.getContext().getWorld();
-                worldIn.addEntity(new ItemEntity(worldIn, event.getContext().getPos().getX(), event.getContext().getPos().getY()+1,event.getContext().getPos().getZ(), new ItemStack(RegistryHandler.earth_worm.get())));
+                worldIn.addEntity(new ItemEntity(worldIn, event.getContext().getPos().getX(), event.getContext().getPos().getY()+1,event.getContext().getPos().getZ(), new ItemStack(ModItems.earth_worm.get())));
             }
         }
     }
@@ -45,7 +48,7 @@ public class EventHandler{
     //drop talp1's head when a mole is struck by a lightning
     @SubscribeEvent
     public static void onMoleStruckByLightning(EntityStruckByLightningEvent event){
-        if(event.getEntity().getType()== RegistryHandler.mole_entity.get()){
+        if(event.getEntity().getType()== ModEntities.mole_entity.get()){
             ItemStack customPlayerHead = new ItemStack(Items.PLAYER_HEAD);
             customPlayerHead.setTag(new CompoundNBT());
             customPlayerHead.getTag().putString("SkullOwner", "Talp1");
@@ -129,7 +132,7 @@ public class EventHandler{
                         playerInv.decrStackSize(slotRedstone,1);
                         playerInv.decrStackSize(slotSpiderEye,1);
                         playerInv.decrStackSize(slotPoisonPot,1);
-                        event.player.addItemStackToInventory(new ItemStack(RegistryHandler.bottle_of_acid.get(),1));
+                        event.player.addItemStackToInventory(new ItemStack(ModItems.bottle_of_acid.get(),1));
                     }
                 }
             }
@@ -140,7 +143,7 @@ public class EventHandler{
     public static void dropBatEardrum(LivingDeathEvent event){
         if (event.getEntity().getType()== EntityType.BAT){
             if (new Random().nextInt(6)==0){
-                event.getEntityLiving().entityDropItem(new ItemStack(RegistryHandler.bat_eardrum.get()));
+                event.getEntityLiving().entityDropItem(new ItemStack(ModItems.bat_eardrum.get()));
             }
         }
     }
@@ -149,7 +152,7 @@ public class EventHandler{
     @SubscribeEvent
     public static void vinesGeneratesBlueIce(BlockEvent.EntityPlaceEvent event){
         if (event.getEntity() instanceof PlayerEntity) {
-            if (event.getPlacedBlock().getBlock() == RegistryHandler.frosted_vines.get().getBlock() && event.getWorld().getBlockState(event.getPos().down()) == Blocks.WATER.getDefaultState()) {
+            if (event.getPlacedBlock().getBlock() == ModBlocks.frosted_vines.get().getBlock() && event.getWorld().getBlockState(event.getPos().down()) == Blocks.WATER.getDefaultState()) {
                 event.getWorld().setBlockState(event.getPos().down(), Blocks.BLUE_ICE.getDefaultState(), 2);
             }
         }
@@ -158,8 +161,8 @@ public class EventHandler{
 //----------------------------------YETI DROPS ICECREAM ON RIGHTCLICK------------------------------
     @SubscribeEvent
     public static void yetiDropsIcecream(PlayerInteractEvent.EntityInteract event){
-       if(event.getTarget().getType()==RegistryHandler.yeti_entity.get()){
-           event.getTarget().entityDropItem(RegistryHandler.yetis_icecream.get());
+       if(event.getTarget().getType()==ModEntities.yeti_entity.get()){
+           event.getTarget().entityDropItem(ModItems.yetis_icecream.get());
        }
     }
 }

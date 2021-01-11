@@ -1,6 +1,6 @@
 package com.talp1.talpsadditions.block;
 
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -13,6 +13,6 @@ public class LilacHydrangeaBlock extends WhiteHydrangeaBlock {
 
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(RegistryHandler.lilac_hydrangea_sprout.get());
+        return new ItemStack(ModItems.lilac_hydrangea_sprout.get());
     }
 }

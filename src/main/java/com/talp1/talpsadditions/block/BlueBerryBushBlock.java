@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.block;
 
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +24,7 @@ public class BlueBerryBushBlock extends SweetBerryBushBlock{
     }
 
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-        return new ItemStack(RegistryHandler.blue_berries.get());
+        return new ItemStack(ModItems.blue_berries.get());
     }
 
     @Override
@@ -34,7 +35,7 @@ public class BlueBerryBushBlock extends SweetBerryBushBlock{
             return ActionResultType.PASS;
         } else if (i > 1) {
             int j = 1 + worldIn.rand.nextInt(2);
-            spawnAsEntity(worldIn, pos, new ItemStack(RegistryHandler.blue_berries.get(), j + (flag ? 1 : 0)));
+            spawnAsEntity(worldIn, pos, new ItemStack(ModItems.blue_berries.get(), j + (flag ? 1 : 0)));
             worldIn.playSound((PlayerEntity)null, pos, SoundEvents.ITEM_SWEET_BERRIES_PICK_FROM_BUSH, SoundCategory.BLOCKS, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
             worldIn.setBlockState(pos, state.with(AGE, 1), 2);
             return ActionResultType.func_233537_a_(worldIn.isRemote);

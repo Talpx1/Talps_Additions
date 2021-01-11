@@ -1,6 +1,6 @@
 package com.talp1.talpsadditions.gui;
 
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -12,7 +12,7 @@ public class CustomItemGroup extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(RegistryHandler.shiny_shard.get());
+        return new ItemStack(ModItems.shiny_shard.get());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.utils;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IBlockColor;
@@ -17,7 +18,7 @@ public class ColorHandler {
     @SubscribeEvent
     public static void blockColorReg(ColorHandlerEvent.Block event) {
         event.getBlockColors().register(new BlockColorImpl(),
-                RegistryHandler.floreal_vines.get());
+                ModBlocks.floreal_vines.get());
     }
 
     static class BlockColorImpl implements IBlockColor{

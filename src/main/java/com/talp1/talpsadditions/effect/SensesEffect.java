@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.effect;
 
-import com.talp1.talpsadditions.utils.RegistryHandler;
+import com.talp1.talpsadditions.utils.registration.ModBlocks;
+import com.talp1.talpsadditions.utils.registration.ModSounds;
 import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -59,7 +60,7 @@ public class SensesEffect extends Effect {
                     if(y>0) {
                         BlockPos currBlockPos = new BlockPos(x, y, z);
                         Block currBlock = playerIn.getEntityWorld().getBlockState(currBlockPos).getBlock();
-                        if (currBlock == RegistryHandler.shiny_shard_ore.get().getBlock()) {
+                        if (currBlock == ModBlocks.shiny_shard_ore.get().getBlock()) {
                             foundOres.add(currBlockPos);
                         }
                     }
@@ -80,7 +81,7 @@ public class SensesEffect extends Effect {
     }
 
     public void playSound(World worldIn, BlockPos pos){
-        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), RegistryHandler.shiny_ores_sound.get(), SoundCategory.BLOCKS,0.75f,0.75f,false);
+        worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), ModSounds.shiny_ores_sound.get(), SoundCategory.BLOCKS,0.75f,0.75f,false);
     }
 
 }
