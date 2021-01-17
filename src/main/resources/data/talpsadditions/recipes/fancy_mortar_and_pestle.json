@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    " i ",
+    " b "
+  ],
+  "key": {
+    "s": {
+      "item": "talpsadditions:fancy_stick"
+    },
+    "i": {
+      "item": "minecraft:diamond"
+    },
+    "b": {
+      "item": "minecraft:bowl"
+    }
+  },
+  "result": {
+    "item": "talpsadditions:fancy_mortar_and_pestle",
+    "count": 1
+  }
+}

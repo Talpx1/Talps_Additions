@@ -59,6 +59,14 @@
   "item.talpsadditions.piece_of_coconut": "Piece Of Cocount",
   "item.talpsadditions.yeti_spawn_egg": "Yeti Egg",
   "item.talpsadditions.yetis_icecream": "Yeti's Icecream",
+  "item.talpsadditions.reinforced_fishing_rod": "Reinforced Fishing Rod",
+  "item.talpsadditions.robust_fishing_rod": "Robust Fishing Rod",
+  "item.talpsadditions.strong_string": "Strong String",
+  "item.talpsadditions.dolphin_fin": "Dolphin Fin",
+  "item.minecraft.potion.effect.dolphins_grace_potion": "Dolphin's Grace Potion",
+  "item.minecraft.splash_potion.effect.dolphins_grace_potion": "Splash Dolphin's Grace Potion",
+  "item.minecraft.lingering_potion.effect.dolphins_grace_potion": "Lingering Dolphin's Grace Potion",
+  "item.minecraft.tipped_arrow.effect.dolphins_grace_potion": "Dolphin's Grace Arrow",
 
   "effect.talpsadditions.senses_effect": "Senses",
 
@@ -110,6 +118,9 @@
   "entity.talpsadditions.netherite_resource_chicken_entity": "Netherite Resource Chicken",
   "entity.talpsadditions.quartz_resource_chicken_entity": "Quartz Resource Chicken",
   "entity.talpsadditions.redstone_resource_chicken_entity": "Redstone Resource Chicken",
+  "item.talpsadditions.fancy_mortar_and_pestle": "Fancy Mortar and Pestle",
+
+  "enchantment.talpsadditions.fine_grinding_enchant": "Fine Grinding",
 
   "screen.talpsadditions.gen_lab_block": "Gen-Lab",
 

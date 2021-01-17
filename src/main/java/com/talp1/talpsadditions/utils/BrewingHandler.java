@@ -47,6 +47,10 @@ public class BrewingHandler {
         basicBrewing(AWKWARD.copy(), ModPotions.senses_potion.get(), ModItems.mysterious_sensory_organ.get());
         splashBrewing(ModPotions.senses_potion.get(), ModItems.mysterious_sensory_organ.get());
         lingerBrewing(ModPotions.senses_potion.get(), ModItems.mysterious_sensory_organ.get());
+        //dolphins grace
+        basicBrewing(AWKWARD.copy(), ModPotions.dolphins_grace_potion.get(), ModItems.dolphin_fin.get());
+        splashBrewing(ModPotions.dolphins_grace_potion.get(), ModItems.dolphin_fin.get());
+        lingerBrewing(ModPotions.dolphins_grace_potion.get(), ModItems.dolphin_fin.get());
     }
 
     private static void basicBrewing(ItemStack AWKWARD, Potion pot, Item item) {

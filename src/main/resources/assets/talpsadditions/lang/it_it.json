@@ -58,6 +58,15 @@
   "item.talpsadditions.piece_of_coconut": "Pezzo di Cocco",
   "item.talpsadditions.yeti_spawn_egg": "Uovo di Yeti",
   "item.talpsadditions.yetis_icecream": "Gelato dello Yeti",
+  "item.talpsadditions.reinforced_fishing_rod": "Canna da Pesca Rinforzata",
+  "item.talpsadditions.robust_fishing_rod": "Canna da Pesca Robusta",
+  "item.talpsadditions.strong_string": "Stringa Resistente",
+  "item.talpsadditions.dolphin_fin": "Pinna di Delfino",
+  "item.minecraft.potion.effect.dolphins_grace_potion": "Pozione della Grazia del Delfino",
+  "item.minecraft.splash_potion.effect.dolphins_grace_potion": "Pozione della Grazia del Delfino da Lancio",
+  "item.minecraft.lingering_potion.effect.dolphins_grace_potion": "Pozione della Grazia del Delfino Persistente",
+  "item.minecraft.tipped_arrow.effect.dolphins_grace_potion": "Freccia della Grazia del Delfino",
+  "item.talpsadditions.fancy_mortar_and_pestle": "Mortaio e Pestello Raffinati",
 
   "effect.talpsadditions.senses_effect": "Sensi",
 
@@ -109,6 +118,8 @@
   "entity.talpsadditions.netherite_resource_chicken_entity": "Pollo Netherite",
   "entity.talpsadditions.quartz_resource_chicken_entity": "Pollo Quarzo",
   "entity.talpsadditions.redstone_resource_chicken_entity": "Pollo Redstone",
+
+  "enchantment.talpsadditions.fine_grinding_enchant": "Polverizzazione",
 
   "screen.talpsadditions.gen_lab_block": "Gen-Lab",
 

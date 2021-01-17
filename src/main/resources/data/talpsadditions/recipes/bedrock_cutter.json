@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "DIN",
-    "IS ",
-    "F  "
+    "DNT",
+    " SN",
+    "F D"
   ],
   "key": {
     "S": {
       "item": "minecraft:nether_star"
     },
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "T": {
+      "item": "talpsadditions:shiny_shard"
     },
     "N": {
       "item": "minecraft:netherite_ingot"

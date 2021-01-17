@@ -2,9 +2,11 @@ package com.talp1.talpsadditions.utils;
 
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.utils.registration.ModBlocks;
+import com.talp1.talpsadditions.utils.registration.ModEnchants;
 import com.talp1.talpsadditions.utils.registration.ModEntities;
 import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.*;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -165,4 +167,15 @@ public class EventHandler{
            event.getTarget().entityDropItem(ModItems.yetis_icecream.get());
        }
     }
+
+//----------------------------------DOLPHIN FIN------------------------------
+    @SubscribeEvent
+    public static void dropDolphinFin(LivingDeathEvent event){
+        if (event.getEntity().getType()== EntityType.DOLPHIN){
+            if (new Random().nextInt(3)==0){
+                event.getEntityLiving().entityDropItem(new ItemStack(ModItems.dolphin_fin.get()));
+            }
+        }
+    }
+
 }

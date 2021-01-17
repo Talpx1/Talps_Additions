@@ -20,5 +20,6 @@ public class ModPotions {
     //registrazione potions
     public static final RegistryObject<Potion> luck_potion = POTIONS.register("luck_potion", () -> new Potion(new EffectInstance(Effects.LUCK, 6000,2)));
     public static final RegistryObject<Potion> senses_potion = POTIONS.register("senses_potion", () -> new Potion(new EffectInstance(Effects.HASTE, 6000, 0),new EffectInstance(Effects.BLINDNESS, 6000, 3),new EffectInstance(ModEffects.senses_effect.get(), 6000)));
+    public static final RegistryObject<Potion> dolphins_grace_potion = POTIONS.register("dolphins_grace_potion", () -> new Potion(new EffectInstance(Effects.DOLPHINS_GRACE, 6000, 1)));
 
 }

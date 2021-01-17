@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    " IS",
+    "I S"
+  ],
+  "key": {
+    "I": {
+      "item": "talpsadditions:fancy_stick"
+    },
+      "S": {
+        "item": "talpsadditions:strong_string"
+      }
+  },
+  "result": {
+    "item": "talpsadditions:robust_fishing_rod",
+    "count": 1
+  }
+}

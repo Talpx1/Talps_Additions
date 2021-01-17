@@ -1,10 +1,7 @@
 package com.talp1.talpsadditions.utils.registration;
 
 import com.talp1.talpsadditions.Main;
-import com.talp1.talpsadditions.item.BedrockCutterItem;
-import com.talp1.talpsadditions.item.BottleOfAcidItem;
-import com.talp1.talpsadditions.item.GeneCollectorItem;
-import com.talp1.talpsadditions.item.MortarAndPestleItem;
+import com.talp1.talpsadditions.item.*;
 import net.minecraft.item.*;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -74,10 +71,15 @@ public class ModItems {
     public static final RegistryObject<Item> fancy_stick = ITEMS.register("fancy_stick", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> coconut_item = ITEMS.register("coconut_item", () -> new BlockItem(ModBlocks.coconut_block.get(), new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<LilyPadItem> flowery_water_lily_item = ITEMS.register("flowery_water_lily_item", () -> new LilyPadItem(ModBlocks.flowery_water_lily.get(), new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> strong_string = ITEMS.register("strong_string", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> dolphin_fin = ITEMS.register("dolphin_fin", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
-    public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
+    public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(1,1,new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<BedrockCutterItem> bedrock_cutter = ITEMS.register("bedrock_cutter", ()-> new BedrockCutterItem(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<ModFishingRodItem> reinforced_fishing_rod = ITEMS.register("reinforced_fishing_rod", ()-> new ModFishingRodItem(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(350), 2));
+    public static final RegistryObject<ModFishingRodItem> robust_fishing_rod = ITEMS.register("robust_fishing_rod", ()-> new ModFishingRodItem(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(1000), 4));
+    public static final RegistryObject<MortarAndPestleItem> fancy_mortar_and_pestle = ITEMS.register("fancy_mortar_and_pestle", () -> new MortarAndPestleItem(2,2,new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(300)));
     //foods
     public static final RegistryObject<BlockNamedItem> blue_berries = ITEMS.register("blue_berries", () -> new BlockNamedItem(ModBlocks.blue_berry_bush.get(), (new Item.Properties()).group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair().food(new Food.Builder().hunger(2).saturation(0.1F).build())));
     public static final RegistryObject<Item> earth_worm = ITEMS.register("earth_worm", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(0.7f).hunger(1).effect(new EffectInstance(Effects.NAUSEA,200,1),1).build())));

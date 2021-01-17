@@ -13,7 +13,7 @@
         "item": "minecraft:red_dye"
     },
     "item-to-inject-into": {
-        "item": "minecraft:bush_sprout"
+        "item": "talpsadditions:bush_sprout"
     },
     "time-to-craft": 45,
     "output-amount":1,

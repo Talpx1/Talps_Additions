@@ -1,0 +1,14 @@
+{
+  "parent": "item/handheld_rod",
+  "textures": {
+    "layer0": "talpsadditions:item/robust_fishing_rod"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "cast": 1
+      },
+      "model": "talpsadditions:item/robust_fishing_rod_cast"
+    }
+  ]
+}

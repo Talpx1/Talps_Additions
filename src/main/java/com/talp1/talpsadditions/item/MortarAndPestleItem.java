@@ -1,12 +1,23 @@
 package com.talp1.talpsadditions.item;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.utils.registration.ModEnchants;
 import net.minecraft.enchantment.*;
 import net.minecraft.item.*;
 
-public class MortarAndPestleItem extends Item {
+import java.util.Random;
 
-    public MortarAndPestleItem(Properties properties) {
-        super(properties);
+public class MortarAndPestleItem extends ToolItem {
+
+    private int tier;
+    private int enchantability;
+
+    public MortarAndPestleItem(int enchantability, int tier, Properties properties) {
+        super(0,0,ItemTier.WOOD, ImmutableSet.of(),properties);
+        this.tier=tier;
+        this.enchantability=enchantability;
     }
 
     @Override
@@ -15,20 +26,39 @@ public class MortarAndPestleItem extends Item {
             return new ItemStack(null);
         else{
             ItemStack newItemStack=itemStack.copy();
-            newItemStack.setDamage(itemStack.getDamage()+1);
+            newItemStack.attemptDamageItem(1, new Random(),null);//this also consider unbreaking
+            //OLD: newItemStack.setDamage(itemStack.getDamage()+1);
             return newItemStack;
         }
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.getName().equals(Enchantments.UNBREAKING.getName())|| enchantment.getName().equals(Enchantments.MENDING.getName());
+        if(this.tier==2){
+            return enchantment.getName().equals(Enchantments.UNBREAKING.getName())||
+                    enchantment.getName().equals(Enchantments.MENDING.getName())||
+                    enchantment.equals(ModEnchants.fine_grinding_enchant.get());
+        }
+        if(this.tier==1){
+            return enchantment.getName().equals(Enchantments.UNBREAKING.getName())||
+                    enchantment.getName().equals(Enchantments.MENDING.getName());
+        }else{return false;}
     }
 
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        return EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.UNBREAKING)||EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.MENDING);
+        if(this.tier==2){
+            return EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.UNBREAKING)||
+                    EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.MENDING)||
+                    EnchantmentHelper.getEnchantments(book).containsKey(ModEnchants.fine_grinding_enchant.get());
+        }
+        if(this.tier==1){
+            return EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.UNBREAKING)||
+                    EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.MENDING);
+        }else {return false;}
     }
+
+
 
     @Override
     public boolean hasContainerItem(ItemStack stack) {
@@ -37,7 +67,7 @@ public class MortarAndPestleItem extends Item {
 
     @Override
     public int getItemEnchantability(ItemStack stack) {
-        return 1;
+        return this.enchantability;
     }
 
 }

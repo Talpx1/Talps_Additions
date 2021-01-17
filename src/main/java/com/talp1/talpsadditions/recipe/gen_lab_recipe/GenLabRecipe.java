@@ -10,9 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 //thx to Darkhax: https://github.com/Minecraft-Forge-Tutorials/Custom-Json-Recipes
@@ -174,5 +177,12 @@ public class GenLabRecipe implements IRecipe<IInventory> {
             buffer.writeInt(recipe.output_amount);
             buffer.writeItemStack(recipe.output);
         }
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> list=NonNullList.create();
+        list.addAll(Arrays.asList(this.gene_type, this.gene_mod, this.base, this.item_to_inj, this.item_to_inj_into));
+        return list;
     }
 }

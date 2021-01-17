@@ -10,7 +10,7 @@
         "item": "talpsadditions:bush_leaf"
     },
     "item-to-inject": {
-        "item": "minecraft:bonemeal"
+        "item": "minecraft:bone_meal"
     },
     "item-to-inject-into": {
         "item": "minecraft:wheat_seeds"

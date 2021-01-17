@@ -31,5 +31,6 @@ public class Main
         ModEntities.init();
         ModFeatures.init();
         ModSounds.init();
+        ModEnchants.init();
     }
 }
