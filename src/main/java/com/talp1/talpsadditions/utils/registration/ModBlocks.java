@@ -2,6 +2,7 @@ package com.talp1.talpsadditions.utils.registration;
 
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.block.*;
+import com.talp1.talpsadditions.config.CommonConfig;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -19,8 +20,8 @@ public class ModBlocks {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final RegistryObject<Block> shiny_shard_ore = BLOCKS.register("shiny_shard_ore", () -> new Block(Block.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f, 6.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).setLightLevel(state -> 6)));
-    public static final RegistryObject<Block> shiny_shard_block = BLOCKS.register("shiny_shard_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 6.0f).sound(SoundType.GLASS).harvestTool(ToolType.PICKAXE).setLightLevel(state -> 8)));
+    public static final RegistryObject<Block> shiny_shard_ore = BLOCKS.register("shiny_shard_ore", () -> new Block(Block.Properties.create(Material.ROCK).setRequiresTool().hardnessAndResistance(5.0f, 6.0f).sound(SoundType.STONE).harvestTool(ToolType.PICKAXE).setLightLevel(state -> CommonConfig.lightValShinyShardOre.get())));
+    public static final RegistryObject<Block> shiny_shard_block = BLOCKS.register("shiny_shard_block", () -> new Block(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 6.0f).sound(SoundType.GLASS).harvestTool(ToolType.PICKAXE).setLightLevel(state -> CommonConfig.lightValShinyShardBlock.get())));
     public static final RegistryObject<BlueBerryBushBlock> blue_berry_bush = BLOCKS.register("blue_berry_bush", () -> new BlueBerryBushBlock(AbstractBlock.Properties.create(Material.PLANTS).tickRandomly().doesNotBlockMovement().sound(SoundType.SWEET_BERRY_BUSH)));
     public static final RegistryObject<HeapOfDirtBlock> heap_of_dirt = BLOCKS.register("heap_of_dirt", () -> new HeapOfDirtBlock(AbstractBlock.Properties.create(Material.EARTH).hardnessAndResistance(1.0f, 1.0f).sound(SoundType.WET_GRASS).harvestTool(ToolType.SHOVEL)));
     public static final RegistryObject<VineBlock> floreal_vines = BLOCKS.register("floreal_vines", () -> new VineBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.VINE)));

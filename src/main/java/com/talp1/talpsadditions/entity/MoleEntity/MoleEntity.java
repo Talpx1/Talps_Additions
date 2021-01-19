@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.entity.MoleEntity;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.utils.registration.ModEntities;
 import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.Block;
@@ -78,7 +79,7 @@ public class MoleEntity extends AnimalEntity {
     }
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D).createMutableAttribute(Attributes.MAX_HEALTH, 5.0D);
+        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MOVEMENT_SPEED, CommonConfig.moleMovementSpeed.get()).createMutableAttribute(Attributes.MAX_HEALTH, CommonConfig.moleMaxHealth.get());
     }
 
     @Override

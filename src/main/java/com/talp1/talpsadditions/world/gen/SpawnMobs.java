@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.world.gen;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.utils.registration.ModEntities;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
@@ -17,12 +18,12 @@ public class SpawnMobs {
 
         //mole
         if (biome.getCategory() == Biome.Category.EXTREME_HILLS || biome.getCategory() == Biome.Category.SWAMP || biome.getCategory() == Biome.Category.TAIGA || biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.PLAINS || biome.getCategory() == Biome.Category.SAVANNA) {
-            biome.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(ModEntities.mole_entity.get(), 8, 1, 4));
+            biome.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(ModEntities.mole_entity.get(), CommonConfig.moleSpawnWeight.get(), CommonConfig.moleSpawnMin.get(), CommonConfig.moleSpawnMax.get()));
         }
 
         //yeti
         if (biome.getCategory()== Biome.Category.ICY){
-            biome.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(ModEntities.yeti_entity.get(),3,1,1));
+            biome.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(ModEntities.yeti_entity.get(),CommonConfig.yetiSpawnWeight.get(),CommonConfig.yetiSpawnMin.get(),CommonConfig.yetiSpawnMax.get()));
         }
     }
 }

@@ -1,11 +1,12 @@
 package com.talp1.talpsadditions;
 
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.gui.CustomItemGroup;
 import com.talp1.talpsadditions.utils.registration.*;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,12 +17,17 @@ public class Main
     public static final String MODID = "talpsadditions";
     //Mod Item Group Instance
     public static final CustomItemGroup CUSTOM_ITEM_GROUP = new CustomItemGroup("talpsadditions", "item_search.png");
-
+    //server side configs
+    public static final CommonConfig COMMON_CONFIG = new CommonConfig();
 
     public Main() {
+        //registering the mod to the event bus
         MinecraftForge.EVENT_BUS.register(this);
 
-        //chiamata al metodo per la registrazione dei DefReg nella classe RegistryHandler nel bus eventi
+        //server config registration
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG.getSpec());
+
+        //registering the registers for the mod additions
         ModItems.init();
         ModPotions.init();
         ModEffects.init();

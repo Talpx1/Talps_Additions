@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.utils;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import com.talp1.talpsadditions.utils.registration.ModEnchants;
 import com.talp1.talpsadditions.utils.registration.ModEntities;
@@ -38,7 +39,7 @@ public class EventHandler{
         Block targetBlock=event.getContext().getWorld().getBlockState(event.getContext().getPos()).getBlock();
         if(targetBlock == Blocks.DIRT||targetBlock==Blocks.GRASS_BLOCK){
             Random random = new Random();
-            if(random.nextInt(3)+1==1){
+            if(random.nextInt(CommonConfig.earthWormDropChance.get())+1==1){
                 World worldIn = event.getContext().getWorld();
                 worldIn.addEntity(new ItemEntity(worldIn, event.getContext().getPos().getX(), event.getContext().getPos().getY()+1,event.getContext().getPos().getZ(), new ItemStack(ModItems.earth_worm.get())));
             }
@@ -144,7 +145,7 @@ public class EventHandler{
     @SubscribeEvent
     public static void dropBatEardrum(LivingDeathEvent event){
         if (event.getEntity().getType()== EntityType.BAT){
-            if (new Random().nextInt(6)==0){
+            if (new Random().nextInt(CommonConfig.earthWormDropChance.get())==0){
                 event.getEntityLiving().entityDropItem(new ItemStack(ModItems.bat_eardrum.get()));
             }
         }
@@ -172,7 +173,7 @@ public class EventHandler{
     @SubscribeEvent
     public static void dropDolphinFin(LivingDeathEvent event){
         if (event.getEntity().getType()== EntityType.DOLPHIN){
-            if (new Random().nextInt(3)==0){
+            if (new Random().nextInt(CommonConfig.dolphinFinDropChance.get())==0){
                 event.getEntityLiving().entityDropItem(new ItemStack(ModItems.dolphin_fin.get()));
             }
         }

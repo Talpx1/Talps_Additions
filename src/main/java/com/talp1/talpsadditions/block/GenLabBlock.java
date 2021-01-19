@@ -1,5 +1,6 @@
 package com.talp1.talpsadditions.block;
 
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.container.GenLabContainer;
 import com.talp1.talpsadditions.tile_entity.GenLabTE;
 import net.minecraft.block.Block;
@@ -97,8 +98,15 @@ public class GenLabBlock extends Block {
     public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
         if(worldIn.getTileEntity(pos) instanceof GenLabTE && entityIn.getType()==EntityType.FALLING_BLOCK){
             GenLabTE tile = (GenLabTE) worldIn.getTileEntity(pos);
-            tile.energyStorage.addEnergy(Math.round(fallDistance*1000));
-            tile.markDirty();
+            if(tile.energyStorage.getEnergyStored()<CommonConfig.genLabEnergyMaxCapacity.get()){
+
+                if( (Math.round(fallDistance * CommonConfig.fallingBlockMultiplier.get())+tile.energyStorage.getEnergyStored())<=CommonConfig.genLabEnergyMaxCapacity.get())
+                    tile.energyStorage.addEnergy(Math.round(fallDistance * CommonConfig.fallingBlockMultiplier.get()));
+                else
+                    tile.energyStorage.addEnergy(CommonConfig.genLabEnergyMaxCapacity.get()-tile.energyStorage.getEnergyStored());
+
+                tile.markDirty();
+            }
         }
         super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
     }

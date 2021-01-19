@@ -73,6 +73,7 @@ public class ModItems {
     public static final RegistryObject<LilyPadItem> flowery_water_lily_item = ITEMS.register("flowery_water_lily_item", () -> new LilyPadItem(ModBlocks.flowery_water_lily.get(), new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> strong_string = ITEMS.register("strong_string", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> dolphin_fin = ITEMS.register("dolphin_fin", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> fancy_bowl = ITEMS.register("fancy_bowl", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(1,1,new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));

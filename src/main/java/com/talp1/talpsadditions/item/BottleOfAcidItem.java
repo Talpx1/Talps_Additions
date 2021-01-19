@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.item;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -25,7 +26,7 @@ public class BottleOfAcidItem extends Item {
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
         if (entityLiving instanceof PlayerEntity){
             PlayerEntity player = (PlayerEntity)entityLiving;
-            entityLiving.attackEntityFrom(DamageSource.HOT_FLOOR, 9999);
+            entityLiving.attackEntityFrom(DamageSource.HOT_FLOOR, CommonConfig.drinkAcidDamageAmount.get());
             if (!player.abilities.isCreativeMode) {
                 stack.shrink(1);
                 player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));

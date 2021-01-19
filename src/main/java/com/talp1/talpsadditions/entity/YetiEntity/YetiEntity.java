@@ -1,5 +1,6 @@
 package com.talp1.talpsadditions.entity.YetiEntity;
 
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -65,7 +66,7 @@ public class YetiEntity extends CreatureEntity implements IAngerable {
     }
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 30.0D).createMutableAttribute(Attributes.FOLLOW_RANGE, 20.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 6.0D);
+        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, CommonConfig.yetiMaxHealth.get()).createMutableAttribute(Attributes.FOLLOW_RANGE, CommonConfig.yetiFollowRange.get()).createMutableAttribute(Attributes.MOVEMENT_SPEED, CommonConfig.yetiMovementSpeed.get()).createMutableAttribute(Attributes.ATTACK_DAMAGE, CommonConfig.yetiAttackDamage.get());
     }
 
     public void readAdditional(CompoundNBT compound) {

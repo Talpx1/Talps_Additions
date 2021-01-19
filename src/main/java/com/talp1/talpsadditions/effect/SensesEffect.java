@@ -1,5 +1,6 @@
 package com.talp1.talpsadditions.effect;
 
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import com.talp1.talpsadditions.utils.registration.ModSounds;
 import net.minecraft.block.Block;
@@ -45,7 +46,7 @@ public class SensesEffect extends Effect {
     }
 
     public static ArrayList<BlockPos> getOrePos(LivingEntity playerIn) {
-        int detectDistance = 5;
+        int detectDistance = CommonConfig.sensesEffectDetectRadius.get();
         ArrayList<BlockPos> foundOres = new ArrayList<>();
         Vector3d playerPosIn =playerIn.getPositionVec();
         int xStart =(int)playerPosIn.getX()-detectDistance;

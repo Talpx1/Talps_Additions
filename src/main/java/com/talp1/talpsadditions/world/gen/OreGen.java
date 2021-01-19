@@ -22,7 +22,6 @@ public class OreGen {
     @SubscribeEvent
     public static void generateOres(BiomeLoadingEvent biome){
         BlockClusterFeatureConfig SHINY_PEBBLE_CONFIG = new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(ModBlocks.shiny_pebble.get().getDefaultState()), SimpleBlockPlacer.PLACER).tries(64).whitelist(ImmutableSet.of(Blocks.STONE.getBlock(),Blocks.ANDESITE.getBlock(),Blocks.DIORITE.getBlock(),Blocks.GRANITE.getBlock())).func_227317_b_().build();
-
         biome.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.EMERALD_ORE.withConfiguration(new ReplaceBlockConfig(Blocks.STONE.getDefaultState(), ModBlocks.shiny_shard_ore.get().getDefaultState())).withPlacement(Placement.EMERALD_ORE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
         biome.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_DECORATION, Feature.RANDOM_PATCH.withConfiguration(SHINY_PEBBLE_CONFIG).withPlacement(Features.Placements.PATCH_PLACEMENT));
     }

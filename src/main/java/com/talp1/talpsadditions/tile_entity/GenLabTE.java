@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.tile_entity;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.container.GenLabContainer;
 import com.talp1.talpsadditions.recipe.gen_lab_recipe.GenLabRecipe;
 import com.talp1.talpsadditions.utils.EnergyStorageHandler;
@@ -10,6 +11,7 @@ import com.talp1.talpsadditions.utils.registration.ModSpawnEggs;
 import com.talp1.talpsadditions.utils.registration.ModTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FurnaceBlock;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -34,6 +37,8 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -42,7 +47,7 @@ import java.util.Map;
 
 public class GenLabTE extends TileEntity implements ITickableTileEntity{
 
-    private final int USAGE_PER_TICK=50;//RF per Tick
+    private final int USAGE_PER_TICK=CommonConfig.genLabEnergyPerTick.get();//RF per Tick
     private int timer;//timer for recipes
     private int currAmount;//amount of items to output (for the itemstack constructor)
     private boolean isCrafting;
@@ -95,6 +100,24 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
     public EnergyStorageHandler energyStorage= createEnergyHandler();
     private LazyOptional<IItemHandler> handler =  LazyOptional.of(()->itemHandler);
     private LazyOptional<IEnergyStorage> energy =  LazyOptional.of(()->energyStorage);
+
+    //TODO: output handler for the bottom side: hopper compat
+    /* //output handler
+    private ItemStackHandler itemOutputHandler=
+            new ItemStackHandler(1){
+                protected void onContentsChanged(int slot) {
+                    itemHandler.setStackInSlot(5, this.getStackInSlot(0));
+                    markDirty();
+                }
+                public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                    return false;
+                }
+                public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+                    return isItemValid(slot, stack)? super.insertItem(slot,stack,simulate):stack;
+                }
+             };
+    private LazyOptional<IItemHandler> outputHandler =  LazyOptional.of(()->itemOutputHandler);*/
+
 
     //items valid in each slot, used to check where to put an itemstack on shift-click
     private static ArrayList<Item> baseItems = new ArrayList<>(Arrays.asList(Items.FEATHER, Items.WHITE_WOOL, ModItems.bush_leaf.get(), Items.VINE));
@@ -162,7 +185,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
 
 
     private EnergyStorageHandler createEnergyHandler(){
-        return new EnergyStorageHandler(50000,0){
+        return new EnergyStorageHandler(CommonConfig.genLabEnergyMaxCapacity.get(),0){
             @Override
             public boolean canReceive() { return true; }
 
@@ -219,6 +242,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
             }
         };
     }
+
 
     //save the current recipe to check if the ingredients are being removed
     private void saveRecipe(){
@@ -357,15 +381,23 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
         return this.totalTime;
     }
 
+
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+            markDirty();
+            if(side==Direction.DOWN){
+                //return output item handler for the hoppers
+            }
             return handler.cast();
         }
         if (cap == CapabilityEnergy.ENERGY) {
+            markDirty();
             return energy.cast();
         }
+
+
         return super.getCapability(cap, side);
     }
 

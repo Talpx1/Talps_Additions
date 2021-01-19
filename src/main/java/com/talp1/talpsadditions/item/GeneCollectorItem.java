@@ -3,15 +3,18 @@ package com.talp1.talpsadditions.item;
 import com.talp1.talpsadditions.block.FlorealDecorationBlock;
 import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.block.VineBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 
 public class GeneCollectorItem extends Item {
     public GeneCollectorItem(Properties properties) {
