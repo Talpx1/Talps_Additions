@@ -101,12 +101,10 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
     private LazyOptional<IItemHandler> handler =  LazyOptional.of(()->itemHandler);
     private LazyOptional<IEnergyStorage> energy =  LazyOptional.of(()->energyStorage);
 
-    //TODO: output handler for the bottom side: hopper compat
-    /* //output handler
+    //output handler (for hoppers)
     private ItemStackHandler itemOutputHandler=
-            new ItemStackHandler(1){
+            new ItemStackHandler(6){
                 protected void onContentsChanged(int slot) {
-                    itemHandler.setStackInSlot(5, this.getStackInSlot(0));
                     markDirty();
                 }
                 public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
@@ -116,7 +114,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
                     return isItemValid(slot, stack)? super.insertItem(slot,stack,simulate):stack;
                 }
              };
-    private LazyOptional<IItemHandler> outputHandler =  LazyOptional.of(()->itemOutputHandler);*/
+    private LazyOptional<IItemHandler> outputHandler =  LazyOptional.of(()->itemOutputHandler);
 
 
     //items valid in each slot, used to check where to put an itemstack on shift-click
@@ -294,10 +292,10 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
         itemHandler.extractItem(2,1,false);
         itemHandler.extractItem(3,1,false);
         itemHandler.extractItem(4,1,false);
-        if(itemHandler.getStackInSlot(5).isEmpty()){
-            itemHandler.setStackInSlot(5,new ItemStack(getCurrResult(), this.currAmount));
-        }else if(itemHandler.getStackInSlot(5).getItem()==getCurrResult()&&itemHandler.getStackInSlot(5).getCount()+currAmount<=64){
-            itemHandler.getStackInSlot(5).setCount(itemHandler.getStackInSlot(5).getCount()+currAmount);
+        if(itemOutputHandler.getStackInSlot(5).isEmpty()){
+            itemOutputHandler.setStackInSlot(5,new ItemStack(getCurrResult(), this.currAmount));
+        }else if(itemOutputHandler.getStackInSlot(5).getItem()==getCurrResult()&&itemOutputHandler.getStackInSlot(5).getCount()+currAmount<=64){
+            itemOutputHandler.getStackInSlot(5).setCount(itemOutputHandler.getStackInSlot(5).getCount()+currAmount);
         }else{
             dropContent();
             this.getWorld().addEntity(new ItemEntity(this.getWorld(), this.getPos().getX(), this.getPos().getY()+1,this.getPos().getZ(),new ItemStack(getCurrResult(), this.currAmount)));
@@ -358,6 +356,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
         compound.put("inv", itemHandler.serializeNBT());
+        compound.put("inv_out", itemOutputHandler.serializeNBT());
         compound.put("energy", energyStorage.serializeNBT());
         compound.putInt("progress", getTimer());
         compound.putInt("total_time", getTotalTime());
@@ -367,6 +366,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
         super.read(state, nbt);
+        itemOutputHandler.deserializeNBT(nbt.getCompound("inv_out"));
         itemHandler.deserializeNBT(nbt.getCompound("inv"));
         energyStorage.deserializeNBT(nbt.getCompound("energy"));
         nbt.getInt("progress");
@@ -388,7 +388,7 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             markDirty();
             if(side==Direction.DOWN){
-                //return output item handler for the hoppers
+                return outputHandler.cast();
             }
             return handler.cast();
         }
