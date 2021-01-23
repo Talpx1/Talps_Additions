@@ -2,6 +2,7 @@ package com.talp1.talpsadditions.compat.vanilla;
 
 import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.ComposterBlock;
+import net.minecraft.item.Items;
 import net.minecraft.util.IItemProvider;
 
 public class ComposterCompat {
@@ -27,7 +28,7 @@ public class ComposterCompat {
         registerCompostable(0.7F, ModItems.coconut_item.get());
         registerCompostable(0.2F, ModItems.piece_of_coconut.get());
         registerCompostable(0.65F, ModItems.flowery_water_lily_item.get());
-
+        registerCompostable(0.65F, Items.GRASS_BLOCK);
     }
 
     private static void registerCompostable(float chance, IItemProvider itemIn) {

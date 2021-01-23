@@ -6,6 +6,7 @@ import com.talp1.talpsadditions.entity.ResourceChicken.ResourceChickenEntity;
 import com.talp1.talpsadditions.entity.ResourceChicken.type.*;
 import com.talp1.talpsadditions.entity.ResourceSheep.ResourceSheepEntity;
 import com.talp1.talpsadditions.entity.ResourceSheep.types.*;
+import com.talp1.talpsadditions.entity.WalkingFungus.WalkingFungusEntity;
 import com.talp1.talpsadditions.entity.YetiEntity.YetiEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -35,6 +36,10 @@ public class ModEntities {
     //yeti
     public static final EntityType<YetiEntity> yetiBuilder = EntityType.Builder.create(YetiEntity::new, EntityClassification.CREATURE).size(1.5f,3f).build(new ResourceLocation(Main.MODID, "yeti_entity").toString());
     public static final RegistryObject<EntityType<YetiEntity>> yeti_entity = ENTITIES.register("yeti_entity", () -> yetiBuilder);
+    //walking fungus
+    public static final EntityType<WalkingFungusEntity> walkingFungusBuilder = EntityType.Builder.create(WalkingFungusEntity::new, EntityClassification.CREATURE).size(0.60f,0.6f).build(new ResourceLocation(Main.MODID, "walking_fungus_entity").toString());
+    public static final RegistryObject<EntityType<WalkingFungusEntity>> walking_fungus_entity = ENTITIES.register("walking_fungus_entity", () -> walkingFungusBuilder);
+
     //----------------------------------------------------
     //resource Sheeps
     //coal
@@ -103,6 +108,8 @@ public class ModEntities {
             GlobalEntityTypeAttributes.put(mole_entity.get(), MoleEntity.setCustomAttributes().create());
             //yeti
             GlobalEntityTypeAttributes.put(yeti_entity.get(), YetiEntity.setCustomAttributes().create());
+            //walking fungus
+            GlobalEntityTypeAttributes.put(walking_fungus_entity.get(), WalkingFungusEntity.setCustomAttributes().create());
             //sheeps
             GlobalEntityTypeAttributes.put(coal_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
             GlobalEntityTypeAttributes.put(diamond_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());

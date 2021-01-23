@@ -7,17 +7,23 @@ import com.talp1.talpsadditions.utils.registration.ModEnchants;
 import com.talp1.talpsadditions.utils.registration.ModEntities;
 import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.*;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -27,6 +33,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Map;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -177,6 +184,72 @@ public class EventHandler{
                 event.getEntityLiving().entityDropItem(new ItemStack(ModItems.dolphin_fin.get()));
             }
         }
+    }
+
+//----------------------------------Re-Enchanter Logic------------------------------
+
+    //TODO: add configurble vals
+    @SubscribeEvent
+    public static void onReEnchanting(ItemTossEvent event){
+        Main.LOGGER.info("Fired");
+        if (!event.getPlayer().getEntityWorld().isRemote()){
+            Main.LOGGER.info("item ok");
+            BlockPos playerPos = event.getPlayer().getPosition();
+            //check for correct multiblock struture
+            if( correctReEnchantrMultiblock(playerPos, event.getPlayer().getEntityWorld()) ){
+                Main.LOGGER.info("correct multi");
+                reEnchantItem(event.getEntityItem().getItem(), event.getPlayer());
+                //event.getPlayer().addExperienceLevel(-100);
+            }
+        }
+    }
+
+    private static void reEnchantItem(ItemStack stack, PlayerEntity player){
+        if(!stack.isEmpty()){
+            Random rand = new Random();
+            int expAmount = rand.nextInt(29)+1;//exp points cost
+            Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);//enchts on the item toss
+            if(stack.isEnchanted() && player.experienceLevel>= expAmount){
+                //increase enchs lvl
+                enchants.forEach( (ench, lvl) ->{
+                    if(rand.nextInt(2)==0){
+                        enchants.replace(ench, lvl+rand.nextInt(3)+1);
+                    }
+                });
+                EnchantmentHelper.setEnchantments(enchants,stack);
+                player.addExperienceLevel(-expAmount);//subtract exp points
+            }
+            expAmount = rand.nextInt(19)+1;//exp points cost
+            if(rand.nextInt(10)==0 && player.experienceLevel>=expAmount){
+                //pick a rendom enchant and check if is compatible
+                Enchantment newEnch;
+                do{
+                    newEnch = Enchantment.getEnchantmentByID(rand.nextInt(50));
+                }while( newEnch==null ||
+                        enchants.containsKey(newEnch) ||
+                        ( (newEnch!=Enchantments.MENDING && newEnch!=Enchantments.FROST_WALKER) && !stack.canApplyAtEnchantingTable(newEnch) )
+                      );
+
+                stack.addEnchantment(newEnch, rand.nextInt(5)+1);//add the enchant
+                player.addExperienceLevel(-expAmount);//subtract the exp points
+            }
+        }
+    }
+
+    private static boolean correctReEnchantrMultiblock(BlockPos playerPos, World worldIn){
+        if(worldIn.getFluidState(playerPos)== Fluids.WATER.getStillFluidState(false)){
+            boolean allSidesAreValid=true;
+            for (Direction direction : Direction.Plane.HORIZONTAL){
+                if(worldIn.getBlockState(playerPos.offset(direction))!=ModBlocks.shiny_shard_block.get().getDefaultState()){
+                    allSidesAreValid=false;
+                    break;
+                }
+            }
+            if(allSidesAreValid && worldIn.getBlockState(playerPos.down())==ModBlocks.shiny_shard_block.get().getDefaultState()){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

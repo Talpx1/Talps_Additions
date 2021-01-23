@@ -67,6 +67,10 @@
   "item.minecraft.splash_potion.effect.dolphins_grace_potion": "Splash Dolphin's Grace Potion",
   "item.minecraft.lingering_potion.effect.dolphins_grace_potion": "Lingering Dolphin's Grace Potion",
   "item.minecraft.tipped_arrow.effect.dolphins_grace_potion": "Dolphin's Grace Arrow",
+  "item.talpsadditions.fancy_mortar_and_pestle": "Fancy Mortar and Pestle",
+  "item.talpsadditions.fancy_bowl": "Fancy Bowl",
+  "item.talpsadditions.walking_fungus_spawn_egg": "Walking Fungus Egg",
+
 
   "effect.talpsadditions.senses_effect": "Senses",
 
@@ -118,8 +122,8 @@
   "entity.talpsadditions.netherite_resource_chicken_entity": "Netherite Resource Chicken",
   "entity.talpsadditions.quartz_resource_chicken_entity": "Quartz Resource Chicken",
   "entity.talpsadditions.redstone_resource_chicken_entity": "Redstone Resource Chicken",
-  "item.talpsadditions.fancy_mortar_and_pestle": "Fancy Mortar and Pestle",
-  "item.talpsadditions.fancy_bowl": "Fancy Bowl",
+  "entity.talpsadditions.walking_fungus_entity": "Walking Fungus",
+
 
   "enchantment.talpsadditions.fine_grinding_enchant": "Fine Grinding",
 

@@ -14,6 +14,8 @@ public class ModSpawnEggs {
     public static SpawnEggItem moleSpawnEgg = new SpawnEggItem(ModEntities.moleBuilder, 0x2B2B2B, 0x463125, new SpawnEggItem.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
     //yeti
     public static SpawnEggItem yetiSpawnEgg = new SpawnEggItem(ModEntities.yetiBuilder, 0xf5fffe, 0x084d46, new SpawnEggItem.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
+    //yeti
+    public static SpawnEggItem walkingFungusSpawnEgg = new SpawnEggItem(ModEntities.walkingFungusBuilder, 0xb00000, 0xfffdeb, new SpawnEggItem.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
     //sheeps
     public static SpawnEggItem coalSheepSpawnEgg = new SpawnEggItem(ModEntities.coalSheepBuilder, 0xfff4cf, 0x292929, new SpawnEggItem.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
     public static SpawnEggItem diamondSheepSpawnEgg = new SpawnEggItem(ModEntities.diamondSheepBuilder, 0xfff4cf, 0x19ffe0, new SpawnEggItem.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair());
@@ -41,6 +43,8 @@ public class ModSpawnEggs {
                 moleSpawnEgg.setRegistryName("mole_spawn_egg"),
                 //yeti
                 yetiSpawnEgg.setRegistryName("yeti_spawn_egg"),
+                //walking fungus
+                walkingFungusSpawnEgg.setRegistryName("walking_fungus_spawn_egg"),
                 //sheeps
                 coalSheepSpawnEgg.setRegistryName("coal_sheep_spawn_egg"),
                 diamondSheepSpawnEgg.setRegistryName("diamond_sheep_spawn_egg"),

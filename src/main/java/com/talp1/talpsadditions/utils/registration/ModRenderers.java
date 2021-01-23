@@ -4,6 +4,7 @@ import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleRenderer;
 import com.talp1.talpsadditions.entity.ResourceChicken.renderer.*;
 import com.talp1.talpsadditions.entity.ResourceSheep.renderer.*;
+import com.talp1.talpsadditions.entity.WalkingFungus.WalkingFungusRenderer;
 import com.talp1.talpsadditions.entity.YetiEntity.YetiRenderer;
 import com.talp1.talpsadditions.gui.GenLabScreen;
 import net.minecraft.client.gui.ScreenManager;
@@ -23,6 +24,8 @@ public class ModRenderers {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.mole_entity.get(), MoleRenderer::new);
         //yeti Renderer Registration
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.yeti_entity.get(), YetiRenderer::new);
+        //walking fungus Renderer Registration
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.walking_fungus_entity.get(), WalkingFungusRenderer::new);
         //Sheeps Renderer Registration
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.coal_sheep_entity.get(), CoalSheepRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.diamond_sheep_entity.get(), DimaondSheepRenderer::new);

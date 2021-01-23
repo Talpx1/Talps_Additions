@@ -5,6 +5,7 @@ import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.utils.registration.ModEntities;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,6 +25,11 @@ public class SpawnMobs {
         //yeti
         if (biome.getCategory()== Biome.Category.ICY){
             biome.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(ModEntities.yeti_entity.get(),CommonConfig.yetiSpawnWeight.get(),CommonConfig.yetiSpawnMin.get(),CommonConfig.yetiSpawnMax.get()));
+        }
+
+        //walking fungus
+        if (biome.getCategory()== Biome.Category.MUSHROOM || biome.getName().equals(Biomes.DARK_FOREST.getLocation()) || biome.getName().equals(Biomes.DARK_FOREST_HILLS.getLocation())){
+            biome.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(ModEntities.walking_fungus_entity.get(),CommonConfig.walkingFungusSpawnWeight.get(),CommonConfig.walkingFungusSpawnMin.get(),CommonConfig.walkingFungusSpawnMax.get()));
         }
     }
 }

@@ -33,6 +33,13 @@ public class CommonConfig {
     public static ForgeConfigSpec.DoubleValue yetiFollowRange;
     public static ForgeConfigSpec.DoubleValue yetiMovementSpeed;
     public static ForgeConfigSpec.DoubleValue yetiAttackDamage;
+    //walking fungus spawning
+    public static ForgeConfigSpec.IntValue walkingFungusSpawnWeight;
+    public static ForgeConfigSpec.IntValue walkingFungusSpawnMax;
+    public static ForgeConfigSpec.IntValue walkingFungusSpawnMin;
+    //walking fungus attr
+    public static ForgeConfigSpec.DoubleValue walkingFungusMovementSpeed;
+    public static ForgeConfigSpec.DoubleValue walkingFungusMaxHealth;
     //dolphin fin drop chance (1 out of x)
     public static ForgeConfigSpec.IntValue dolphinFinDropChance;
     //bat eardrum drop chance (1 out of x)
@@ -90,6 +97,14 @@ public class CommonConfig {
         yetiFollowRange = builder.comment("The maximum distance the yeti will follow its target").defineInRange("yetiFollowRange", 20.0D,5.0D,40.0D);
         yetiMovementSpeed = builder.comment("The movement speed of the yeti").defineInRange("yetiMovementSpeed", 0.25D, 0.10D, 1.0D);
         yetiAttackDamage = builder.comment("The damage the yeti will cause on attack").defineInRange("yetiAttackDamage", 6.0D, 1.0D, 15.0D);
+        //walking fungus spawning
+        walkingFungusSpawnWeight = builder.comment("The spawning weight for the walking fungus").defineInRange("walkingFungusSpawnWeight", 5,1,48);
+        walkingFungusSpawnMin = builder.comment("The minimum number of walking fungus in a spawn group").defineInRange("walkingFungusSpawnMin", 1, 1, 16);
+        walkingFungusSpawnMax = builder.comment("The maximum number of walking fungus in a spawn group").defineInRange("walkingFungusSpawnMax", 2,1,48);
+        //walking fungus atts
+        walkingFungusMaxHealth = builder.comment("The maximum amount of health for the walking fungus").defineInRange("walkingFungusMaxHealth", 9.0D,1.0D,18.0D);
+        walkingFungusMovementSpeed = builder.comment("The movement speed of the walking fungus").defineInRange("walkingFungusMovementSpeed", 0.25D, 0.10D, 1.0D);
+
         //event handler drops settings
         dolphinFinDropChance = builder.comment("The chance out of X that when killing a dolphin it will drop a Dolpin Fin (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("dolphinFinDropChance",3,1,100);
         batEarDrumDropChance = builder.comment("The chance out of X that when killing a bat it will drop a Bat Eardrum (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("batEarDrumDropChance",6,1,100);

@@ -68,6 +68,8 @@
   "item.minecraft.tipped_arrow.effect.dolphins_grace_potion": "Freccia della Grazia del Delfino",
   "item.talpsadditions.fancy_mortar_and_pestle": "Mortaio e Pestello Raffinati",
   "item.talpsadditions.fancy_bowl": "Ciotola Raffinata",
+  "item.talpsadditions.walking_fungus_spawn_egg": "Uovo di Fungo Viandante",
+
 
   "effect.talpsadditions.senses_effect": "Sensi",
 
@@ -119,6 +121,7 @@
   "entity.talpsadditions.netherite_resource_chicken_entity": "Pollo Netherite",
   "entity.talpsadditions.quartz_resource_chicken_entity": "Pollo Quarzo",
   "entity.talpsadditions.redstone_resource_chicken_entity": "Pollo Redstone",
+  "entity.talpsadditions.walking_fungus_entity": "Fungo Viandante",
 
   "enchantment.talpsadditions.fine_grinding_enchant": "Polverizzazione",
 
