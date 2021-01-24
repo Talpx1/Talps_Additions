@@ -2,14 +2,15 @@ package com.talp1.talpsadditions.utils.registration;
 
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleRenderer;
-import com.talp1.talpsadditions.entity.ResourceChicken.renderer.*;
-import com.talp1.talpsadditions.entity.ResourceSheep.renderer.*;
+import com.talp1.talpsadditions.entity.ResourceChicken.ResourceChickenRenderer;
+import com.talp1.talpsadditions.entity.ResourceSheep.ResourceSheepRenderer;
 import com.talp1.talpsadditions.entity.WalkingFungus.WalkingFungusRenderer;
 import com.talp1.talpsadditions.entity.YetiEntity.YetiRenderer;
 import com.talp1.talpsadditions.gui.GenLabScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Main.MODID, bus=Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModRenderers {
+
     @SubscribeEvent
     public static void registerRenderer(FMLClientSetupEvent event) {
         //mole Renderer Registration
@@ -26,26 +28,28 @@ public class ModRenderers {
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.yeti_entity.get(), YetiRenderer::new);
         //walking fungus Renderer Registration
         RenderingRegistry.registerEntityRenderingHandler(ModEntities.walking_fungus_entity.get(), WalkingFungusRenderer::new);
-        //Sheeps Renderer Registration
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.coal_sheep_entity.get(), CoalSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.diamond_sheep_entity.get(), DimaondSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.emerald_sheep_entity.get(), EmeraldSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.gold_sheep_entity.get(), GoldSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.iron_sheep_entity.get(), IronSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.lapis_sheep_entity.get(), LapisSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.quartz_sheep_entity.get(), QuartzSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.netherite_sheep_entity.get(), NetheriteSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.redstone_sheep_entity.get(), RedstoneSheepRenderer::new);
+
+        //Sheep Renderer Registration
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.coal_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.COAL));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.diamond_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.DIAMOND));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.emerald_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.EMERALD));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.gold_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.GOLD_INGOT));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.iron_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.IRON_INGOT));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.lapis_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.LAPIS_LAZULI));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.quartz_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.QUARTZ));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.netherite_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.NETHERITE_INGOT));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.redstone_resource_sheep_entity.get(), (manager)->new ResourceSheepRenderer(manager, Items.REDSTONE));
         //Chickens Renderer Registration
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.coal_chicken_entity.get(), CoalResourceChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.diamond_chicken_entity.get(), DiamondResourceChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.emerald_chicken_entity.get(), EmeraldResourceChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.gold_chicken_entity.get(), GoldResourceChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.iron_chicken_entity.get(), IronResourceChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.lapis_chicken_entity.get(), LapisResourceChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.quartz_chicken_entity.get(), QuartzResourceChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.netherite_chicken_entity.get(), NetheriteResourceChickenRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntities.redstone_chicken_entity.get(), RedstoneResourceChickenRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.coal_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.COAL));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.diamond_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.DIAMOND));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.emerald_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.EMERALD));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.gold_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.GOLD_INGOT));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.iron_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.IRON_INGOT));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.lapis_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.LAPIS_LAZULI));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.quartz_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.QUARTZ));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.netherite_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.NETHERITE_INGOT));
+        RenderingRegistry.registerEntityRenderingHandler(ModEntities.redstone_resource_chicken_entity.get(), (manager)->new ResourceChickenRenderer(manager, Items.REDSTONE));
+
         //cutout renderer for blue berries bush
         RenderTypeLookup.setRenderLayer(ModBlocks.blue_berry_bush.get(), RenderType.getCutout());
         //cutout renderer for floreal_vines

@@ -3,14 +3,13 @@ package com.talp1.talpsadditions.utils.registration;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
 import com.talp1.talpsadditions.entity.ResourceChicken.ResourceChickenEntity;
-import com.talp1.talpsadditions.entity.ResourceChicken.type.*;
 import com.talp1.talpsadditions.entity.ResourceSheep.ResourceSheepEntity;
-import com.talp1.talpsadditions.entity.ResourceSheep.types.*;
 import com.talp1.talpsadditions.entity.WalkingFungus.WalkingFungusEntity;
 import com.talp1.talpsadditions.entity.YetiEntity.YetiEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -41,63 +40,81 @@ public class ModEntities {
     public static final RegistryObject<EntityType<WalkingFungusEntity>> walking_fungus_entity = ENTITIES.register("walking_fungus_entity", () -> walkingFungusBuilder);
 
     //----------------------------------------------------
-    //resource Sheeps
+    //resource Sheep
     //coal
-    public static final EntityType<CoalResourceSheep> coalSheepBuilder =EntityType.Builder.create(CoalResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "coal_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<CoalResourceSheep>> coal_sheep_entity = ENTITIES.register("coal_resource_sheep_entity", () -> coalSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> coalSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.COAL);
+    public static final EntityType<ResourceSheepEntity> coalSheepBuilder = EntityType.Builder.create(coalSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "coal_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> coal_resource_sheep_entity = ENTITIES.register("coal_resource_sheep_entity", () -> coalSheepBuilder);
     //diamond
-    public static final EntityType<DiamondResourceSheep> diamondSheepBuilder =EntityType.Builder.create(DiamondResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "diamond_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<DiamondResourceSheep>> diamond_sheep_entity = ENTITIES.register("diamond_resource_sheep_entity", () ->diamondSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> diamondSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.DIAMOND);
+    public static final EntityType<ResourceSheepEntity> diamondSheepBuilder = EntityType.Builder.create(diamondSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "diamond_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> diamond_resource_sheep_entity = ENTITIES.register("diamond_resource_sheep_entity", () -> diamondSheepBuilder);
     //emerald
-    public static final EntityType<EmeraldResourceSheep> emeraldSheepBuilder =EntityType.Builder.create(EmeraldResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "emerald_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<EmeraldResourceSheep>> emerald_sheep_entity = ENTITIES.register("emerald_resource_sheep_entity", () -> emeraldSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> emeraldSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.EMERALD);
+    public static final EntityType<ResourceSheepEntity> emeraldSheepBuilder = EntityType.Builder.create(emeraldSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "emerald_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> emerald_resource_sheep_entity = ENTITIES.register("emerald_resource_sheep_entity", () -> emeraldSheepBuilder);
     //gold
-    public static final EntityType<GoldResourceSheep> goldSheepBuilder =EntityType.Builder.create(GoldResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "gold_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<GoldResourceSheep>> gold_sheep_entity = ENTITIES.register("gold_resource_sheep_entity", () -> goldSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> goldSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.GOLD_INGOT);
+    public static final EntityType<ResourceSheepEntity> goldSheepBuilder = EntityType.Builder.create(goldSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "gold_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> gold_resource_sheep_entity = ENTITIES.register("gold_resource_sheep_entity", () -> goldSheepBuilder);
     //iron
-    public static final EntityType<IronResourceSheep> ironSheepBuilder =EntityType.Builder.create(IronResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "iron_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<IronResourceSheep>> iron_sheep_entity = ENTITIES.register("iron_resource_sheep_entity", () -> ironSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> ironSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.IRON_INGOT);
+    public static final EntityType<ResourceSheepEntity> ironSheepBuilder = EntityType.Builder.create(ironSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "iron_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> iron_resource_sheep_entity = ENTITIES.register("iron_resource_sheep_entity", () -> ironSheepBuilder);
     //lapis
-    public static final EntityType<LapisResourceSheep> lapisSheepBuilder =EntityType.Builder.create(LapisResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "lapis_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<LapisResourceSheep>> lapis_sheep_entity = ENTITIES.register("lapis_resource_sheep_entity", () -> lapisSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> lapisSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.LAPIS_LAZULI);
+    public static final EntityType<ResourceSheepEntity> lapisSheepBuilder = EntityType.Builder.create(lapisSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "lapis_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> lapis_resource_sheep_entity = ENTITIES.register("lapis_resource_sheep_entity", () -> lapisSheepBuilder);
     //netherite
-    public static final EntityType<NetheriteResourceSheep> netheriteSheepBuilder =EntityType.Builder.create(NetheriteResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "netherite_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<NetheriteResourceSheep>> netherite_sheep_entity = ENTITIES.register("netherite_resource_sheep_entity", () -> netheriteSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> netheriteSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.NETHERITE_INGOT);
+    public static final EntityType<ResourceSheepEntity> netheriteSheepBuilder = EntityType.Builder.create(netheriteSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "netherite_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> netherite_resource_sheep_entity = ENTITIES.register("netherite_resource_sheep_entity", () -> netheriteSheepBuilder);
     //quartz
-    public static final EntityType<QuartzResourceSheep> quartzSheepBuilder =EntityType.Builder.create(QuartzResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "quartz_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<QuartzResourceSheep>> quartz_sheep_entity = ENTITIES.register("quartz_resource_sheep_entity", () -> quartzSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> quartzSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.QUARTZ);
+    public static final EntityType<ResourceSheepEntity> quartzSheepBuilder = EntityType.Builder.create(quartzSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "quartz_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> quartz_resource_sheep_entity = ENTITIES.register("quartz_resource_sheep_entity", () -> quartzSheepBuilder);
     //redstone
-    public static final EntityType<RedstoneResourceSheep> redstoneSheepBuilder =EntityType.Builder.create(RedstoneResourceSheep::new, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "redstone_resource_sheep_entity").toString());
-    public static final RegistryObject<EntityType<RedstoneResourceSheep>> redstone_sheep_entity = ENTITIES.register("redstone_resource_sheep_entity", () -> redstoneSheepBuilder);
+    private static final EntityType.IFactory<ResourceSheepEntity> redstoneSheepFactoryInstance = (type, world)-> new ResourceSheepEntity(type, world, Items.REDSTONE);
+    public static final EntityType<ResourceSheepEntity> redstoneSheepBuilder = EntityType.Builder.create(redstoneSheepFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "redstone_resource_sheep_entity").toString());
+    public static final RegistryObject<EntityType<ResourceSheepEntity>> redstone_resource_sheep_entity = ENTITIES.register("redstone_resource_sheep_entity", () -> redstoneSheepBuilder);
     //---------------------------------------------------
     //resource Chickens
     //coal
-    public static final EntityType<CoalResourceChicken> coalChickenBuilder =EntityType.Builder.create(CoalResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "coal_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<CoalResourceChicken>> coal_chicken_entity = ENTITIES.register("coal_resource_chicken_entity", () -> coalChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> coalChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.COAL);
+    public static final EntityType<ResourceChickenEntity> coalChickenBuilder = EntityType.Builder.create(coalChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "coal_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> coal_resource_chicken_entity = ENTITIES.register("coal_resource_chicken_entity", () -> coalChickenBuilder);
     //diamond
-    public static final EntityType<DiamondResourceChicken> diamondChickenBuilder =EntityType.Builder.create(DiamondResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "diamond_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<DiamondResourceChicken>> diamond_chicken_entity = ENTITIES.register("diamond_resource_chicken_entity", () ->diamondChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> diamondChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.DIAMOND);
+    public static final EntityType<ResourceChickenEntity> diamondChickenBuilder = EntityType.Builder.create(diamondChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "diamond_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> diamond_resource_chicken_entity = ENTITIES.register("diamond_resource_chicken_entity", () -> diamondChickenBuilder);
     //emerald
-    public static final EntityType<EmeraldResourceChicken> emeraldChickenBuilder =EntityType.Builder.create(EmeraldResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "emerald_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<EmeraldResourceChicken>> emerald_chicken_entity = ENTITIES.register("emerald_resource_chicken_entity", () -> emeraldChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> emeraldChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.EMERALD);
+    public static final EntityType<ResourceChickenEntity> emeraldChickenBuilder = EntityType.Builder.create(emeraldChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "emerald_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> emerald_resource_chicken_entity = ENTITIES.register("emerald_resource_chicken_entity", () -> emeraldChickenBuilder);
     //gold
-    public static final EntityType<GoldResourceChicken> goldChickenBuilder =EntityType.Builder.create(GoldResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "gold_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<GoldResourceChicken>> gold_chicken_entity = ENTITIES.register("gold_resource_chicken_entity", () -> goldChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> goldChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.GOLD_INGOT);
+    public static final EntityType<ResourceChickenEntity> goldChickenBuilder = EntityType.Builder.create(goldChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "gold_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> gold_resource_chicken_entity = ENTITIES.register("gold_resource_chicken_entity", () -> goldChickenBuilder);
     //iron
-    public static final EntityType<IronResourceChicken> ironChickenBuilder =EntityType.Builder.create(IronResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "iron_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<IronResourceChicken>> iron_chicken_entity = ENTITIES.register("iron_resource_chicken_entity", () -> ironChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> ironChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.IRON_INGOT);
+    public static final EntityType<ResourceChickenEntity> ironChickenBuilder = EntityType.Builder.create(ironChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "iron_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> iron_resource_chicken_entity = ENTITIES.register("iron_resource_chicken_entity", () -> ironChickenBuilder);
     //lapis
-    public static final EntityType<LapisResourceChicken> lapisChickenBuilder =EntityType.Builder.create(LapisResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "lapis_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<LapisResourceChicken>> lapis_chicken_entity = ENTITIES.register("lapis_resource_chicken_entity", () -> lapisChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> lapisChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.LAPIS_LAZULI);
+    public static final EntityType<ResourceChickenEntity> lapisChickenBuilder = EntityType.Builder.create(lapisChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "lapis_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> lapis_resource_chicken_entity = ENTITIES.register("lapis_resource_chicken_entity", () -> lapisChickenBuilder);
     //netherite
-    public static final EntityType<NetheriteResourceChicken> netheriteChickenBuilder =EntityType.Builder.create(NetheriteResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "netherite_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<NetheriteResourceChicken>> netherite_chicken_entity = ENTITIES.register("netherite_resource_chicken_entity", () -> netheriteChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> netheriteChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.NETHERITE_INGOT);
+    public static final EntityType<ResourceChickenEntity> netheriteChickenBuilder = EntityType.Builder.create(netheriteChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "netherite_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> netherite_resource_chicken_entity = ENTITIES.register("netherite_resource_chicken_entity", () -> netheriteChickenBuilder);
     //quartz
-    public static final EntityType<QuartzResourceChicken> quartzChickenBuilder =EntityType.Builder.create(QuartzResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "quartz_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<QuartzResourceChicken>> quartz_chicken_entity = ENTITIES.register("quartz_resource_chicken_entity", () -> quartzChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> quartzChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.QUARTZ);
+    public static final EntityType<ResourceChickenEntity> quartzChickenBuilder = EntityType.Builder.create(quartzChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "quartz_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> quartz_resource_chicken_entity = ENTITIES.register("quartz_resource_chicken_entity", () -> quartzChickenBuilder);
     //redstone
-    public static final EntityType<RedstoneResourceChicken> redstoneChickenBuilder =EntityType.Builder.create(RedstoneResourceChicken::new, EntityClassification.CREATURE).size(0.4F, 0.7F).build(new ResourceLocation(Main.MODID, "redstone_resource_chicken_entity").toString());
-    public static final RegistryObject<EntityType<RedstoneResourceChicken>> redstone_chicken_entity = ENTITIES.register("redstone_resource_chicken_entity", () -> redstoneChickenBuilder);
+    private static final EntityType.IFactory<ResourceChickenEntity> redstoneChickenFactoryInstance = (type, world)-> new ResourceChickenEntity(type, world, Items.REDSTONE);
+    public static final EntityType<ResourceChickenEntity> redstoneChickenBuilder = EntityType.Builder.create(redstoneChickenFactoryInstance, EntityClassification.CREATURE).size(0.9F, 1.3F).build(new ResourceLocation(Main.MODID, "redstone_resource_chicken_entity").toString());
+    public static final RegistryObject<EntityType<ResourceChickenEntity>> redstone_resource_chicken_entity = ENTITIES.register("redstone_resource_chicken_entity", () -> redstoneChickenBuilder);
 
     //registrazione attributi entity
     @Mod.EventBusSubscriber(modid = Main.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
@@ -111,25 +128,25 @@ public class ModEntities {
             //walking fungus
             GlobalEntityTypeAttributes.put(walking_fungus_entity.get(), WalkingFungusEntity.setCustomAttributes().create());
             //sheeps
-            GlobalEntityTypeAttributes.put(coal_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(diamond_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(emerald_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(gold_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(iron_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(lapis_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(netherite_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(quartz_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(redstone_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(coal_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(diamond_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(emerald_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(gold_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(iron_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(lapis_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(netherite_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(quartz_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(redstone_resource_sheep_entity.get(), ResourceSheepEntity.setCustomAttributes().create());
             //chickens
-            GlobalEntityTypeAttributes.put(coal_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(diamond_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(emerald_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(gold_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(iron_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(lapis_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(netherite_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(quartz_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(redstone_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(coal_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(diamond_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(emerald_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(gold_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(iron_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(lapis_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(netherite_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(quartz_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(redstone_resource_chicken_entity.get(), ResourceChickenEntity.setCustomAttributes().create());
         }
     }
     

@@ -101,17 +101,10 @@ public class ResourceChickenEntity  extends AnimalEntity {
         return false;
     }
 
-    public Item getItemToDrop() {
-        return itemToDrop;
-    }
-
-    public void setItemToDrop(Item itemToDrop) {
-        this.itemToDrop = itemToDrop;
-    }
-
-    public ResourceChickenEntity(EntityType<? extends ResourceChickenEntity> type, World worldIn) {
+    public ResourceChickenEntity(EntityType<? extends ResourceChickenEntity> type, World worldIn, Item resourceType) {
         super(type, worldIn);
         this.setPathPriority(PathNodeType.WATER, 0.0F);
+        this.itemToDrop=resourceType;
     }
 
     @Override
@@ -134,7 +127,7 @@ public class ResourceChickenEntity  extends AnimalEntity {
         this.wingRotation += this.wingRotDelta * 2.0F;
         if (!this.world.isRemote && this.isAlive() && !this.isChild() && !this.isChickenJockey() && --this.timeUntilNextEgg <= 0) {
             this.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-            this.entityDropItem(this.getItemToDrop());
+            this.entityDropItem(this.itemToDrop);
             this.timeUntilNextEgg = this.rand.nextInt(6000) + 6000;
         }
     }

@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class ResourceSheepEntity extends AnimalEntity implements IShearable, net.minecraftforge.common.IForgeShearable {
 
-    private String resourceType;
+    private Item resourceType;
     private boolean sheared;
     private int sheepTimer;
     private EatGrassGoal eatGrassGoal;
@@ -46,17 +47,18 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
         this.sheared = sheared;
     }
 
-    public String getResourceType() {
+    public Item getResourceType() {
         return resourceType;
     }
 
-    public void setResourceType(String resourceType) {
+    public void setResourceType(Item resourceType) {
         this.resourceType = resourceType;
     }
 
-    public ResourceSheepEntity(EntityType<? extends ResourceSheepEntity> type, World worldIn){
+    public ResourceSheepEntity(EntityType<? extends ResourceSheepEntity> type, World worldIn, Item resourceType){
         super(type, worldIn);
         this.sheared=false;
+        this.resourceType=resourceType;
     }
 
     @Nullable
@@ -75,7 +77,7 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
     public void shear(SoundCategory category) {
         this.world.playMovingSound((PlayerEntity)null, this, SoundEvents.ENTITY_SHEEP_SHEAR, category, 1.0F, 1.0F);
         this.setSheared(true);
-        entityDropItem(convertStringToItem(resourceType));
+        entityDropItem(this.resourceType);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
         if (!world.isRemote) {
             java.util.List<ItemStack> items = new java.util.ArrayList<>();
             this.setSheared(true);
-            items.add(new ItemStack(convertStringToItem(resourceType)));
+            items.add(new ItemStack(this.resourceType));
             return items;
         }
         return java.util.Collections.emptyList();
@@ -124,22 +126,13 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         this.setSheared(compound.getBoolean("Sheared"));
-        this.setResourceType(compound.getString("ResourceType"));
+        this.setResourceType(Item.getItemById(compound.getInt("ResourceType")));
     }
 
-    private Item convertStringToItem(String stringItem){
-        switch (stringItem){
-            case "coal": return Items.COAL;
-            case "diamond": return Items.DIAMOND;
-            case "iron": return Items.IRON_INGOT;
-            case "emerald": return Items.EMERALD;
-            case "lapis": return Items.LAPIS_LAZULI;
-            case "redstone": return Items.REDSTONE;
-            case "gold": return Items.GOLD_INGOT;
-            case "quartz": return Items.QUARTZ;
-            case "netherite": return Items.NETHERITE_INGOT;
-            default: return Items.COAL;
-        }
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
+        compound.putBoolean("Sheared",this.isSheared());
+        compound.putInt("ResourceType", Item.getIdFromItem(this.resourceType));
     }
 
     public ActionResultType func_230254_b_(PlayerEntity p_230254_1_, Hand p_230254_2_) {
@@ -163,12 +156,6 @@ public class ResourceSheepEntity extends AnimalEntity implements IShearable, net
     @Override
     public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
         return null;
-    }
-
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
-        compound.putBoolean("Sheared",this.isSheared());
-        compound.putString("ResourceType", this.getResourceType());
     }
 
     @OnlyIn(Dist.CLIENT)

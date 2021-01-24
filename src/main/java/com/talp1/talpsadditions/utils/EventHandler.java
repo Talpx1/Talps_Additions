@@ -190,14 +190,11 @@ public class EventHandler{
 
     //TODO: add configurble vals
     @SubscribeEvent
-    public static void onReEnchanting(ItemTossEvent event){
-        Main.LOGGER.info("Fired");
+    public static void onReEnchanting(ItemTossEvent event){ ;
         if (!event.getPlayer().getEntityWorld().isRemote()){
-            Main.LOGGER.info("item ok");
             BlockPos playerPos = event.getPlayer().getPosition();
             //check for correct multiblock struture
             if( correctReEnchantrMultiblock(playerPos, event.getPlayer().getEntityWorld()) ){
-                Main.LOGGER.info("correct multi");
                 reEnchantItem(event.getEntityItem().getItem(), event.getPlayer());
                 //event.getPlayer().addExperienceLevel(-100);
             }
@@ -208,7 +205,7 @@ public class EventHandler{
         if(!stack.isEmpty()){
             Random rand = new Random();
             int expAmount = rand.nextInt(29)+1;//exp points cost
-            Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);//enchts on the item toss
+            Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);//enchants on the item toss
             if(stack.isEnchanted() && player.experienceLevel>= expAmount){
                 //increase enchs lvl
                 enchants.forEach( (ench, lvl) ->{

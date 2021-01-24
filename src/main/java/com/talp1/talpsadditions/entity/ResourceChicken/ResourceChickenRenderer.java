@@ -1,27 +1,27 @@
-package com.talp1.talpsadditions.entity.ResourceChicken.renderer;
+package com.talp1.talpsadditions.entity.ResourceChicken;
 
 import com.talp1.talpsadditions.Main;
-import com.talp1.talpsadditions.entity.ResourceChicken.ResourceChickenModel;
-import com.talp1.talpsadditions.entity.ResourceChicken.type.QuartzResourceChicken;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class QuartzResourceChickenRenderer extends MobRenderer<QuartzResourceChicken, ResourceChickenModel<QuartzResourceChicken>> {
-    private static final ResourceLocation CHICKEN_TEXTURES = new ResourceLocation(Main.MODID,"textures/entity/chicken_quartz.png");
+public class ResourceChickenRenderer extends MobRenderer<ResourceChickenEntity, ResourceChickenModel<ResourceChickenEntity>> {
+    private ResourceLocation CHICKEN_TEXTURES;
 
-    public QuartzResourceChickenRenderer(EntityRendererManager renderManagerIn) {
+    public ResourceChickenRenderer(EntityRendererManager renderManagerIn, Item resourceType) {
         super(renderManagerIn, new ResourceChickenModel<>(), 0.3F);
+        this.CHICKEN_TEXTURES=new ResourceLocation(Main.MODID,"textures/entity/resource_chickens/chicken_"+resourceType.toString()+".png");
     }
 
     @Override
-    public ResourceLocation getEntityTexture(QuartzResourceChicken entity)  {
-        return CHICKEN_TEXTURES;
+    public ResourceLocation getEntityTexture(ResourceChickenEntity entity)  {
+        return this.CHICKEN_TEXTURES;
     }
 
 

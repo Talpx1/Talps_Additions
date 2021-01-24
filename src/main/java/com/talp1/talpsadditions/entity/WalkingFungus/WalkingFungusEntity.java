@@ -54,7 +54,7 @@ public class WalkingFungusEntity extends AnimalEntity {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.BLOCK_BAMBOO_PLACE;
+        return SoundEvents.ENTITY_FOX_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
