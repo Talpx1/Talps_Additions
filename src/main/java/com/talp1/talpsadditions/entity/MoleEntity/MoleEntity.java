@@ -11,9 +11,11 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
@@ -94,4 +96,13 @@ public class MoleEntity extends AnimalEntity {
         return worldIn.canBlockSeeSky(pos)||worldIn.canSeeSky(pos);
     }
 
+    @Override //drop talp1's head when a mole is struck by a lightning
+    public void func_241841_a(ServerWorld p_241841_1_, LightningBoltEntity p_241841_2_) {
+        if(!this.world.isRemote()){
+            ItemStack customPlayerHead = new ItemStack(Items.PLAYER_HEAD);
+            customPlayerHead.setTag(new CompoundNBT());
+            customPlayerHead.getTag().putString("SkullOwner", "Talp1");
+            this.entityDropItem(customPlayerHead);
+        }
+    }
 }

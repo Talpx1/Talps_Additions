@@ -17,7 +17,6 @@ public class ResourceSheepRenderer extends MobRenderer<ResourceSheepEntity, Reso
         this.addLayer(new ResourceSheepWoolLayer(this, resourceType ));
     }
 
-
     @Override
     public ResourceLocation getEntityTexture(ResourceSheepEntity entity) {
         return SHEARED_RESOURCE_SHEEP_TEXTURES;

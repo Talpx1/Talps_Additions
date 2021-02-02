@@ -74,6 +74,8 @@ public class ModItems {
     public static final RegistryObject<Item> strong_string = ITEMS.register("strong_string", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> dolphin_fin = ITEMS.register("dolphin_fin", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> fancy_bowl = ITEMS.register("fancy_bowl", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> yetis_tooth = ITEMS.register("yetis_tooth", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
+    public static final RegistryObject<Item> shiny_gem = ITEMS.register("shiny_gem", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     //tools
     public static final RegistryObject<MortarAndPestleItem> mortar_and_pestle = ITEMS.register("mortar_and_pestle", () -> new MortarAndPestleItem(1,1,new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(1).maxDamage(64)));
     public static final RegistryObject<GeneCollectorItem> gene_collector = ITEMS.register("gene_collector", ()-> new GeneCollectorItem(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
@@ -87,5 +89,5 @@ public class ModItems {
     public static final RegistryObject<Item> cooked_earth_worm = ITEMS.register("cooked_earth_worm", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().meat().saturation(1.5f).hunger(2).build())));
     public static final RegistryObject<Item> piece_of_coconut = ITEMS.register("piece_of_coconut", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(2).saturation(0.3F).build())));
     public static final RegistryObject<Item> yetis_icecream = ITEMS.register("yetis_icecream", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(1).saturation(0.1f).build())));
-
+    public static final RegistryObject<Item> golden_mushroom = ITEMS.register("golden_mushroom", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(6).saturation(1.2F).build())));
 }

@@ -78,6 +78,24 @@ public class CommonConfig {
     public static ForgeConfigSpec.IntValue dolphinGraceDuration;
     //dolphins grace potion amplifier
     public static ForgeConfigSpec.IntValue dolphinGraceAmplifier;
+    //grow coral on bonemealing chance (1 out of x)
+    public static ForgeConfigSpec.IntValue growCoralChance;
+    //re-enchanter
+    //max level cost to increase enchant lvls
+    public static ForgeConfigSpec.IntValue maxLvlCostToIncreaseLvls;
+    //increase enchants chance (1 out of x)
+    public static ForgeConfigSpec.IntValue increaseEnchantsChance;
+    //max level cost to increase add new enchant
+    public static ForgeConfigSpec.IntValue maxLvlCostToAddEnchant;
+    //new enchant chance (1 out of x)
+    public static ForgeConfigSpec.IntValue newEnchantChance;
+    //max lvl increase
+    public static ForgeConfigSpec.IntValue maxLvlIncrease;
+    //new enchant max lvl
+    public static ForgeConfigSpec.IntValue newEnchantMaxLvl;
+    //walking fungus shiny gem trade chance
+    public static ForgeConfigSpec.IntValue chanceTradeGem;
+
 
     public CommonConfig() {
         builder.push(Main.MODID);
@@ -104,11 +122,14 @@ public class CommonConfig {
         //walking fungus atts
         walkingFungusMaxHealth = builder.comment("The maximum amount of health for the walking fungus").defineInRange("walkingFungusMaxHealth", 9.0D,1.0D,18.0D);
         walkingFungusMovementSpeed = builder.comment("The movement speed of the walking fungus").defineInRange("walkingFungusMovementSpeed", 0.25D, 0.10D, 1.0D);
+        //walking-fungus drop gem
+        chanceTradeGem=builder.comment("The chance out of X that a walking-fungus will trade a Shiny Gem (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("chanceTradeGem",100,5,500);
 
         //event handler drops settings
         dolphinFinDropChance = builder.comment("The chance out of X that when killing a dolphin it will drop a Dolpin Fin (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("dolphinFinDropChance",3,1,100);
         batEarDrumDropChance = builder.comment("The chance out of X that when killing a bat it will drop a Bat Eardrum (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("batEarDrumDropChance",6,1,100);
         earthWormDropChance = builder.comment("The chance out of X that when hoeing it will drop a Earth Worm (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("earthWormDropChance",3,1,100);
+        growCoralChance = builder.comment("The chance out of X that when bonemealing a coral fan it grow into a coral block (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("growCoralChance",3,1,100);
         //gen lab settings
         genLabEnergyPerTick = builder.comment("The amount of energy per tick used by the Gen-Lab").defineInRange("genLabEnergyPerTick",50,1,5000);
         genLabEnergyMaxCapacity = builder.comment("The amount of energy that the Gen-Lab can store").defineInRange("genLabEnergyMaxCapacity",200000,10000,500000);
@@ -130,6 +151,14 @@ public class CommonConfig {
         dolphinGraceAmplifier = builder.comment("The amplifier that will be applied to the dolphins grace effect when drinking a dolphins grace potion").defineInRange("dolphinGraceAmplifier",1,0,5);
         //effects settings
         sensesEffectDetectRadius = builder.comment("The radius where the senses effect will look for Shiny Shards Ore").defineInRange("sensesEffectDetectRadius",5,2,15);
+        //re-enchanter
+        maxLvlCostToIncreaseLvls= builder.comment("The maximum amount of levels that increasing the enchant in the re-enchanter may costs").defineInRange("maxLvlCostToIncreaseLvls",29,1,100);
+        increaseEnchantsChance=builder.comment("The chance out of X, for each enchantment on the item, that when tossing an item in the re-enchanter this enchantment will get increased (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("increaseEnchantsChance",2,1,40);
+        maxLvlCostToAddEnchant=builder.comment("The maximum amount of levels that adding a new enchant in the re-enchanter may costs").defineInRange("maxLvlCostToAddEnchant",19,1,100);
+        newEnchantChance=builder.comment("The chance out of X that when tossing an item in the re-enchanter this item will recive a new enchant (you are setting the X here, so the smaller the more likely the drop happens)").defineInRange("newEnchantChance",10,1,200);
+        maxLvlIncrease= builder.comment("The maximum amount in levels that an enchant can be increased in the re-enchanter (for each enchant on the item)").defineInRange("maxLvlIncrease",3,1,15);
+        newEnchantMaxLvl=builder.comment("The maximum amount in levels for a newly generated enchant in the re-enchanter").defineInRange("newEnchantMaxLvl",5,1,25);
+
 
         builder.pop();
 

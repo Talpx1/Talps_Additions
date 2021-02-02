@@ -2,6 +2,7 @@ package com.talp1.talpsadditions.entity.YetiEntity;
 
 import com.talp1.talpsadditions.config.CommonConfig;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
+import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -21,6 +22,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -32,12 +34,34 @@ import java.util.function.Predicate;
 
 public class YetiEntity extends CreatureEntity implements IAngerable {
 
+    private int dropTimer;
     private static final RangedInteger field_234217_by_ = TickRangeConverter.convertRange(20, 39);
     private int field_234218_bz_;
     private UUID field_234216_bA_;
 
     public YetiEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
         super(type, worldIn);
+        this.dropTimer=0;
+    }
+
+    private void setDropTimer(int ticks){
+        this.dropTimer=ticks;
+    }
+
+    @Override
+    public void livingTick() {
+        if(this.dropTimer>0)  this.dropTimer--;
+        super.livingTick();
+    }
+
+    @Override
+    public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
+        if(!this.world.isRemote() && this.dropTimer==0){
+            setDropTimer(100);
+            this.entityDropItem(new ItemStack(ModItems.yetis_icecream.get(),1));
+            return ActionResultType.SUCCESS;
+        }
+        return super.applyPlayerInteraction(player, vec, hand);
     }
 
     public static boolean canSpawn(EntityType<YetiEntity> yetiEntityEntityType, IWorld iWorld, SpawnReason spawnReason, BlockPos blockPos, Random random) {

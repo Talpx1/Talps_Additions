@@ -10,16 +10,16 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 0.0,
-                "max": 2.0,
+                "min": 1.0,
+                "max": 3.0,
                 "type": "minecraft:uniform"
               }
             },
             {
               "function": "minecraft:looting_enchant",
               "count": {
-                "min": 0.0,
-                "max": 2.0
+                "min": 1.0,
+                "max": 3.0
               }
             }
           ],
@@ -41,8 +41,8 @@
         },
         {
           "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.3,
-          "looting_multiplier": 0.07
+          "chance": 0.2,
+          "looting_multiplier": 0.067
         }
       ]
     }

@@ -27,7 +27,7 @@ public class ResourceSheepWoolLayer extends LayerRenderer<ResourceSheepEntity, R
 
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, ResourceSheepEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!entitylivingbaseIn.isSheared() && !entitylivingbaseIn.isInvisible()) {
+        if (!entitylivingbaseIn.getSheared() && !entitylivingbaseIn.isInvisible()) {
             renderCopyCutoutModel(this.getEntityModel(), this.sheepModel, TEXTURE, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, 1,1,1);
         }
     }
