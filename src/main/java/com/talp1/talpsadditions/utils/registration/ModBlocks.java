@@ -55,5 +55,5 @@ public class ModBlocks {
     public static final RegistryObject<VineBlock> frosted_vines = BLOCKS.register("frosted_vines", () -> new VineBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.2F).sound(SoundType.VINE)));
     public static final RegistryObject<CoconutBlock> coconut_block = BLOCKS.register("coconut_block", () -> new CoconutBlock(AbstractBlock.Properties.create(Material.MISCELLANEOUS).hardnessAndResistance(0.2F).sound(SoundType.BAMBOO)));
     public static final RegistryObject<FloweryWaterLily> flowery_water_lily = BLOCKS.register("flowery_water_lily", () -> new FloweryWaterLily(AbstractBlock.Properties.create(Material.PLANTS).zeroHardnessAndResistance().sound(SoundType.LILY_PADS).notSolid()));
-
+    public static final RegistryObject<AncientStatue> ancient_statue = BLOCKS.register("ancient_statue", () -> new AncientStatue(Block.Properties.create(Material.CLAY).hardnessAndResistance(-1.0F, 3600000.0F).sound(SoundType.SAND).setLightLevel(state -> 4)));
 }

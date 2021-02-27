@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "talpsadditions:block/ancient_statue",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "talpsadditions:block/ancient_statue"
+    },
+    "facing=south": {
+      "model": "talpsadditions:block/ancient_statue",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "talpsadditions:block/ancient_statue",
+      "y": 270
+    }
+  }
+}

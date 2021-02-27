@@ -72,7 +72,7 @@
   "item.talpsadditions.yetis_tooth": "Dente di Yeti",
   "item.talpsadditions.shiny_gem": "Gemma Lucente",
   "item.talpsadditions.golden_mushroom": "Fungo Dorato",
-
+  "item.talpsadditions.ancient_tool": "Utensile Antoco",
 
   "effect.talpsadditions.senses_effect": "Sensi",
 
@@ -103,6 +103,7 @@
   "block.talpsadditions.frosted_vines": "Rampicante Ghiacciato",
   "block.talpsadditions.coconut_block": "Noce di Cocco",
   "block.talpsadditions.flowery_water_lily": "Ninfea Fiorita",
+  "block.talpsadditions.ancient_statue": "Statua Antica",
 
   "entity.talpsadditions.mole_entity": "Talpa",
   "entity.talpsadditions.yeti_entity": "Yeti",

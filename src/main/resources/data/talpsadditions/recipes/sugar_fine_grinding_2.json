@@ -1,0 +1,24 @@
+{
+  "type":"minecraft:crafting_shapeless",
+  "ingredients":[
+    {
+      "type": "talpsadditions:fine_grinding_enchanted",
+      "item":"talpsadditions:fancy_mortar_and_pestle",
+      "nbt": {
+        "Enchantments":[
+          {
+            "id":"talpsadditions:fine_grinding_enchant",
+            "lvl":2
+          }
+        ]
+      }
+    },
+    {
+      "item": "minecraft:sugar_cane"
+    }
+  ],
+  "result": {
+    "item": "minecraft:sugar",
+    "count": 5
+  }
+}

@@ -1,14 +1,22 @@
 package com.talp1.talpsadditions.utils;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.mojang.realmsclient.util.JsonUtils;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.config.CommonConfig;
+import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
+import com.talp1.talpsadditions.entity.MoleEntity.MoleModel;
 import com.talp1.talpsadditions.entity.WalkingFungus.WalkingFungusEntity;
 import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import com.talp1.talpsadditions.utils.registration.ModEnchants;
 import com.talp1.talpsadditions.utils.registration.ModEntities;
 import com.talp1.talpsadditions.utils.registration.ModItems;
+import com.talp1.talpsadditions.world.data.StatuesSavedData;
 import net.minecraft.advancements.criterion.PlayerEntityInteractionTrigger;
 import net.minecraft.block.*;
+import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -16,22 +24,35 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
+import net.minecraft.loot.LootTable;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentUtils;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.DimensionSavedDataManager;
+import net.minecraft.world.storage.IServerWorldInfo;
+import net.minecraft.world.storage.ServerWorldInfo;
+import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -39,14 +60,14 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Random;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler{
@@ -195,7 +216,7 @@ public class EventHandler{
 //----------------------------------Re-Enchanter Logic------------------------------
 
     @SubscribeEvent
-    public static void onReEnchanting(ItemTossEvent event){ ;
+    public static void onReEnchanting(ItemTossEvent event){
         if (!event.getPlayer().getEntityWorld().isRemote()){
             BlockPos playerPos = event.getPlayer().getPosition();
             //check for correct multiblock struture
@@ -263,6 +284,81 @@ public class EventHandler{
         return false;
     }
 
+//----------------------------------Ancient Statues Spawn Logic------------------------------
 
+    @SubscribeEvent
+    public static void onWorldCreation(WorldEvent.CreateSpawnPosition event){
+        if(event.getWorld().isRemote()) return;
+        generateStatues(event.getWorld());
+    }
 
+    /*public static void regenStatues(){
+        if(event.getWorld().isRemote()) return;
+        ServerWorld world = (ServerWorld)event.getWorld();
+        List<BlockPos> data = StatuesSavedData.get(world).getPositions();
+        if(data == null) return;
+        data.forEach((pos)-> event.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 2));
+        generateStatues(world);
+    }*/
+
+    private static void generateStatues(IWorld world){
+        if(world.isRemote()) return;
+        ServerWorld serverWorld = (ServerWorld) world;
+        final int maxSpawnRadius = 1000;//TODO: make this configurable
+        Map<String, BlockPos> statuePositions= new HashMap<>();
+        Random rand = new Random();
+        for(int i=0; i<4; i++)
+            statuePositions.put("statue_"+(i+1), placeRitualStatue(rand.nextInt(200),rand.nextInt(200),rand,world,maxSpawnRadius));//TODO: make this conf
+        saveStatuesPositionData(statuePositions, serverWorld);
+    }
+
+    private static BlockPos placeRitualStatue(int spawnX, int spawnZ, Random rand, IWorld world, int maxSpawnRadius){
+        boolean placed = false;
+        BlockPos pos = null;
+        ArrayList<BlockState> validBlocks = new ArrayList<>(Arrays.asList(Blocks.GRASS_BLOCK.getDefaultState(), Blocks.STONE.getDefaultState(), Blocks.SAND.getDefaultState(), Blocks.DIRT.getDefaultState()));
+        do{
+            int posX = addOrSubtract(spawnX, rand.nextInt(maxSpawnRadius), rand);
+            int posZ = addOrSubtract(spawnZ, rand.nextInt(maxSpawnRadius), rand);
+            for (int posY = 62; posY<255; posY++){
+                pos = new BlockPos(posX, posY, posZ);
+                BlockState state = world.getBlockState(pos);
+                BlockState stateDown = world.getBlockState(pos.down());
+                if(state==Blocks.AIR.getDefaultState() && validBlocks.contains(stateDown)){
+                    world.setBlockState(pos, ModBlocks.ancient_statue.get().getDefaultState(), 2);
+                    Main.LOGGER.info(pos);
+                    placed=true;
+                    break;
+                }
+            }
+        }while(!placed);
+        return pos;
+    }
+
+    private static int addOrSubtract(int n1, int n2, Random rand){
+        int result = rand.nextInt(10)+1<5 ? n1-n2 : n1+n2;
+        return rand.nextInt(10)+1<5 ? -(result): result;
+    }
+
+    private static void saveStatuesPositionData(Map<String, BlockPos> positions, World world){
+        StatuesSavedData data = StatuesSavedData.get(world);
+        data.setPositions(positions);
+    }
+
+//----------------------------------Debris Has Statue Coords------------------------------
+
+    @SubscribeEvent
+    public static void debrisDropStatueCoords(EntityJoinWorldEvent event){
+        if(event.getWorld().isRemote()) return;
+        if(!(event.getEntity() instanceof ItemEntity)) return;
+        ItemEntity itemEntity = (ItemEntity) event.getEntity();
+        if(itemEntity.getItem().getItem() != Items.ANCIENT_DEBRIS) return;
+        CompoundNBT nbt = itemEntity.getItem().getOrCreateTag();
+        if(nbt.contains("ancient_statue_coords")) return;
+        itemEntity.getItem().getOrCreateChildTag("ancient_statue_coords");
+        Random random = new Random();
+        if(random.nextInt(6)==0){//todo make this conf
+            BlockPos pos = StatuesSavedData.get(event.getWorld()).getPositions().get(random.nextInt(3)+1);
+            itemEntity.getItem().setDisplayName(TextComponentUtils.toTextComponent(pos::getCoordinatesAsString));
+        }
+    }
 }

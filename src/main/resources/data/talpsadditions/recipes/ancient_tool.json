@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "T",
+    "A",
+    "S"
+  ],
+  "key": {
+    "T": {
+      "item": "talpsadditions:yetis_tooth"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "A": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "talpsadditions:ancient_tool",
+    "count": 1
+  }
+}

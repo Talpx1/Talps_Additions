@@ -27,7 +27,6 @@ public class MortarAndPestleItem extends ToolItem {
         else{
             ItemStack newItemStack=itemStack.copy();
             newItemStack.attemptDamageItem(1, new Random(),null);//this also consider unbreaking
-            //OLD: newItemStack.setDamage(itemStack.getDamage()+1);
             return newItemStack;
         }
     }
