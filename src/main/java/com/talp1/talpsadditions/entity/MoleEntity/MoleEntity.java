@@ -102,6 +102,7 @@ public class MoleEntity extends AnimalEntity {
             ItemStack customPlayerHead = new ItemStack(Items.PLAYER_HEAD);
             customPlayerHead.setTag(new CompoundNBT());
             customPlayerHead.getTag().putString("SkullOwner", "Talp1");
+            customPlayerHead.getOrCreateChildTag("prevent_lightning_destroy");
             this.entityDropItem(customPlayerHead);
         }
     }

@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.utils.registration;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.enchantment.AncientResistanceEnchant;
 import com.talp1.talpsadditions.enchantment.FineGrindingEnchant;
 import net.minecraft.enchantment.*;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -25,6 +26,7 @@ public class ModEnchants {
 
     //Enchants
     public static final RegistryObject<FineGrindingEnchant> fine_grinding_enchant = ENCHANTMENTS.register("fine_grinding_enchant", ()->new FineGrindingEnchant(Enchantment.Rarity.COMMON, EnchantmentType.DIGGER, new EquipmentSlotType[]{EquipmentSlotType.MAINHAND}));
+    public static final RegistryObject<AncientResistanceEnchant> ancient_resistance_enchant = ENCHANTMENTS.register("ancient_resistance_enchant", ()->new AncientResistanceEnchant(Enchantment.Rarity.VERY_RARE, EnchantmentType.create("all_items_are_valid", (item)->true), EquipmentSlotType.values()));
 
 
 }

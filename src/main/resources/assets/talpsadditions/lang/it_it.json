@@ -73,6 +73,7 @@
   "item.talpsadditions.shiny_gem": "Gemma Lucente",
   "item.talpsadditions.golden_mushroom": "Fungo Dorato",
   "item.talpsadditions.ancient_tool": "Utensile Antoco",
+  "item.talpsadditions.walking_fungus_1up": "1UP",
 
   "effect.talpsadditions.senses_effect": "Sensi",
 
@@ -128,6 +129,7 @@
   "entity.talpsadditions.walking_fungus_entity": "Fungo Viandante",
 
   "enchantment.talpsadditions.fine_grinding_enchant": "Polverizzazione",
+  "enchantment.talpsadditions.ancient_resistance_enchant": "Resistenza Antica",
 
   "screen.talpsadditions.gen_lab_block": "Gen-Lab",
 

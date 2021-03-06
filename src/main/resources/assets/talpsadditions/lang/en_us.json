@@ -106,6 +106,7 @@
   "block.talpsadditions.flowery_water_lily": "Flowery Water Lily",
   "block.talpsadditions.ancient_statue": "Ancient Statue",
   "item.talpsadditions.ancient_tool": "Ancient Tool",
+  "item.talpsadditions.walking_fungus_1up": "1UP",
 
   "entity.talpsadditions.mole_entity": "Mole",
   "entity.talpsadditions.yeti_entity": "Yeti",
@@ -131,6 +132,7 @@
 
 
   "enchantment.talpsadditions.fine_grinding_enchant": "Fine Grinding",
+  "enchantment.talpsadditions.ancient_resistance_enchant": "Ancient Resistance",
 
   "screen.talpsadditions.gen_lab_block": "Gen-Lab",
 

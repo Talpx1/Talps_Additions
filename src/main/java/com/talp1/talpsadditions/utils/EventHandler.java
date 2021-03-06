@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.mojang.realmsclient.util.JsonUtils;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.config.CommonConfig;
+import com.talp1.talpsadditions.entity.AncientResistanceItemEntity;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleModel;
 import com.talp1.talpsadditions.entity.WalkingFungus.WalkingFungusEntity;
@@ -24,6 +25,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -39,6 +41,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextComponentUtils;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -48,12 +51,16 @@ import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.IServerWorldInfo;
 import net.minecraft.world.storage.ServerWorldInfo;
 import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityLeaveWorldEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -292,14 +299,18 @@ public class EventHandler{
         generateStatues(event.getWorld());
     }
 
-    /*public static void regenStatues(){
-        if(event.getWorld().isRemote()) return;
-        ServerWorld world = (ServerWorld)event.getWorld();
-        List<BlockPos> data = StatuesSavedData.get(world).getPositions();
+    @SubscribeEvent
+    public static void regenStatues(LivingDeathEvent event){
+        if(event.getEntityLiving().getEntityWorld().isRemote()) return;
+        if(!( (event.getEntityLiving() instanceof PlayerEntity)||(event.getEntityLiving() instanceof CowEntity)))return;
+        BlockPos playerPos = event.getEntityLiving().getPosition();
+        if(playerPos.getX()!=0 && playerPos.getZ()!=0) return;
+        if(event.getEntityLiving().getEntityWorld().getBlockState(playerPos.down())!=ModBlocks.shiny_shard_block.get().getDefaultState()) return;
+        List<BlockPos> data = StatuesSavedData.get(event.getEntityLiving().getEntityWorld()).getPositions();
         if(data == null) return;
-        data.forEach((pos)-> event.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 2));
-        generateStatues(world);
-    }*/
+        data.forEach((pos)-> event.getEntityLiving().getEntityWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 2));
+        generateStatues(event.getEntityLiving().getEntityWorld());
+    }
 
     private static void generateStatues(IWorld world){
         if(world.isRemote()) return;
@@ -361,4 +372,31 @@ public class EventHandler{
             itemEntity.getItem().setDisplayName(TextComponentUtils.toTextComponent(pos::getCoordinatesAsString));
         }
     }
+
+//----------------------------------1UP Easter egg Killing Walking fungus------------------------------
+    @SubscribeEvent
+    public static void walkingFungusDrops1UP(LivingDeathEvent event){
+        if (event.getEntity().getType()== ModEntities.walking_fungus_entity.get()){
+            if (new Random().nextInt(1000)==0){//todo configurable
+                event.getEntityLiving().entityDropItem(new ItemStack(ModItems.walking_fungus_1up.get()));
+            }
+        }
+    }
+
+    //----------------------------------Ancient Resistance Logic ------------------------------
+    @SubscribeEvent
+    public static void ancinetResistance(EntityJoinWorldEvent event){
+        if(event.getWorld().isRemote())return;
+        if(!(event.getEntity() instanceof ItemEntity))return;
+        ItemEntity itemEntity = (ItemEntity) event.getEntity();
+        if(itemEntity instanceof AncientResistanceItemEntity) return;
+        if(!itemEntity.getItem().isEnchanted())return;
+        if(EnchantmentHelper.getEnchantments(itemEntity.getItem()).containsKey(ModEnchants.ancient_resistance_enchant.get())){
+            AncientResistanceItemEntity newItemEntity = new AncientResistanceItemEntity(event.getWorld(), itemEntity.getPosX(), itemEntity.getPosY(), itemEntity.getPosZ(), itemEntity);
+            newItemEntity.moveForced(Vector3d.copyCenteredHorizontally(itemEntity.getPosition()));
+            newItemEntity.copyDataFromOld(itemEntity);
+            event.getWorld().addEntity(newItemEntity);
+        }
+    }
+
 }

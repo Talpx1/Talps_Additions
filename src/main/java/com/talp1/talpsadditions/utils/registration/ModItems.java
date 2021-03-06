@@ -92,4 +92,5 @@ public class ModItems {
     public static final RegistryObject<Item> piece_of_coconut = ITEMS.register("piece_of_coconut", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(2).saturation(0.3F).build())));
     public static final RegistryObject<Item> yetis_icecream = ITEMS.register("yetis_icecream", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(1).saturation(0.1f).build())));
     public static final RegistryObject<Item> golden_mushroom = ITEMS.register("golden_mushroom", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(6).saturation(1.2F).build())));
+    public static final RegistryObject<Item> walking_fungus_1up = ITEMS.register("walking_fungus_1up", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).food(new Food.Builder().hunger(20).saturation(20F).build())));
 }
