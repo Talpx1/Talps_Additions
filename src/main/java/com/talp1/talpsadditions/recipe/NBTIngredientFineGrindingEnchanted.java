@@ -1,4 +1,4 @@
-package com.talp1.talpsadditions.utils;
+package com.talp1.talpsadditions.recipe;
 
 import com.google.gson.JsonObject;
 import com.talp1.talpsadditions.utils.registration.ModEnchants;

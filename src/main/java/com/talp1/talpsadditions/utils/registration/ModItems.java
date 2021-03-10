@@ -12,14 +12,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModItems {
 
-    //DefReg per Items
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
 
     public static void init() {
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    // registrazione Items
     public static final RegistryObject<Item> moles_nose = ITEMS.register("moles_nose", () -> new Item(new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> shiny_shard_ore_item = ITEMS.register("shiny_shard_ore", () -> new BlockItem(ModBlocks.shiny_shard_ore.get(), new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));
     public static final RegistryObject<Item> shiny_shard_block_item = ITEMS.register("shiny_shard_block", () -> new BlockItem(ModBlocks.shiny_shard_block.get(), new Item.Properties().group(Main.CUSTOM_ITEM_GROUP).maxStackSize(64).setNoRepair()));

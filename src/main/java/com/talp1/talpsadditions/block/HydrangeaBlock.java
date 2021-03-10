@@ -3,6 +3,7 @@ package com.talp1.talpsadditions.block;
 import com.talp1.talpsadditions.utils.registration.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResultType;
@@ -14,13 +15,22 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class WhiteHydrangeaBlock extends NormalBushBlock {
-    public WhiteHydrangeaBlock(Properties p_i49971_1_) {
+public class HydrangeaBlock extends NormalBushBlock {
+    private int blockItem;
+    public HydrangeaBlock(Properties p_i49971_1_, int blockItem) {
         super(p_i49971_1_);
+        this.blockItem=blockItem;
     }
 
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
+        switch (this.blockItem){
+            case 1: return new ItemStack(ModItems.white_hydrangea_sprout.get());
+            case 2: return new ItemStack(ModItems.red_hydrangea_sprout.get());
+            case 3: return new ItemStack(ModItems.pink_hydrangea_sprout.get());
+            case 4: return new ItemStack(ModItems.lilac_hydrangea_sprout.get());
+            case 5: return new ItemStack(ModItems.blue_hydrangea_sprout.get());
+        }
         return new ItemStack(ModItems.white_hydrangea_sprout.get());
     }
 

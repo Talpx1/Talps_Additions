@@ -10,6 +10,7 @@ import com.talp1.talpsadditions.entity.AncientResistanceItemEntity;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleEntity;
 import com.talp1.talpsadditions.entity.MoleEntity.MoleModel;
 import com.talp1.talpsadditions.entity.WalkingFungus.WalkingFungusEntity;
+import com.talp1.talpsadditions.utils.helper.InventoryHelper;
 import com.talp1.talpsadditions.utils.registration.ModBlocks;
 import com.talp1.talpsadditions.utils.registration.ModEnchants;
 import com.talp1.talpsadditions.utils.registration.ModEntities;
@@ -83,19 +84,19 @@ public class EventHandler{
     //may drop a worm when dirt/grass get hoed into farmland
     @SubscribeEvent
     public static void onHoeingDropWorm(UseHoeEvent event){
-        if(!event.getContext().getWorld().isRemote()){
-            ServerWorld serverWorld = (ServerWorld) event.getContext().getWorld();
-            Block targetBlock=event.getContext().getWorld().getBlockState(event.getContext().getPos()).getBlock();
-            if(targetBlock == Blocks.DIRT||targetBlock==Blocks.GRASS_BLOCK){
-                Random random = new Random();
-                if(random.nextInt(CommonConfig.earthWormDropChance.get())+1==1){
-                    BlockPos wormBlock = event.getContext().getPos();
-                    serverWorld.spawnParticle(ParticleTypes.SNEEZE, wormBlock.getX(), wormBlock.getY()+1,wormBlock.getZ(),6, 0.2D,0.2D,0.2D,0.1D);
-                    World worldIn = event.getContext().getWorld();
-                    worldIn.addEntity(new ItemEntity(worldIn, event.getContext().getPos().getX(), event.getContext().getPos().getY()+1,event.getContext().getPos().getZ(), new ItemStack(ModItems.earth_worm.get())));
-                }
+        if(event.getContext().getWorld().isRemote())return;
+        ServerWorld serverWorld = (ServerWorld) event.getContext().getWorld();
+        Block targetBlock=event.getContext().getWorld().getBlockState(event.getContext().getPos()).getBlock();
+        if(targetBlock == Blocks.DIRT||targetBlock==Blocks.GRASS_BLOCK){
+            Random random = new Random();
+            if(random.nextInt(CommonConfig.earthWormDropChance.get())+1==1){
+                BlockPos wormBlock = event.getContext().getPos();
+                serverWorld.spawnParticle(ParticleTypes.SNEEZE, wormBlock.getX(), wormBlock.getY()+1,wormBlock.getZ(),6, 0.2D,0.2D,0.2D,0.1D);
+                World worldIn = event.getContext().getWorld();
+                worldIn.addEntity(new ItemEntity(worldIn, event.getContext().getPos().getX(), event.getContext().getPos().getY()+1,event.getContext().getPos().getZ(), new ItemStack(ModItems.earth_worm.get())));
             }
         }
+
     }
 
     //--------------------------------BoneMeal Coral----------------------------------
@@ -103,29 +104,25 @@ public class EventHandler{
     public static void onBonemealCoralFan(BonemealEvent event){
         if(!event.getWorld().isRemote()){
             if(event.getBlock().getBlock()==Blocks.BRAIN_CORAL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.BRAIN_CORAL_WALL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.BRAIN_CORAL.getBlock()){
-                if(checkForFreeSpace(event.getWorld().getBlockState(event.getPos().up())))
-                    spawnCorals(Blocks.BRAIN_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
+                spawnCorals(Blocks.BRAIN_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
             }
             if(event.getBlock().getBlock()==Blocks.BUBBLE_CORAL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.BUBBLE_CORAL_WALL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.BUBBLE_CORAL.getBlock()){
-                if(checkForFreeSpace(event.getWorld().getBlockState(event.getPos().up())))
-                    spawnCorals(Blocks.BUBBLE_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
+                spawnCorals(Blocks.BUBBLE_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
             }
             if(event.getBlock().getBlock()==Blocks.FIRE_CORAL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.FIRE_CORAL_WALL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.FIRE_CORAL.getBlock()){
-                if(checkForFreeSpace(event.getWorld().getBlockState(event.getPos().up())))
-                    spawnCorals(Blocks.FIRE_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
+                spawnCorals(Blocks.FIRE_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
             }
             if(event.getBlock().getBlock()==Blocks.HORN_CORAL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.HORN_CORAL_WALL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.HORN_CORAL.getBlock()){
-                if(checkForFreeSpace(event.getWorld().getBlockState(event.getPos().up())))
-                    spawnCorals(Blocks.HORN_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
+                spawnCorals(Blocks.HORN_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
             }
             if(event.getBlock().getBlock()==Blocks.TUBE_CORAL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.TUBE_CORAL_WALL_FAN.getBlock()||event.getBlock().getBlock()==Blocks.TUBE_CORAL.getBlock()){
-                if(checkForFreeSpace(event.getWorld().getBlockState(event.getPos().up())))
-                    spawnCorals(Blocks.TUBE_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
+                spawnCorals(Blocks.TUBE_CORAL_BLOCK.getBlock(), event.getPos(), event.getWorld());
             }
         }
     }
 
     private static void spawnCorals(Block blockIn, BlockPos posIn, World worldIn){
+        if(!checkForFreeSpace(worldIn.getBlockState(posIn.up()))) return;
         Random random = new Random();
         ServerWorld serverWorld = (ServerWorld) worldIn;
         if(random.nextInt(CommonConfig.growCoralChance.get())==0){
@@ -142,129 +139,103 @@ public class EventHandler{
     }
 
 //----------------------------------CRAFT ACID------------------------------
-    private static int findSlotInInv(Item item, PlayerInventory plyerInv){
-        for (int i=0; i<plyerInv.getSizeInventory(); i++){
-            if (plyerInv.getStackInSlot(i).getItem()==item){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private static int findPotionSlotInInv(ItemStack item, PlayerInventory plyerInv){
-        for (int i=0; i<plyerInv.getSizeInventory(); i++){
-            if (plyerInv.getStackInSlot(i).getItem()==item.getItem()){
-                if (plyerInv.getStackInSlot(i).getTag().getString("Potion").equals(item.getTag().getString("Potion"))){
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
 
     @SubscribeEvent
     public static void craftAcidBottle(TickEvent.PlayerTickEvent event) {//TODO: make a timer or something to avoid insta-crafting
-        if(event.player.isSneaking()&&event.side.isServer()){
-            World worldIn = event.player.getEntityWorld();
-            BlockPos playerPos =event.player.getPosition();
-            if(worldIn.getBlockState(playerPos.down())==Blocks.CAULDRON.getDefaultState()){
-                ItemStack potion = new ItemStack(Items.POTION);
-                potion.setTag(new CompoundNBT());
-                potion.getTag().putString("Potion","minecraft:poison");
-
-                PlayerInventory playerInv = event.player.inventory;
-
-                if (playerInv.hasItemStack(potion)&&playerInv.hasItemStack(new ItemStack(Items.REDSTONE))&&playerInv.hasItemStack(new ItemStack(Items.FERMENTED_SPIDER_EYE))){
-                    int slotRedstone=findSlotInInv(Items.REDSTONE,playerInv);
-                    int slotSpiderEye=findSlotInInv(Items.FERMENTED_SPIDER_EYE,playerInv);
-                    int slotPoisonPot=findPotionSlotInInv(potion,playerInv);
-                    if (slotRedstone!=-1&&slotSpiderEye!=-1&&slotPoisonPot!=-1){
-                        playerInv.decrStackSize(slotRedstone,1);
-                        playerInv.decrStackSize(slotSpiderEye,1);
-                        playerInv.decrStackSize(slotPoisonPot,1);
-                        event.player.addItemStackToInventory(new ItemStack(ModItems.bottle_of_acid.get(),1));
-                        ServerWorld serverWorld = (ServerWorld)event.player.getEntityWorld();
-                        serverWorld.spawnParticle(ParticleTypes.SNEEZE, event.player.getPosX(), event.player.getPosY(), event.player.getPosZ(),200, 0.5,0.25,0.5,0.65);
-                    }
-                }
-            }
+        if(!event.side.isServer())return;
+        if(!event.player.isSneaking())return;
+        World worldIn = event.player.getEntityWorld();
+        BlockPos playerPos =event.player.getPosition();
+        if(worldIn.getBlockState(playerPos.down())!=Blocks.CAULDRON.getDefaultState())return;
+        ItemStack potion = new ItemStack(Items.POTION);
+        potion.setTag(new CompoundNBT());
+        potion.getTag().putString("Potion","minecraft:poison");
+        PlayerInventory playerInv = event.player.inventory;
+        if( !(playerInv.hasItemStack(potion)&&
+               playerInv.hasItemStack(new ItemStack(Items.REDSTONE))&&
+               playerInv.hasItemStack(new ItemStack(Items.FERMENTED_SPIDER_EYE))
+        ))return;
+        int slotRedstone = InventoryHelper.findItemSlotInInventory(Items.REDSTONE,playerInv);
+        int slotSpiderEye = InventoryHelper.findItemSlotInInventory(Items.FERMENTED_SPIDER_EYE,playerInv);
+        int slotPoisonPot = InventoryHelper.findPotionSlotInInventory(potion,playerInv);
+        if (slotRedstone!=-1&&slotSpiderEye!=-1&&slotPoisonPot!=-1){
+            playerInv.decrStackSize(slotRedstone,1);
+            playerInv.decrStackSize(slotSpiderEye,1);
+            playerInv.decrStackSize(slotPoisonPot,1);
+            event.player.addItemStackToInventory(new ItemStack(ModItems.bottle_of_acid.get(),1));
+            ServerWorld serverWorld = (ServerWorld)event.player.getEntityWorld();
+            serverWorld.spawnParticle(ParticleTypes.SNEEZE, event.player.getPosX(), event.player.getPosY(), event.player.getPosZ(),200, 0.5,0.25,0.5,0.65);
         }
     }
 //----------------------------------BAT EARDRUM------------------------------
     @SubscribeEvent
     public static void dropBatEardrum(LivingDeathEvent event){
-        if (event.getEntity().getType()== EntityType.BAT){
-            if (new Random().nextInt(CommonConfig.earthWormDropChance.get())==0){
-                event.getEntityLiving().entityDropItem(new ItemStack(ModItems.bat_eardrum.get()));
-            }
-        }
+        if (event.getEntityLiving().getEntityWorld().isRemote()) return;
+        if (event.getEntity().getType() != EntityType.BAT)return;
+        if (new Random().nextInt(CommonConfig.earthWormDropChance.get())==0)
+            event.getEntityLiving().entityDropItem(new ItemStack(ModItems.bat_eardrum.get()));
     }
 
 //----------------------------------FROSTED VINES TURNS WATER INTO BLUE ICE------------------------------
     @SubscribeEvent
     public static void vinesGeneratesBlueIce(BlockEvent.EntityPlaceEvent event){
-        if (event.getEntity() instanceof PlayerEntity) {
-            if (event.getPlacedBlock().getBlock() == ModBlocks.frosted_vines.get().getBlock() && event.getWorld().getBlockState(event.getPos().down()) == Blocks.WATER.getDefaultState()) {
-                event.getWorld().setBlockState(event.getPos().down(), Blocks.BLUE_ICE.getDefaultState(), 2);
-            }
-        }
+        if (event.getEntity().getEntityWorld().isRemote())return;
+        if (!(event.getEntity() instanceof PlayerEntity))return;
+        if (event.getPlacedBlock().getBlock() == ModBlocks.frosted_vines.get().getBlock() && event.getWorld().getBlockState(event.getPos().down()) == Blocks.WATER.getDefaultState())
+            event.getWorld().setBlockState(event.getPos().down(), Blocks.BLUE_ICE.getDefaultState(), 2);
     }
 
 //----------------------------------DOLPHIN FIN------------------------------
     @SubscribeEvent
     public static void dropDolphinFin(LivingDeathEvent event){
-        if (event.getEntity().getType()== EntityType.DOLPHIN){
-            if (new Random().nextInt(CommonConfig.dolphinFinDropChance.get())==0){
-                event.getEntityLiving().entityDropItem(new ItemStack(ModItems.dolphin_fin.get()));
-            }
-        }
+        if (event.getEntity().getEntityWorld().isRemote())return;
+        if (event.getEntity().getType() != EntityType.DOLPHIN)return;
+        if (new Random().nextInt(CommonConfig.dolphinFinDropChance.get())==0)
+            event.getEntityLiving().entityDropItem(new ItemStack(ModItems.dolphin_fin.get()));
     }
 
 //----------------------------------Re-Enchanter Logic------------------------------
 
     @SubscribeEvent
     public static void onReEnchanting(ItemTossEvent event){
-        if (!event.getPlayer().getEntityWorld().isRemote()){
-            BlockPos playerPos = event.getPlayer().getPosition();
-            //check for correct multiblock struture
-            if( correctReEnchantrMultiblock(playerPos, event.getPlayer().getEntityWorld()) ){
-                reEnchantItem(event.getEntityItem(), event.getPlayer());
-            }
-        }
+        if (event.getPlayer().getEntityWorld().isRemote())return;
+        BlockPos playerPos = event.getPlayer().getPosition();
+        //check for correct multiblock struture
+        if(correctReEnchantrMultiblock(playerPos, event.getPlayer().getEntityWorld()))
+            reEnchantItem(event.getEntityItem(), event.getPlayer());
     }
 
     private static void reEnchantItem(ItemEntity itemEntity, PlayerEntity player){
         ItemStack stack = itemEntity.getItem();
-        if(!stack.isEmpty()){
-            ServerWorld serverWorld = (ServerWorld)player.getEntityWorld();
-            Random rand = new Random();
-            int expAmount = rand.nextInt(CommonConfig.maxLvlCostToIncreaseLvls.get())+1;//exp points cost
-            Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);//enchants on the item toss
-            if(stack.isEnchanted() && player.experienceLevel>= expAmount){
-                //increase enchs lvl
-                enchants.forEach( (ench, lvl) ->{
-                    if(rand.nextInt(CommonConfig.increaseEnchantsChance.get())==0){
-                        enchants.replace(ench, lvl+rand.nextInt(CommonConfig.maxLvlIncrease.get())+1);
-                        spawnReEnchanterParticleFormation(ParticleTypes.ENCHANTED_HIT, serverWorld, player.getPosition());
-                    }
-                });
-                EnchantmentHelper.setEnchantments(enchants,stack);
-                player.addExperienceLevel(-expAmount);//subtract exp points
-            }
-            expAmount = rand.nextInt(CommonConfig.maxLvlCostToAddEnchant.get())+1;//exp points cost
-            if(rand.nextInt(CommonConfig.newEnchantChance.get())==0 && player.experienceLevel>=expAmount){
-                //pick a rendom enchant and check if is compatible
-                Enchantment newEnch;
-                do{
-                    newEnch = Enchantment.getEnchantmentByID(rand.nextInt(50));
-                }while( newEnch==null ||
-                        enchants.containsKey(newEnch) ||
-                        ( (newEnch!=Enchantments.MENDING && newEnch!=Enchantments.FROST_WALKER) && !stack.canApplyAtEnchantingTable(newEnch) )
-                      );
-                spawnReEnchanterParticleFormation(ParticleTypes.WITCH, serverWorld, player.getPosition());
-                stack.addEnchantment(newEnch, rand.nextInt(CommonConfig.newEnchantMaxLvl.get())+1);//add the enchant
-                player.addExperienceLevel(-expAmount);//subtract the exp points
-            }
+        if(stack.isEmpty())return;
+        ServerWorld serverWorld = (ServerWorld)player.getEntityWorld();
+        Random rand = new Random();
+        int expAmount = rand.nextInt(CommonConfig.maxLvlCostToIncreaseLvls.get())+1;//exp points cost
+        Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);//enchants on the item toss
+        if(stack.isEnchanted() && player.experienceLevel>= expAmount){
+            //increase enchs lvl
+            enchants.forEach( (ench, lvl) ->{
+                if(rand.nextInt(CommonConfig.increaseEnchantsChance.get())==0){
+                    enchants.replace(ench, lvl+rand.nextInt(CommonConfig.maxLvlIncrease.get())+1);
+                    spawnReEnchanterParticleFormation(ParticleTypes.ENCHANTED_HIT, serverWorld, player.getPosition());
+                }
+            });
+            EnchantmentHelper.setEnchantments(enchants,stack);
+            player.addExperienceLevel(-expAmount);//subtract exp points
+        }
+        expAmount = rand.nextInt(CommonConfig.maxLvlCostToAddEnchant.get())+1;//exp points cost
+        if(rand.nextInt(CommonConfig.newEnchantChance.get())==0 && player.experienceLevel>=expAmount){
+            //pick a rendom enchant and check if is compatible
+            Enchantment newEnch;
+            do{
+                newEnch = Enchantment.getEnchantmentByID(rand.nextInt(50));
+            }while( newEnch==null ||
+                    enchants.containsKey(newEnch) ||
+                    ( (newEnch!=Enchantments.MENDING && newEnch!=Enchantments.FROST_WALKER) && !stack.canApplyAtEnchantingTable(newEnch) )
+                  );
+            spawnReEnchanterParticleFormation(ParticleTypes.WITCH, serverWorld, player.getPosition());
+            stack.addEnchantment(newEnch, rand.nextInt(CommonConfig.newEnchantMaxLvl.get())+1);//add the enchant
+            player.addExperienceLevel(-expAmount);//subtract the exp points
         }
     }
 
@@ -376,11 +347,10 @@ public class EventHandler{
 //----------------------------------1UP Easter egg Killing Walking fungus------------------------------
     @SubscribeEvent
     public static void walkingFungusDrops1UP(LivingDeathEvent event){
-        if (event.getEntity().getType()== ModEntities.walking_fungus_entity.get()){
-            if (new Random().nextInt(1000)==0){//todo configurable
-                event.getEntityLiving().entityDropItem(new ItemStack(ModItems.walking_fungus_1up.get()));
-            }
-        }
+        if(event.getEntityLiving().getEntityWorld().isRemote())return;
+        if (event.getEntity().getType()!= ModEntities.walking_fungus_entity.get())return;
+        if (new Random().nextInt(1000)==0)//todo configurable
+            event.getEntityLiving().entityDropItem(new ItemStack(ModItems.walking_fungus_1up.get()));
     }
 
     //----------------------------------Ancient Resistance Logic ------------------------------

@@ -3,7 +3,7 @@ package com.talp1.talpsadditions.utils.registration;
 import com.talp1.talpsadditions.Main;
 import com.talp1.talpsadditions.recipe.gen_lab_recipe.GenLabRecipe;
 import com.talp1.talpsadditions.recipe.gen_lab_recipe.GenLabRecipeType;
-import com.talp1.talpsadditions.utils.NBTIngredientFineGrindingEnchanted;
+import com.talp1.talpsadditions.recipe.NBTIngredientFineGrindingEnchanted;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;

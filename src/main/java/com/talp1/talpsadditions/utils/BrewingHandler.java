@@ -1,6 +1,7 @@
 package com.talp1.talpsadditions.utils;
 
 import com.talp1.talpsadditions.Main;
+import com.talp1.talpsadditions.recipe.ModBrewingRecipe;
 import com.talp1.talpsadditions.utils.registration.ModItems;
 import com.talp1.talpsadditions.utils.registration.ModPotions;
 import net.minecraft.item.Item;
@@ -20,21 +21,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Main.MODID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class BrewingHandler {
-
-    /*registrazione ricette Pozioni
-    @SubscribeEvent
-    public static void registerPotionRecepies(FMLCommonSetupEvent event) {
-        try {
-            Method addMix = PotionBrewing.class.getDeclaredMethod("addMix", Potion.class, Item.class, Potion.class);
-            addMix.setAccessible(true);
-            //luck
-            addMix.invoke(addMix, Potions.AWKWARD, ModPotions.shiny_shard_dust.get(), ModPotions.luck_potion.get());
-            //senses
-            addMix.invoke(addMix, Potions.AWKWARD, ModPotions.mysterious_sensory_organ.get(), ModPotions.senses_potion.get());
-        }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e){
-            e.printStackTrace();
-        }
-    }*/
 
     @SubscribeEvent
     public static void setup(FMLCommonSetupEvent event) {

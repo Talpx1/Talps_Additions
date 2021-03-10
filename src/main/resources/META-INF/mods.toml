@@ -24,7 +24,7 @@ issueTrackerURL="https://github.com/Talpx1/Talps_Additions/issues" #optional
 modId="talpsadditions" #mandatory
 
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="0.3" #mandatory
+version="0.5" #mandatory
 
 # A display name for the mod
 displayName="Talp's Additions" #mandatory

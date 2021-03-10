@@ -15,19 +15,14 @@ public class Main
 {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "talpsadditions";
-    //Mod Item Group Instance
     public static final CustomItemGroup CUSTOM_ITEM_GROUP = new CustomItemGroup("talpsadditions", "item_search.png");
-    //server side configs
     public static final CommonConfig COMMON_CONFIG = new CommonConfig();
 
     public Main() {
-        //registering the mod to the event bus
         MinecraftForge.EVENT_BUS.register(this);
 
-        //server config registration
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG.getSpec());
 
-        //registering the registers for the mod additions
         ModItems.init();
         ModPotions.init();
         ModEffects.init();
