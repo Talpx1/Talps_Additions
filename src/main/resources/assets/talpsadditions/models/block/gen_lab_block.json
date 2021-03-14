@@ -3,7 +3,7 @@
   "textures": {
     "particle": "talpsadditions:block/gen_lab_block",
     "down": "talpsadditions:block/gen_lab_block_bottom",
-    "up": "talpsadditions:block/gen_lab_block_bottom",
+    "up": "talpsadditions:block/gen_lab_block_top",
     "north": "talpsadditions:block/gen_lab_block_front",
     "south": "talpsadditions:block/gen_lab_block",
     "east": "talpsadditions:block/gen_lab_block",
