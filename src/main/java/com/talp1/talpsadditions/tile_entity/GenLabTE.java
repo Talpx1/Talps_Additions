@@ -175,7 +175,6 @@ public class GenLabTE extends TileEntity implements ITickableTileEntity{
 
     @Override
     public void remove() {
-        Main.LOGGER.info("TE Removed!");
         super.remove();
         dropContent();
         handler.invalidate();
